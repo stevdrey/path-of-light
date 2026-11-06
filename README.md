@@ -1,49 +1,49 @@
 # Path of Light
 
-Un juego de plataformas 2D en desarrollo con Godot. Explora dos niveles, recoge diamantes y llaves, evita peligros y encuentra una cámara secreta. El documento de diseño está en [GDD.md](GDD.md) y hay más detalles del proyecto en [src/README.md](src/README.md).
+A 2D platformer in development with Godot. Explore two levels, collect diamonds and keys, avoid hazards, and find a secret chamber. The game design document is in [GDD.md](GDD.md), and more project details are available in [src/README.md](src/README.md).
 
-## Requisitos
+## Requirements
 
-- Godot **4.8 beta 2**: es la versión usada en la prueba de importación. El archivo `project.godot` indica Godot 4.8 y el renderizador Compatibility; otras versiones no se han verificado para esta configuración.
-- Git, para clonar el repositorio.
+- Godot **4.8 beta 2**: the version used to test importing the project. The `project.godot` file specifies Godot 4.8 and the Compatibility renderer; other versions have not been verified for this configuration.
+- Git, to clone the repository.
 
-## Abrir y ejecutar
+## Open and run
 
-1. Clona el repositorio:
+1. Clone the repository:
 
    ```bash
    git clone git@github.com:stevdrey/path-of-light.git
    ```
 
-2. Abre Godot y, en el administrador de proyectos, elige **Importar**. Selecciona el archivo `project.godot` de la carpeta clonada y abre el proyecto.
-3. Espera a que el editor termine de importar los recursos.
-4. Pulsa **F5** o el botón **Ejecutar proyecto**. Se abrirá el menú principal.
+2. Open Godot and select **Import** in the Project Manager. Select the `project.godot` file in the cloned folder and open the project.
+3. Wait for the editor to finish importing the assets.
+4. Press **F5** or click **Run Project**. The main menu will open.
 
-En la primera importación pueden aparecer errores de carga de música antes de que los archivos estén listos. Si persisten después de importar, cierra y vuelve a abrir el proyecto.
+During the first import, music loading errors may appear before the files are ready. If they persist after importing, close and reopen the project.
 
-El repositorio incluye el complemento `godot_mcp`, habilitado en la configuración del proyecto. La carpeta de caché `.godot/` se genera localmente.
+The repository includes the `godot_mcp` plugin, which is enabled in the project settings. The `.godot/` cache folder is generated locally.
 
-## Controles predeterminados
+## Default controls
 
-- **A/D o flechas izquierda/derecha:** moverse.
-- **Espacio, W o flecha arriba:** saltar.
-- **W o flecha arriba:** interactuar y subir escaleras.
-- **S o flecha abajo:** bajar escaleras.
-- **Esc:** pausar; **R:** reiniciar.
+- **A/D or left/right arrows:** move.
+- **Space, W, or up arrow:** jump.
+- **W or up arrow:** interact and climb ladders.
+- **S or down arrow:** climb down ladders.
+- **Esc:** pause; **R:** restart.
 
-Los controles y volúmenes se pueden ajustar desde el menú del juego.
+Controls and volume can be adjusted from the game menu.
 
-## Archivos de importación
+## Import files
 
-Por decisión del proyecto, Git ignora los archivos `*.import`. Godot los vuelve a crear al importar los recursos, pero esos archivos también guardan identificadores y ajustes de importación: una copia nueva podría usar valores predeterminados y diferir de la configuración original. La [documentación de Godot recomienda versionarlos](https://docs.godotengine.org/en/4.7/tutorials/assets_pipeline/import_process.html#files-generated). Revisa el resultado al cambiar opciones de importación o trabajar desde otra copia.
+By project choice, Git ignores `*.import` files. Godot regenerates them when importing assets, but they also store identifiers and import settings: a fresh copy may use default values and differ from the original configuration. The [Godot documentation recommends versioning these files](https://docs.godotengine.org/en/4.7/tutorials/assets_pipeline/import_process.html#files-generated). Check the results when changing import settings or working from another copy.
 
-## Licencias y recursos
+## Licenses and assets
 
-El código original del juego en `src/**/*.gd` se distribuye bajo la [licencia MIT](LICENSE). Esta licencia no cambia las condiciones de recursos de terceros ni cubre automáticamente las imágenes, fuentes o sonidos.
+The original game code in `src/**/*.gd` is distributed under the [MIT License](LICENSE). This license does not change the terms for third-party assets or automatically cover images, fonts, or sounds.
 
-- El complemento `addons/godot_mcp` tiene su propia [licencia MIT](addons/godot_mcp/LICENSE).
-- La fuente Fredoka se distribuye bajo la [SIL Open Font License 1.1](assets/fonts/fredoka/OFL.txt).
-- Los créditos y licencias documentados para sonidos se encuentran en [assets/sounds/CREDITS.md](assets/sounds/CREDITS.md).
-- La procedencia y los permisos de redistribución de algunos recursos visuales y audios generados todavía deben verificarse. En particular, los [términos de SFX Engine](https://sfxengine.com/terms-of-service) restringen la redistribución de efectos como archivos independientes. Su presencia en este repositorio no implica una licencia abierta para reutilizarlos; hay que revisar los términos aplicables o sustituirlos antes de distribuirlos de esa forma.
+- The `addons/godot_mcp` plugin has its own [MIT License](addons/godot_mcp/LICENSE).
+- The Fredoka font is distributed under the [SIL Open Font License 1.1](assets/fonts/fredoka/OFL.txt).
+- Sound credits and documented licenses are in [assets/sounds/CREDITS.md](assets/sounds/CREDITS.md).
+- The provenance and redistribution permissions for some visual assets and generated audio still need to be verified. In particular, the [SFX Engine terms](https://sfxengine.com/terms-of-service) restrict the redistribution of sound effects as standalone files. Their presence in this repository does not imply an open license to reuse them; the applicable terms must be reviewed or the files replaced before distributing them in that form.
 
-Por ello, aún no está verificado que **todos los recursos del juego** puedan redistribuirse y modificarse como contenido abierto. El código y los recursos tienen alcances de licencia distintos.
+Therefore, it has not yet been verified that **all game assets** can be redistributed and modified as open content. The code and assets have different license scopes.
