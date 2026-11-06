@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://b8yvvseyyi35t"]
+
+[ext_resource type="Script" uid="uid://bjss10orho56v" path="res://src/ui/scripts/collection_hud.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bjiige06imk7y" path="res://assets/images/platformPack_tilesheet.png" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.055, 0.105, 0.15, 0.68)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.38, 0.54, 0.58, 0.7)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="AtlasTexture" id="heart_full"]
+atlas = ExtResource("2")
+region = Rect2(704, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="blue"]
+atlas = ExtResource("2")
+region = Rect2(448, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="yellow"]
+atlas = ExtResource("2")
+region = Rect2(512, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="green"]
+atlas = ExtResource("2")
+region = Rect2(576, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="orange"]
+atlas = ExtResource("2")
+region = Rect2(640, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="key"]
+atlas = ExtResource("2")
+region = Rect2(448, 256, 64, 64)
+
+[node name="CollectionHUD" type="CanvasLayer" unique_id=658881624]
+layer = 2
+script = ExtResource("1")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=122247304]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 78.0
+offset_right = -18.0
+offset_bottom = 130.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=788523117]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="Column" type="VBoxContainer" parent="Panel/Margin" unique_id=1758242845]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Hearts" type="HBoxContainer" parent="Panel/Margin/Column" unique_id=1010941200]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Heart0" type="TextureRect" parent="Panel/Margin/Column/Hearts" unique_id=176658113]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = SubResource("heart_full")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart1" type="TextureRect" parent="Panel/Margin/Column/Hearts" unique_id=1800287134]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = SubResource("heart_full")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart2" type="TextureRect" parent="Panel/Margin/Column/Hearts" unique_id=1710814701]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = SubResource("heart_full")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Score" type="Label" parent="Panel/Margin/Column" unique_id=373873276]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.42, 1)
+theme_override_font_sizes/font_size = 16
+text = "PUNTOS   0"
+
+[node name="Inventory" type="HBoxContainer" parent="Panel/Margin/Column" unique_id=1605647318]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Diamonds" type="VBoxContainer" parent="Panel/Margin/Column/Inventory" unique_id=1390277171]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Blue" type="HBoxContainer" parent="Panel/Margin/Column/Inventory/Diamonds" unique_id=1546634104]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Panel/Margin/Column/Inventory/Diamonds/Blue" unique_id=318642972]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("blue")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Panel/Margin/Column/Inventory/Diamonds/Blue" unique_id=1135353043]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "× 0"
+
+[node name="Yellow" type="HBoxContainer" parent="Panel/Margin/Column/Inventory/Diamonds" unique_id=1323516220]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Panel/Margin/Column/Inventory/Diamonds/Yellow" unique_id=1057748285]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("yellow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Panel/Margin/Column/Inventory/Diamonds/Yellow" unique_id=1285905205]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "× 0"
+
+[node name="Green" type="HBoxContainer" parent="Panel/Margin/Column/Inventory/Diamonds" unique_id=9232391]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Panel/Margin/Column/Inventory/Diamonds/Green" unique_id=810912421]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("green")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Panel/Margin/Column/Inventory/Diamonds/Green" unique_id=1552641521]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "× 0"
+
+[node name="Orange" type="HBoxContainer" parent="Panel/Margin/Column/Inventory/Diamonds" unique_id=1754710283]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Panel/Margin/Column/Inventory/Diamonds/Orange" unique_id=1259806496]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("orange")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="Panel/Margin/Column/Inventory/Diamonds/Orange" unique_id=896102909]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "× 0"
+
+[node name="Key" type="HBoxContainer" parent="Panel/Margin/Column/Inventory" unique_id=1851891653]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Icon" type="TextureRect" parent="Panel/Margin/Column/Inventory/Key" unique_id=2111953865]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("key")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="State" type="Label" parent="Panel/Margin/Column/Inventory/Key" unique_id=786335845]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Sin llave"

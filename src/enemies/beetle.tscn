@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cnuahalh1cah6"]
+
+[ext_resource type="Script" uid="uid://be43yusunu4eb" path="res://src/enemies/scripts/beetle.gd" id="1"]
+[ext_resource type="Script" uid="uid://bm6pupsf02oyt" path="res://src/enemies/scripts/beetle_visual.gd" id="2"]
+[ext_resource type="SpriteFrames" uid="uid://cevjxa3vu8t3b" path="res://src/enemies/ressources/beetle_frames.tres" id="3"]
+
+[sub_resource type="RectangleShape2D" id="body"]
+size = Vector2(52, 37)
+
+[sub_resource type="RectangleShape2D" id="contact"]
+size = Vector2(58, 42)
+
+[node name="BeetleEnemy" type="CharacterBody2D" unique_id=1491510247]
+collision_layer = 4
+script = ExtResource("1")
+
+[node name="BodyShape" type="CollisionShape2D" parent="." unique_id=1417063001]
+position = Vector2(0, -15.5)
+shape = SubResource("body")
+
+[node name="Visual" type="Node2D" parent="." unique_id=1858154749]
+position = Vector2(0, -30)
+script = ExtResource("2")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Visual" unique_id=1431957742]
+texture_filter = 2
+position = Vector2(0, 12.54)
+scale = Vector2(0.1446875, 0.13101564)
+sprite_frames = ExtResource("3")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Contact" type="Area2D" parent="." unique_id=1447287333]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Contact" unique_id=383371626]
+position = Vector2(0, -21)
+shape = SubResource("contact")

@@ -1,0 +1,82 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cevjxa3vu8t3b"]
+
+[ext_resource type="Texture2D" uid="uid://bl44w2xgm5155" path="res://assets/images/enemy_beetle_wings_v2.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://mi15wldmxvhq" path="res://assets/images/enemy_beetle_walk_v2.png" id="3"]
+
+[sub_resource type="AtlasTexture" id="frame_3"]
+atlas = ExtResource("2")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_4"]
+atlas = ExtResource("2")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_5"]
+atlas = ExtResource("2")
+region = Rect2(1024, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_0"]
+atlas = ExtResource("3")
+region = Rect2(153, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_1"]
+atlas = ExtResource("3")
+region = Rect2(825, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_2"]
+atlas = ExtResource("3")
+region = Rect2(153, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="frame_walk_3"]
+atlas = ExtResource("3")
+region = Rect2(825, 512, 512, 512)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_5")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_walk_3")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}],
+"loop": 1,
+"name": &"windup",
+"speed": 5.0
+}]
