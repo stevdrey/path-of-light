@@ -1,0 +1,16 @@
+# Published GitHub backlog
+
+The GitHub issues below are the execution record. Local specifications remain available for context and review.
+
+| Epic | GitHub issue | Child issues |
+| --- | --- | --- |
+| [E01: Foundation and production evidence](epics/E01.md) | [Epic #1](https://github.com/stevdrey/path-of-light/issues/1) | [E01-01](https://github.com/stevdrey/path-of-light/issues/11), [E01-02](https://github.com/stevdrey/path-of-light/issues/12), [E01-03](https://github.com/stevdrey/path-of-light/issues/13), [E01-04](https://github.com/stevdrey/path-of-light/issues/14) |
+| [E02: Solo controls, recovery and assists](epics/E02.md) | [Epic #2](https://github.com/stevdrey/path-of-light/issues/2) | [E02-01](https://github.com/stevdrey/path-of-light/issues/15), [E02-02](https://github.com/stevdrey/path-of-light/issues/16), [E02-03](https://github.com/stevdrey/path-of-light/issues/17) |
+| [E03: Campaign progression and persistence](epics/E03.md) | [Epic #3](https://github.com/stevdrey/path-of-light/issues/3) | [E03-01](https://github.com/stevdrey/path-of-light/issues/18), [E03-02](https://github.com/stevdrey/path-of-light/issues/19), [E03-03](https://github.com/stevdrey/path-of-light/issues/20) |
+| [E04: Local cooperative play](epics/E04.md) | [Epic #4](https://github.com/stevdrey/path-of-light/issues/4) | [E04-01](https://github.com/stevdrey/path-of-light/issues/21), [E04-02](https://github.com/stevdrey/path-of-light/issues/22), [E04-03](https://github.com/stevdrey/path-of-light/issues/23) |
+| [E05: Representative playable slice](epics/E05.md) | [Epic #5](https://github.com/stevdrey/path-of-light/issues/5) | [E05-01](https://github.com/stevdrey/path-of-light/issues/24), [E05-02](https://github.com/stevdrey/path-of-light/issues/25), [E05-03](https://github.com/stevdrey/path-of-light/issues/26), [E05-04](https://github.com/stevdrey/path-of-light/issues/27) |
+| [E06: Playtest and scope decision](epics/E06.md) | [Epic #6](https://github.com/stevdrey/path-of-light/issues/6) | [E06-01](https://github.com/stevdrey/path-of-light/issues/28), [E06-02](https://github.com/stevdrey/path-of-light/issues/29) |
+| [E07: Campaign production](epics/E07.md) | [Epic #7](https://github.com/stevdrey/path-of-light/issues/7) | [E07-01](https://github.com/stevdrey/path-of-light/issues/30), [E07-02](https://github.com/stevdrey/path-of-light/issues/31), [E07-03](https://github.com/stevdrey/path-of-light/issues/32) |
+| [E08: Replayability and discovery](epics/E08.md) | [Epic #8](https://github.com/stevdrey/path-of-light/issues/8) | [E08-01](https://github.com/stevdrey/path-of-light/issues/33), [E08-02](https://github.com/stevdrey/path-of-light/issues/34), [E08-03](https://github.com/stevdrey/path-of-light/issues/35) |
+| [E09: Quality, accessibility and release](epics/E09.md) | [Epic #9](https://github.com/stevdrey/path-of-light/issues/9) | [E09-01](https://github.com/stevdrey/path-of-light/issues/36), [E09-02](https://github.com/stevdrey/path-of-light/issues/37), [E09-03](https://github.com/stevdrey/path-of-light/issues/38) |
+| [E10: Optional playtest telemetry](epics/E10.md) | [Epic #10](https://github.com/stevdrey/path-of-light/issues/10) | [E10-01](https://github.com/stevdrey/path-of-light/issues/39), [E10-02](https://github.com/stevdrey/path-of-light/issues/40), [E10-03](https://github.com/stevdrey/path-of-light/issues/41) |

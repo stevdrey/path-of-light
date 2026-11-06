@@ -2,6 +2,10 @@
 
 A 2D platformer in development with Godot. Explore two levels, collect diamonds and keys, avoid hazards, and find a secret chamber. The game design document is in [GDD.md](GDD.md), and more project details are available in [src/README.md](src/README.md).
 
+## Documentation
+
+See the [documentation index](docs/README.md), [roadmap](docs/ROADMAP.md), [backlog](docs/backlog/README.md), and [wiki source](docs/wiki/Home.md).
+
 ## Requirements
 
 - Godot **4.8 beta 2**: the version used to test importing the project. The `project.godot` file specifies Godot 4.8 and the Compatibility renderer; other versions have not been verified for this configuration.
