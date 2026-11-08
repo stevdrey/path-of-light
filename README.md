@@ -41,6 +41,8 @@ Controls and volume can be adjusted from the game menu.
 
 By project choice, Git ignores `*.import` files. Godot regenerates them when importing assets, but they also store identifiers and import settings: a fresh copy may use default values and differ from the original configuration. The [Godot documentation recommends versioning these files](https://docs.godotengine.org/en/4.7/tutorials/assets_pipeline/import_process.html#files-generated). Check the results when changing import settings or working from another copy.
 
+See the [import and integration-test baseline](docs/import-test-baseline.md) for repeatable commands, observed import errors, metadata comparison and limitations.
+
 ## Licenses and assets
 
 The original game code in `src/**/*.gd` is distributed under the [MIT License](LICENSE). This license does not change the terms for third-party assets or automatically cover images, fonts, or sounds.
