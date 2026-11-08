@@ -48,6 +48,7 @@ The original game code in `src/**/*.gd` is distributed under the [MIT License](L
 - The `addons/godot_mcp` plugin has its own [MIT License](addons/godot_mcp/LICENSE).
 - The Fredoka font is distributed under the [SIL Open Font License 1.1](assets/fonts/fredoka/OFL.txt).
 - Sound credits and documented licenses are in [assets/sounds/CREDITS.md](assets/sounds/CREDITS.md).
+- The [asset provenance audit](docs/asset-provenance-audit.md) records the reviewed baseline, file-level evidence, and outstanding clearance or replacement actions.
 - The provenance and redistribution permissions for some visual assets and generated audio still need to be verified. In particular, the [SFX Engine terms](https://sfxengine.com/terms-of-service) restrict the redistribution of sound effects as standalone files. Their presence in this repository does not imply an open license to reuse them; the applicable terms must be reviewed or the files replaced before distributing them in that form.
 
 Therefore, it has not yet been verified that **all game assets** can be redistributed and modified as open content. The code and assets have different license scopes.
