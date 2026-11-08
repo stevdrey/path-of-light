@@ -106,13 +106,14 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		get_tree().change_scene_to_file(FIRST_LEVEL)
 		return
-	if transitioning or player_health.dead:
+	if transitioning or player_health.dead or movement.input_locked or movement.damage_locked:
 		return
-	var up_pressed := event.is_action_pressed("interact_up")
+	var up_pressed := event.is_action_pressed("interact_up") and not event.is_echo()
 	if door != null and door.player_nearby and movement.control == movement.player_control and up_pressed:
-		if Progress.keys.get(door.required_key, false):
-			get_viewport().set_input_as_handled()
+		get_viewport().set_input_as_handled()
+		if event.is_action_pressed("jump"):
 			movement.suppress_jump_once = true
+		if Progress.keys.get(door.required_key, false):
 			_open_door()
 
 func _on_health_changed(current: int, maximum: int) -> void:
@@ -170,8 +171,6 @@ func _on_box_item_released(item: CollectibleItem) -> void:
 
 func _update_status() -> void:
 	status.text = "Control: %s" % control_label
-	if door != null:
-		status.text += "   •   ↑ frente a la puerta"
 	var key_kind: int = door.required_key if door != null else CollectibleItem.Kind.BLUE_KEY
 	collection_hud.set_inventory(Progress.diamond_counts, Progress.keys.get(key_kind, false), key_kind, present_colors, Progress.score, door != null)
 
@@ -193,6 +192,7 @@ func _create_fade() -> void:
 
 func _open_door() -> void:
 	transitioning = true
+	door.cue_enabled = false
 	movement.input_locked = true
 	movement.jump_buffer_left = 0.0
 	Progress.keys.erase(door.required_key)

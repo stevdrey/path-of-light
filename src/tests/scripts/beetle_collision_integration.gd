@@ -52,12 +52,63 @@ func run():
 	enemy = world.get_node("Enemy")
 	health = player.get_node("HealthComponent")
 	await frames(8)
+	player.global_position = enemy.global_position + Vector2(0,-120)
+	player.velocity = Vector2(0,1200)
+	bounced = false
+	for i in range(35):
+		await physics_frame
+		if enemy.state == enemy.State.DEFEATED and player.velocity.y < 0:
+			bounced = true
+			break
+	if not bounced or health.hearts != 3:
+		printerr("FAIL: fast falling top contact must stomp rather than damage"); quit(1); return
+	print("PASS: fast falling top contact defeats beetle")
+	world.queue_free()
+	await process_frame
+	world = make_world()
+	player = world.get_node("Player")
+	enemy = world.get_node("Enemy")
+	health = player.get_node("HealthComponent")
+	enemy.patrol_speed = 65.0
+	enemy.detection_range = 0.0
+	await frames(8)
+	player.global_position = enemy.global_position + Vector2(0,-120)
+	player.velocity = Vector2(0,1200)
+	bounced = false
+	for i in range(35):
+		await physics_frame
+		if enemy.state == enemy.State.DEFEATED and player.velocity.y < 0:
+			bounced = true
+			break
+	if not bounced or health.hearts != 3:
+		printerr("FAIL: fast falling top contact on moving beetle"); quit(1); return
+	print("PASS: fast falling top contact defeats moving beetle")
+	world.queue_free()
+	await process_frame
+	world = make_world()
+	player = world.get_node("Player")
+	enemy = world.get_node("Enemy")
+	health = player.get_node("HealthComponent")
+	await frames(8)
 	player.global_position = enemy.global_position + Vector2(50,-2)
 	player.velocity = Vector2.ZERO
 	await frames(8)
 	if health.hearts != 2 or enemy.state == enemy.State.DEFEATED:
 		printerr("FAIL: side collision should damage player, hearts=",health.hearts); quit(1); return
 	print("PASS: physical side contact damages player")
+	world.queue_free()
+	await process_frame
+	world = make_world()
+	player = world.get_node("Player")
+	enemy = world.get_node("Enemy")
+	health = player.get_node("HealthComponent")
+	await frames(8)
+	player.global_position = enemy.global_position + Vector2(50,-15)
+	player.velocity = Vector2(0,200)
+	await frames(8)
+	if health.hearts != 2 or enemy.state == enemy.State.DEFEATED:
+		printerr("FAIL: falling side contact should damage player"); quit(1); return
+	print("PASS: falling side contact damages player")
 	world.queue_free()
 	await process_frame
 	quit(0)

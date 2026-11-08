@@ -24,6 +24,7 @@ var input_locked := false
 var damage_locked := false
 var jump_sound: AudioStreamPlayer
 var suppress_jump_once := false
+var independent_jump_pressed := false
 var ladder_contacts := 0
 var nearby_ladders: Array[Area2D] = []
 var climbing := false
@@ -42,6 +43,7 @@ func set_control(strategy: ControlStrategy) -> void:
 		control.deactivate()
 	control = strategy
 	jump_buffer_left = 0.0
+	independent_jump_pressed = false
 	control.activate()
 	control_changed.emit("Automático" if strategy == scripted_control else "Jugador")
 
@@ -50,6 +52,10 @@ func use_player_control() -> void:
 
 func use_scripted_control() -> void:
 	set_control(scripted_control)
+
+func _input(event: InputEvent) -> void:
+	if not event.is_echo() and event.is_action_pressed("jump") and not event.is_action_pressed("interact_up"):
+		independent_jump_pressed = true
 
 func _physics_process(delta: float) -> void:
 	if control == null:
@@ -65,6 +71,7 @@ func _physics_process(delta: float) -> void:
 		is_crouching = false
 		jump_buffer_left = 0.0
 		suppress_jump_once = false
+		independent_jump_pressed = false
 		body.velocity = Vector2(control.horizontal() * speed, climb_input * climb_speed)
 		body.move_and_slide()
 		var ladder := _centered_ladder()
@@ -86,9 +93,11 @@ func _physics_process(delta: float) -> void:
 		coyote_left = maxf(0.0, coyote_left - delta)
 		body.velocity.y += gravity * delta
 	jump_buffer_left = 0.0 if is_crouching else maxf(0.0, jump_buffer_left - delta)
-	if not is_crouching and not locked and not suppress_jump_once and control.wants_jump():
+	var wants_jump := (control.wants_jump() and not suppress_jump_once) or (control == player_control and independent_jump_pressed)
+	if not is_crouching and not locked and wants_jump:
 		jump_buffer_left = jump_buffer_time
 	suppress_jump_once = false
+	independent_jump_pressed = false
 	if locked:
 		jump_buffer_left = 0.0
 	if jump_buffer_left > 0.0 and coyote_left > 0.0:

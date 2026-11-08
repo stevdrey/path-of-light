@@ -44,6 +44,8 @@ func run():
 	body.velocity = Vector2.ZERO
 	await frames(10)
 	await key_up()
+	if level.door.cue_enabled:
+		printerr("FAIL: door cue should stop during opening"); quit(1); return
 	await frames(170)
 	if not level.completed or progress.keys.has(5):
 		printerr("FAIL: second door completion"); quit(1); return
