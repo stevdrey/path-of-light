@@ -346,7 +346,7 @@ position = Vector2(5952, 550)
 position = Vector2(10350, 550)
 
 [node name="TrailSpikes4" parent="." unique_id=2067320971 instance=ExtResource("12_77rm0")]
-position = Vector2(10420, 550)
+position = Vector2(10403, 550)
 
 [node name="CeilingSpike115" parent="." unique_id=370420092 instance=ExtResource("12_77rm0")]
 z_index = -2

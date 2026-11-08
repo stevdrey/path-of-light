@@ -45,11 +45,12 @@ func _screen_focus(world_position: Vector2) -> Vector2:
 func _input(event: InputEvent) -> void:
 	if portal_transitioning:
 		return
-	if not transitioning and not player_health.dead and event.is_action_pressed("interact_up") and not event.is_echo():
+	if not transitioning and not player_health.dead and not movement.input_locked and not movement.damage_locked and movement.control == movement.player_control and event.is_action_pressed("interact_up") and not event.is_echo():
 		var portal: Area2D = get_node_or_null("BonusExit" if in_secret else "BonusEntrance")
 		if portal != null and portal.can_activate($Character):
 			get_viewport().set_input_as_handled()
-			movement.suppress_jump_once = true
+			if event.is_action_pressed("jump"):
+				movement.suppress_jump_once = true
 			_use_portal(portal)
 			return
 	super._input(event)

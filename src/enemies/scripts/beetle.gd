@@ -48,6 +48,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 	if target == null or not is_instance_valid(target):
 		target = get_tree().get_first_node_in_group("player") as CharacterBody2D
+		if target != null:
+			# Contact is resolved by the Area2D; the body must not be pushed
+			# through terrain by the player standing or landing on it.
+			add_collision_exception_with(target)
 	timer = maxf(0.0, timer - delta)
 	match state:
 		State.PATROL:
@@ -92,11 +96,13 @@ func _on_contact(body: Node2D) -> void:
 	var health = player.get_node_or_null("HealthComponent")
 	if health != null and health.dead:
 		return
-	# Both origins are at the feet. A falling player whose feet reach the top
-	# of the beetle is a stomp; all other contact is damaging.
+	# Both origins are at the feet. Include the most recent downward motion so
+	# a fast fall crossing the top between overlap callbacks still counts.
 	var shape := contact_shape.shape as RectangleShape2D
 	var enemy_top := contact_shape.to_global(Vector2(0, -shape.size.y * 0.5)).y
-	if player.velocity.y > 0.0 and player.global_position.y <= enemy_top + 10.0:
+	var player_fall := maxf(player.get_position_delta().y, player.velocity.y * get_physics_process_delta_time())
+	var relative_fall := maxf(0.0, player_fall - get_position_delta().y)
+	if relative_fall > 0.0 and player.global_position.y - relative_fall <= enemy_top + 10.0:
 		_defeat(player)
 	elif health == null or health.invulnerability_left <= 0.0:
 		_damage_player(player)

@@ -132,7 +132,7 @@ Inhabitants enrich the story through brief encounters and gestures; none require
 |---|---|---|
 | Move | Travel in either direction through the level. | Immediate response and readable terrain. |
 | Jump | Clear gaps, reach platforms, and neutralize beetles from above. | Consistent heights and distances; coyote time and jump buffering. |
-| Interact | Enter portals and open nearby doors. | Contextual icon prompt; avoid accidental jumps when interacting. |
+| Interact | Enter portals and open nearby doors. | Invite discovery with contextual visual cues such as a gentle glow; avoid accidental jumps when interacting. Test whether players recognize the interaction without explicit instructions. |
 | Climb | Move up or down identifiable ladders. | Safe introduction before combining them with hazards. |
 | Hit crates from below | Obtain a diamond, key, or heart, or discover an empty crate. | Shape and audiovisual feedback teach their purpose. |
 
@@ -213,7 +213,7 @@ Exact quantities of diamonds, appearances, curiosities, and challenges will be d
 
 **Audio:** cheerful melodies with recognizable motifs for each world and variations for secrets and the ending. Short, distinct effects for jumping, damage, rewards, doors, and checkpoints. Music and effects have independent volume controls; no essential information is conveyed by sound alone. Verify licenses and provenance of all assets before publication.
 
-**Interface:** clear hearts per player, discreet key and diamond indicators, and contextual controls using icons; a map with completed levels and open routes. Visual hints without mandatory reading, brief text, and easily accessible pause and options. Avoid relying exclusively on colors or timers.
+**Interface:** clear hearts per player, discreet key and diamond indicators, and contextual visual cues that invite discovery; a map with completed levels and open routes. Visual hints without mandatory reading, brief text, and easily accessible pause and options. Avoid relying exclusively on colors or timers. Test whether the cues make interactions discoverable without displaying an action instruction.
 
 ## 11. Current project status
 
