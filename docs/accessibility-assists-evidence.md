@@ -18,6 +18,18 @@ These are not diagnostic-free runs: 35 suite logs report unavailable GameMode D-
 
 A separate verifier reproduced the source digest and independently reran the recovery matrix, UI/live changes, settings write and second-process restore, restart lifecycle and standard fall depletion, all with exit 0. Its logs are under `/tmp/path-of-light-17/independent/`. The final acceptance verdict is reported separately against the complete candidate including this note; the source digest above deliberately excludes this self-referential document. None of these checks is a human playtest.
 
+## Post-review fixes
+
+A later code review of PR #47 found five issues, all corrected on this branch after the candidate above:
+
+1. Disabling extra hearts at low health and enabling it again healed the player (1/5 → 1/3 → 3/5). Missing hearts hidden by the one-heart minimum are now remembered, carried across level transitions and cleared on retry.
+2. `GameProgress.reset_attempt()`/`restore_inventory()` hardcoded three hearts; they now use the configured cap, and the per-caller overrides were removed.
+3. Esc inside the pause AYUDAS panel resumed gameplay; it now returns to the pause list.
+4. The menu and pause hosts each added the panel's Volver button and open/close logic; the shared panel now owns Volver, Esc-to-back and a `closed` signal.
+5. The HUD allocated new heart textures on every health update; it now reuses two cached textures.
+
+`assist_ui_integration.gd` adds the off/on round trips (1/5 and 2/5), hidden missing hearts across the real exit, and simulated Esc in pause AYUDAS; `assist_recovery_integration.gd` relies on `GameProgress.reset()` for configured hearts and checks cached HUD textures. These checks are headless; the Esc behaviour and HUD were not reviewed visually or with a controller. The source digest above refers to the pre-fix candidate.
+
 ## Acceptance evidence
 
 | Requirement | Evidence |

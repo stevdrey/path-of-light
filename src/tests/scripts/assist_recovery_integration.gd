@@ -24,8 +24,8 @@ func run() -> void:
 		for i in range(3):
 			settings.set_assist(settings.ASSISTS[i], bool(mask & (1 << i)))
 		for path in PATHS:
+			# GameProgress itself supplies the configured cap.
 			Progress.reset()
-			Progress.hearts = settings.get_max_hearts()
 			var level: Node2D = load(path).instantiate()
 			root.add_child(level)
 			current_scene = level
@@ -40,6 +40,11 @@ func run() -> void:
 				if icon.visible:
 					visible_hearts += 1
 			if not check(visible_hearts == maximum, "HUD shows every configured heart"):
+				return
+			level.collection_hud.set_health(1, maximum)
+			level.collection_hud.set_health(maximum, maximum)
+			var icons: Array = level.collection_hud.hearts_row.get_children()
+			if not check(icons[0].texture == icons[1].texture and icons[0].texture == level.collection_hud.heart_full_texture, "HUD reuses cached heart textures"):
 				return
 			# Extra points must be supported, free of contact damage at rest and
 			# inactive while airborne. Test their actual landing/fall windows.

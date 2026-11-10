@@ -95,7 +95,8 @@ func _build_ui() -> void:
 	assists_panel = VBoxContainer.new()
 	assists_panel.set_script(ASSIST_OPTIONS)
 	holder.add_child(assists_panel)
-	_add_button(assists_panel, "Volver", _close_assists)
+	_add_button_feedback(assists_panel.back_button)
+	assists_panel.closed.connect(_close_assists)
 	assists_panel.hide()
 	_refresh_keys()
 
@@ -198,8 +199,7 @@ func _open_options() -> void:
 func _open_assists() -> void:
 	waiting_action = ""
 	options_panel.hide()
-	assists_panel.show()
-	assists_panel.focus_first()
+	assists_panel.open()
 
 func _close_assists() -> void:
 	assists_panel.hide()

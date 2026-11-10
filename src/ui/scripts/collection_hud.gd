@@ -7,9 +7,19 @@ extends CanvasLayer
 @onready var key_icon: TextureRect = $Panel/Margin/Column/Inventory/Key/Icon
 @onready var hearts_row: HBoxContainer = $Panel/Margin/Column/Hearts
 @onready var score_label: Label = $Panel/Margin/Column/Score
+var heart_full_texture: AtlasTexture
+var heart_empty_texture: AtlasTexture
 
 func _ready() -> void:
 	key_icon.texture = key_icon.texture.duplicate()
+	heart_full_texture = _heart_texture(256)
+	heart_empty_texture = _heart_texture(128)
+
+func _heart_texture(region_y: int) -> AtlasTexture:
+	var heart := AtlasTexture.new()
+	heart.atlas = preload("res://assets/images/platformPack_tilesheet.png")
+	heart.region = Rect2(704, region_y, 64, 64)
+	return heart
 
 func set_inventory(diamonds: Array[int], has_key: bool, key_kind: int, present: Array[bool], score: int, show_key: bool) -> void:
 	var atlas := key_icon.texture as AtlasTexture
@@ -23,7 +33,6 @@ func set_inventory(diamonds: Array[int], has_key: bool, key_kind: int, present: 
 	score_label.text = "PUNTOS   %d" % score
 
 func set_health(current: int, maximum: int) -> void:
-	var atlas_source: Texture2D = preload("res://assets/images/platformPack_tilesheet.png")
 	while hearts_row.get_child_count() < maximum:
 		var icon := TextureRect.new()
 		icon.custom_minimum_size = Vector2(30, 30)
@@ -34,7 +43,4 @@ func set_health(current: int, maximum: int) -> void:
 		var icon := hearts_row.get_child(i) as TextureRect
 		icon.custom_minimum_size = Vector2(30, 30) if maximum > 3 else Vector2(40, 40)
 		icon.visible = i < maximum
-		var heart := AtlasTexture.new()
-		heart.atlas = atlas_source
-		heart.region = Rect2(704, 256 if i < current else 128, 64, 64)
-		icon.texture = heart
+		icon.texture = heart_full_texture if i < current else heart_empty_texture

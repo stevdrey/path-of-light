@@ -15,6 +15,8 @@ signal depleted
 const HURT_SOUND := preload("res://assets/sounds/sfx/hurt.wav")
 const DEFEAT_SOUND := preload("res://assets/sounds/sfx/defeat.wav")
 var hearts := 3
+# Missing hearts hidden by the one-heart minimum when the cap was lowered.
+var hidden_missing := 0
 var invulnerability_left := 0.0
 var hurt_left := 0.0
 var dead := false
@@ -54,10 +56,16 @@ func heal(amount: int = 1) -> bool:
 
 func set_max_hearts(maximum: int) -> void:
 	# Preserve missing hearts. Disabling the assist cannot cause defeat, and
-	# changing settings during defeat cannot resurrect the player.
-	var missing := max_hearts - hearts
+	# changing settings during defeat cannot resurrect the player. Missing
+	# hearts hidden by the one-heart minimum are remembered, so toggling the
+	# cap off and on again never heals.
+	var missing := max_hearts - hearts + hidden_missing
 	max_hearts = maximum
-	hearts = 0 if dead else clampi(max_hearts - missing, 1, max_hearts)
+	if dead:
+		hearts = 0
+	else:
+		hearts = clampi(max_hearts - missing, 1, max_hearts)
+		hidden_missing = maxi(0, missing - (max_hearts - hearts))
 	health_changed.emit(hearts, max_hearts)
 
 func take_fall_damage() -> void:

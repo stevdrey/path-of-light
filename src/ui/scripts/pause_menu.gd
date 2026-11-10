@@ -65,14 +65,13 @@ func _build_menu() -> void:
 	assists_panel = VBoxContainer.new()
 	assists_panel.set_script(ASSIST_OPTIONS)
 	holder.add_child(assists_panel)
-	_button(assists_panel, "Volver", _close_assists)
+	assists_panel.closed.connect(_close_assists)
 	assists_panel.hide()
 	overlay.hide()
 
 func _open_assists() -> void:
 	menu_column.hide()
-	assists_panel.show()
-	assists_panel.focus_first()
+	assists_panel.open()
 
 func _close_assists() -> void:
 	assists_panel.hide()
@@ -90,7 +89,9 @@ func _button(parent: Control, caption: String, callback: Callable) -> Button:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel") or event.is_echo():
 		return
-	if owns_pause:
+	if owns_pause and assists_panel.visible:
+		_close_assists()
+	elif owns_pause:
 		resume()
 	elif not get_tree().paused:
 		pause()

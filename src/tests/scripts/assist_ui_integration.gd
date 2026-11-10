@@ -39,8 +39,8 @@ func run() -> void:
 	menu.assists_panel.toggles.extra_hearts.button_pressed = true
 	if not check(settings.get_max_hearts() == 5 and not settings.is_assist_enabled("no_fall_damage"), "menu checkbox changes only selected assist"):
 		return
-	menu._close_assists()
-	if not check(menu.assists_button.has_focus(), "return restores Options focus"):
+	menu.assists_panel.back_button.pressed.emit()
+	if not check(menu.assists_button.has_focus() and menu.options_panel.visible and not menu.assists_panel.visible, "Volver restores Options focus"):
 		return
 	root.size = Vector2i(1152, 648)
 	menu._play()
@@ -64,8 +64,18 @@ func run() -> void:
 	await create_timer(0.1, true).timeout
 	if not check(body.global_position == position_before and health.hearts == 4 and level.checkpoint_index == 0, "live options work during pause without moving player or granting unvisited checkpoint"):
 		return
-	pause_menu._close_assists()
-	if not check(pause_menu.assists_button.has_focus(), "assist back restores Pause focus"):
+	pause_menu.assists_panel.back_button.pressed.emit()
+	if not check(pause_menu.assists_button.has_focus() and pause_menu.menu_column.visible, "assist back restores Pause focus"):
+		return
+	# Esc inside AYUDAS goes back one step instead of resuming gameplay.
+	pause_menu._open_assists()
+	var cancel := InputEventAction.new()
+	cancel.action = "ui_cancel"
+	cancel.pressed = true
+	Input.parse_input_event(cancel)
+	for i in 2:
+		await process_frame
+	if not check(paused and not pause_menu.assists_panel.visible and pause_menu.menu_column.visible and pause_menu.assists_button.has_focus(), "Esc in pause AYUDAS returns to the pause list"):
 		return
 	pause_menu.resume()
 	await frames(25)
@@ -86,6 +96,17 @@ func run() -> void:
 	settings.set_assist("extra_hearts", false)
 	if not check(health.hearts == 1 and not health.dead, "disabling at low health cannot cause defeat"):
 		return
+	# Hidden missing hearts are remembered, so toggling the cap never heals.
+	settings.set_assist("extra_hearts", true)
+	if not check(health.hearts == 1 and health.max_hearts == 5, "re-enabling after a clamped disable does not heal (1/5)"):
+		return
+	health.hearts = 2
+	settings.set_assist("extra_hearts", false)
+	settings.set_assist("extra_hearts", true)
+	if not check(health.hearts == 2 and health.max_hearts == 5, "off/on round trip from 2/5 does not heal"):
+		return
+	health.hearts = 1
+	settings.set_assist("extra_hearts", false)
 	health.invulnerability_left = 0.0
 	health.take_damage(body.global_position)
 	pause_menu.pause()
@@ -109,12 +130,18 @@ func run() -> void:
 	await frames(60)
 	level.get_node("Collectibles/BlueKey")._on_body_entered(body)
 	var score_before := Progress.score
-	level.player_health.hearts = 4
-	level.player_health.health_changed.emit(4, 5)
+	# Hidden missing hearts survive the real exit: 1/5 -> 1/3 -> door -> 1/5.
+	level.player_health.hearts = 1
+	level.player_health.health_changed.emit(1, 5)
+	settings.set_assist("extra_hearts", false)
 	level._open_door()
 	await frames(190)
 	level = current_scene
-	if not check(level.level_number == 2 and level.player_health.hearts == 4 and level.player_health.max_hearts == 5 and Progress.score == score_before and Progress.completed_levels.get(1, false), "assists retain rewards, health and completion across the real exit"):
+	settings.set_assist("extra_hearts", true)
+	if not check(level.level_number == 2 and level.player_health.hearts == 1 and level.player_health.max_hearts == 5 and Progress.score == score_before and Progress.completed_levels.get(1, false), "assists retain rewards, hidden missing hearts and completion across the real exit"):
+		return
+	level.player_health.heal(3)
+	if not check(level.player_health.hearts == 4 and Progress.hearts == 4, "level two heals normally after the transition"):
 		return
 	# A synchronous setting change must not overwrite a pending retry's full
 	# health with the old scene's remaining hearts before deferred replacement.

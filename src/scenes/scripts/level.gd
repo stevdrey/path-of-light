@@ -36,7 +36,6 @@ func _ready() -> void:
 	add_child(pause_menu)
 	if level_number == 1:
 		Progress.reset_attempt()
-		Progress.hearts = game_settings.get_max_hearts()
 	else:
 		movement.use_player_control()
 		control_label = "Jugador"
@@ -58,6 +57,7 @@ func _ready() -> void:
 	$Character.add_child(player_health)
 	player_health.hearts = clampi(Progress.hearts, 1, player_health.max_hearts)
 	Progress.hearts = player_health.hearts
+	player_health.hidden_missing = Progress.hidden_missing
 	player_health.health_changed.connect(_on_health_changed)
 	player_health.depleted.connect(_on_health_depleted)
 	for item in $Collectibles.get_children():
@@ -126,7 +126,9 @@ func _input(event: InputEvent) -> void:
 			_open_door()
 
 func _on_health_changed(current: int, maximum: int) -> void:
-	Progress.hearts = game_settings.get_max_hearts() if restarting else current
+	# A pending retry keeps its full configured health and clears hidden hearts.
+	Progress.hearts = Progress.configured_max_hearts() if restarting else current
+	Progress.hidden_missing = 0 if restarting else player_health.hidden_missing
 	collection_hud.set_health(current, maximum)
 
 func _on_assists_changed() -> void:
@@ -144,7 +146,6 @@ func _restart_attempt() -> void:
 	restarting = true
 	movement.input_locked = true
 	Progress.restore_inventory(entry_progress)
-	Progress.hearts = game_settings.get_max_hearts()
 	# Input/physics callbacks must finish before their scene is removed.
 	call_deferred("_finish_restart", previous_inventory, false)
 
@@ -169,6 +170,7 @@ func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
 	if not replay:
 		Progress.restore_inventory(previous_inventory)
 		Progress.hearts = player_health.hearts
+		Progress.hidden_missing = player_health.hidden_missing
 	restarting = false
 	completed = replay
 	transitioning = replay
