@@ -24,8 +24,15 @@ func set_inventory(diamonds: Array[int], has_key: bool, key_kind: int, present: 
 
 func set_health(current: int, maximum: int) -> void:
 	var atlas_source: Texture2D = preload("res://assets/images/platformPack_tilesheet.png")
+	while hearts_row.get_child_count() < maximum:
+		var icon := TextureRect.new()
+		icon.custom_minimum_size = Vector2(30, 30)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		hearts_row.add_child(icon)
 	for i in range(hearts_row.get_child_count()):
 		var icon := hearts_row.get_child(i) as TextureRect
+		icon.custom_minimum_size = Vector2(30, 30) if maximum > 3 else Vector2(40, 40)
 		icon.visible = i < maximum
 		var heart := AtlasTexture.new()
 		heart.atlas = atlas_source

@@ -6,3 +6,4 @@ An ADR captures a consequential decision, alternatives, tradeoffs and evidence. 
 - [ADR 0002: local co-op ownership](0002-coop-ownership.md) — proposed.
 - [ADR 0003: asset import metadata](0003-import-metadata.md) — proposed.
 - [ADR 0004: solo attempt recovery](0004-attempt-recovery.md) — accepted for the current in-memory prototype; disk saves remain proposed.
+- [ADR 0005: configurable solo assists](0005-configurable-assists.md) — proposed balance/contract, implemented in the two-level prototype for evaluation.

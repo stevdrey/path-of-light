@@ -12,6 +12,7 @@ const SOUND_EFFECTS := preload("res://src/audio/scripts/sound_effects.gd")
 const DOOR_OPEN_SOUND := preload("res://assets/sounds/sfx/door_open_sfx_engine.wav")
 const TILE_TEXTURE := preload("res://assets/images/platformPack_tilesheet.png")
 
+@onready var game_settings: Node = get_node("/root/GameSettings")
 @onready var movement: MovementComponent = $Character/MovementComponent
 @onready var status: Label = $CanvasLayer/Instructions/Status
 var control_label := "Automático"
@@ -35,6 +36,7 @@ func _ready() -> void:
 	add_child(pause_menu)
 	if level_number == 1:
 		Progress.reset_attempt()
+		Progress.hearts = game_settings.get_max_hearts()
 	else:
 		movement.use_player_control()
 		control_label = "Jugador"
@@ -52,8 +54,10 @@ func _ready() -> void:
 	key_sound.stream = preload("res://assets/sounds/sfx/collect_key.mp3")
 	add_child(key_sound)
 	player_health = HEALTH_SCENE.instantiate()
+	player_health.max_hearts = game_settings.get_max_hearts()
 	$Character.add_child(player_health)
 	player_health.hearts = clampi(Progress.hearts, 1, player_health.max_hearts)
+	Progress.hearts = player_health.hearts
 	player_health.health_changed.connect(_on_health_changed)
 	player_health.depleted.connect(_on_health_depleted)
 	for item in $Collectibles.get_children():
@@ -70,6 +74,7 @@ func _ready() -> void:
 		collection_hud = HUD_SCENE.instantiate()
 		add_child(collection_hud)
 	collection_hud.set_health(player_health.hearts, player_health.max_hearts)
+	game_settings.assists_changed.connect(_on_assists_changed)
 	if level_number == 1:
 		_setup_exit()
 	else:
@@ -121,8 +126,12 @@ func _input(event: InputEvent) -> void:
 			_open_door()
 
 func _on_health_changed(current: int, maximum: int) -> void:
-	Progress.hearts = current
+	Progress.hearts = game_settings.get_max_hearts() if restarting else current
 	collection_hud.set_health(current, maximum)
+
+func _on_assists_changed() -> void:
+	if player_health.max_hearts != game_settings.get_max_hearts():
+		player_health.set_max_hearts(game_settings.get_max_hearts())
 
 func _on_health_depleted() -> void:
 	_restart_attempt()
@@ -135,6 +144,7 @@ func _restart_attempt() -> void:
 	restarting = true
 	movement.input_locked = true
 	Progress.restore_inventory(entry_progress)
+	Progress.hearts = game_settings.get_max_hearts()
 	# Input/physics callbacks must finish before their scene is removed.
 	call_deferred("_finish_restart", previous_inventory, false)
 

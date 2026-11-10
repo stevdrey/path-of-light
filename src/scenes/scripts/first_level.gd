@@ -18,9 +18,13 @@ var vortex_material: ShaderMaterial
 var checkpoint := Vector2(100, 548)
 var checkpoint_index := 0
 @export var safe_checkpoints: Array[Vector2] = [Vector2(2190, 548), Vector2(3210, 548), Vector2(4352, 548), Vector2(5540, 548), Vector2(8500, 548), Vector2(11000, 548), Vector2(13000, 548)]
+@export var assist_checkpoints: Array[Vector2] = [Vector2(1100, 548), Vector2(2700, 548), Vector2(3990, 548), Vector2(4900, 548), Vector2(7200, 548), Vector2(9500, 548), Vector2(12000, 548)]
+var active_checkpoints: Array[Vector2] = []
 
 func _ready() -> void:
 	super._ready()
+	_refresh_checkpoints()
+	game_settings.assists_changed.connect(_refresh_checkpoints)
 	movement.use_player_control()
 	control_label = "Jugador"
 	if level_number == 1 and door != null:
@@ -95,7 +99,7 @@ func _physics_process(_delta: float) -> void:
 	if player_health.dead or transitioning or portal_transitioning or movement.input_locked:
 		return
 	if player.global_position.y > (SECRET_FALL_Y if in_secret else FALL_Y):
-		# A fall always costs a heart, even if the player was already flashing.
+		# Standard falls bypass hit immunity; the assist suppresses damage only.
 		player_health.take_fall_damage()
 		in_secret = false
 		player.global_position = checkpoint
@@ -104,10 +108,22 @@ func _physics_process(_delta: float) -> void:
 		$Character/LevelCamera.reset_smoothing()
 		return
 	if not in_secret and player.is_on_floor():
-		for i in range(safe_checkpoints.size()):
-			if i >= checkpoint_index and _is_at_checkpoint(player.global_position, safe_checkpoints[i]):
-				checkpoint = safe_checkpoints[i]
+		for i in range(active_checkpoints.size()):
+			if i >= checkpoint_index and _is_at_checkpoint(player.global_position, active_checkpoints[i]):
+				checkpoint = active_checkpoints[i]
 				checkpoint_index = i + 1
+
+func _refresh_checkpoints() -> void:
+	active_checkpoints = safe_checkpoints.duplicate()
+	if game_settings.is_assist_enabled("frequent_checkpoints"):
+		active_checkpoints.append_array(assist_checkpoints)
+	active_checkpoints.sort_custom(func(a: Vector2, b: Vector2): return a.x < b.x)
+	# Changing frequency retains the last visited point without granting an
+	# unvisited point or making backtracking move recovery backwards.
+	checkpoint_index = 0
+	for point in active_checkpoints:
+		if point.x <= checkpoint.x:
+			checkpoint_index += 1
 
 func _is_at_checkpoint(at: Vector2, point: Vector2) -> bool:
 	var ahead := at.x - point.x

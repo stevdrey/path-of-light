@@ -1,8 +1,12 @@
 extends Node
 
+signal assists_changed
+
 const FILE := "user://settings.cfg"
 const ACTIONS := ["move_left", "move_right", "jump", "crouch", "interact_up", "restart_demo"]
+const ASSISTS := ["extra_hearts", "frequent_checkpoints", "no_fall_damage"]
 var defaults := {}
+var assists := {"extra_hearts": false, "frequent_checkpoints": false, "no_fall_damage": false}
 
 func _ready() -> void:
 	# Keep independent copies so restoring defaults also restores alternate keys.
@@ -11,12 +15,33 @@ func _ready() -> void:
 	var config := ConfigFile.new()
 	if config.load(FILE) != OK:
 		return
+	load_assists(config)
 	for bus_name in ["Music", "SFX"]:
 		set_volume(bus_name, clampf(float(config.get_value("audio", bus_name, get_volume(bus_name))), 0.0, 1.0), false)
 	for action in ACTIONS:
 		var code := int(config.get_value("controls", action, 0))
 		if code > 0:
 			bind_key(action, code, false)
+
+func load_assists(config: ConfigFile) -> void:
+	for key in ASSISTS:
+		var value: Variant = config.get_value("assists", key, false)
+		# Old files and malformed entries keep the standard recovery rules.
+		assists[key] = value if value is bool else false
+	assists_changed.emit()
+
+func is_assist_enabled(key: String) -> bool:
+	return assists.get(key, false)
+
+func get_max_hearts() -> int:
+	return 5 if is_assist_enabled("extra_hearts") else 3
+
+func set_assist(key: String, enabled: bool) -> void:
+	if not key in ASSISTS or assists[key] == enabled:
+		return
+	assists[key] = enabled
+	assists_changed.emit()
+	save_settings()
 
 func get_volume(bus_name: String) -> float:
 	var index := AudioServer.get_bus_index(bus_name)
@@ -46,6 +71,8 @@ func restore_controls() -> void:
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
+	for key in ASSISTS:
+		config.set_value("assists", key, assists[key])
 	for bus_name in ["Music", "SFX"]:
 		config.set_value("audio", bus_name, get_volume(bus_name))
 	for action in ACTIONS:

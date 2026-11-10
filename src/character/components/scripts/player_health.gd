@@ -2,10 +2,11 @@ extends Node2D
 
 signal health_changed(current: int, maximum: int)
 signal depleted
-@export_range(1, 3, 1) var max_hearts := 3
+@export_range(1, 5, 1) var max_hearts := 3
 @export_range(0.5, 5.0, 0.1) var invulnerability_duration := 2.0
 @export var hurt_duration := 0.3
 @export var defeat_duration := 1.3
+@onready var game_settings: Node = get_node("/root/GameSettings")
 @onready var body: CharacterBody2D = get_parent()
 @onready var movement: MovementComponent = body.get_node("MovementComponent")
 @onready var original: AnimatedSprite2D = body.get_node("AnimatedSprite2D")
@@ -51,10 +52,20 @@ func heal(amount: int = 1) -> bool:
 	health_changed.emit(hearts, max_hearts)
 	return true
 
+func set_max_hearts(maximum: int) -> void:
+	# Preserve missing hearts. Disabling the assist cannot cause defeat, and
+	# changing settings during defeat cannot resurrect the player.
+	var missing := max_hearts - hearts
+	max_hearts = maximum
+	hearts = 0 if dead else clampi(max_hearts - missing, 1, max_hearts)
+	health_changed.emit(hearts, max_hearts)
+
 func take_fall_damage() -> void:
 	take_damage(body.global_position, true)
 
 func take_damage(source: Vector2, is_fall: bool = false) -> bool:
+	if is_fall and game_settings.is_assist_enabled("no_fall_damage"):
+		return false
 	if dead or (invulnerability_left > 0.0 and not is_fall) or movement.input_locked:
 		return false
 	hearts -= 1
