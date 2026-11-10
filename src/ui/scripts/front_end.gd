@@ -176,6 +176,8 @@ func _show_splash() -> void:
 	main_panel.get_child(2).grab_focus()
 
 func _play() -> void:
+	# JUGAR starts at level one within the same session; preserve discoveries
+	# and completions. A future new-campaign action must call GameProgress.reset().
 	BackgroundMusic.play_game()
 	get_tree().change_scene_to_file(FIRST_LEVEL)
 

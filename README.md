@@ -41,6 +41,8 @@ Controls and volume can be adjusted from the game menu.
 
 A hit or fall costs one heart. Falls return to the last visited safe point while keeping the current attempt's items. Losing all hearts or pressing **R** restarts the current level from its beginning with three hearts, restores its pickups and crates, and discards the attempt's inventory changes. Totals carried into level two are retained. On the final completion screen, **R** starts again from level one. Recorded secret visits and completed levels survive retries in memory; closing the application still loses these records. Campaign disk saves remain separate planned work.
 
+Returning to the menu and selecting **JUGAR** starts another attempt from level one and keeps those session records. There is currently no destructive new-campaign menu action. If a restart cannot load its scene, the game reports the error and leaves retry and pause available.
+
 See the [attempt recovery evidence](docs/attempt-recovery-evidence.md) for checks and remaining playtest limitations.
 
 ## Import files

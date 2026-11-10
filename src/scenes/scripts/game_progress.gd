@@ -6,8 +6,10 @@ static var score := 0
 static var diamonds := 0
 static var diamond_counts: Array[int] = [0, 0, 0, 0]
 static var keys: Dictionary = {}
-# Session records have a different lifetime from attempt inventory. Disk saves
-# and migration remain E03-01; retrying a level must never clear these records.
+# GameProgress owns process-session records, including menu -> JUGAR and replay.
+# JUGAR starts another attempt, not a destructive new campaign. No current UI
+# offers a full reset; reset() is the explicit API for a future fresh campaign.
+# Disk saves and migration remain E03-01.
 static var recorded_secrets: Dictionary = {}
 static var completed_levels: Dictionary = {}
 

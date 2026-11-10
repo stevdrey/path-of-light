@@ -130,19 +130,42 @@ func _on_health_depleted() -> void:
 func _restart_attempt() -> void:
 	if transitioning:
 		return
+	var previous_inventory := Progress.snapshot_inventory()
 	transitioning = true
 	restarting = true
 	movement.input_locked = true
 	Progress.restore_inventory(entry_progress)
 	# Input/physics callbacks must finish before their scene is removed.
-	get_tree().call_deferred("reload_current_scene")
+	call_deferred("_finish_restart", previous_inventory, false)
 
 # The final completion screen offers a new playthrough, not a level retry.
 func _replay_from_start() -> void:
 	completed = false
 	restarting = true
 	movement.input_locked = true
-	get_tree().call_deferred("change_scene_to_file", FIRST_LEVEL)
+	call_deferred("_finish_restart", {}, true)
+
+func _request_restart_scene(replay: bool) -> Error:
+	if replay:
+		return get_tree().change_scene_to_file(FIRST_LEVEL)
+	return get_tree().reload_current_scene()
+
+func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
+	var error := _request_restart_scene(replay)
+	if error == OK:
+		return
+	# The old scene is still live. Keep its inventory consistent with consumed
+	# pickups, and allow another restart or a return to the menu through pause.
+	if not replay:
+		Progress.restore_inventory(previous_inventory)
+		Progress.hearts = player_health.hearts
+	restarting = false
+	completed = replay
+	transitioning = replay
+	movement.input_locked = replay
+	_update_status()
+	status.text = "No se pudo reiniciar. Reintenta o vuelve al menú desde pausa."
+	push_warning("Level restart failed (error %d, replay=%s). Retry and pause remain available." % [error, replay])
 
 func _on_guard_defeated(guard: Node2D) -> void:
 	call_deferred("_spawn_guard_key", guard.global_position + Vector2(0, -52))
@@ -162,9 +185,12 @@ func _spawn_guard_key(at: Vector2) -> void:
 		key.monitoring = true
 
 func _show_completion() -> void:
-	Progress.completed_levels[level_number] = true
+	_record_level_completion()
 	completed = true
 	add_child(COMPLETION_SCENE.instantiate())
+
+func _record_level_completion() -> void:
+	Progress.completed_levels[level_number] = true
 
 func _on_control_changed(label: String) -> void:
 	control_label = label
@@ -243,6 +269,6 @@ func _open_door() -> void:
 	else:
 		tween.tween_property(fade, "modulate:a", 1.0, 0.45)
 		tween.tween_callback(func():
-			Progress.completed_levels[level_number] = true
+			_record_level_completion()
 			get_tree().change_scene_to_file(door.next_level)
 		)
