@@ -18,6 +18,7 @@ var control_label := "Automático"
 var door: Area2D
 var transitioning := false
 var completed := false
+var restarting := false
 var fade: ColorRect
 @export var level_number := 1
 var gem_sound: AudioStreamPlayer
@@ -33,11 +34,11 @@ func _ready() -> void:
 	pause_menu.set_script(PAUSE_MENU)
 	add_child(pause_menu)
 	if level_number == 1:
-		Progress.reset()
+		Progress.reset_attempt()
 	else:
 		movement.use_player_control()
 		control_label = "Jugador"
-	entry_progress = {"score": Progress.score, "diamonds": Progress.diamonds, "counts": Progress.diamond_counts.duplicate(), "keys": Progress.keys.duplicate(true)}
+	entry_progress = Progress.snapshot_inventory()
 	$Character.add_to_group("player")
 	gem_sound = AudioStreamPlayer.new()
 	gem_sound.bus = &"SFX"
@@ -102,9 +103,12 @@ func _setup_exit() -> void:
 		key.collected.connect(_on_collected)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("restart_demo") and (not transitioning or completed):
+	if event.is_action_pressed("restart_demo") and not event.is_echo() and (not transitioning or completed):
 		get_viewport().set_input_as_handled()
-		get_tree().change_scene_to_file(FIRST_LEVEL)
+		if completed:
+			_replay_from_start()
+		else:
+			_restart_attempt()
 		return
 	if transitioning or player_health.dead or movement.input_locked or movement.damage_locked:
 		return
@@ -121,12 +125,47 @@ func _on_health_changed(current: int, maximum: int) -> void:
 	collection_hud.set_health(current, maximum)
 
 func _on_health_depleted() -> void:
-	Progress.hearts = 3
-	Progress.score = entry_progress.score
-	Progress.diamonds = entry_progress.diamonds
-	Progress.diamond_counts.assign(entry_progress.counts)
-	Progress.keys = entry_progress.keys.duplicate(true)
-	get_tree().reload_current_scene()
+	_restart_attempt()
+
+func _restart_attempt() -> void:
+	if transitioning:
+		return
+	var previous_inventory := Progress.snapshot_inventory()
+	transitioning = true
+	restarting = true
+	movement.input_locked = true
+	Progress.restore_inventory(entry_progress)
+	# Input/physics callbacks must finish before their scene is removed.
+	call_deferred("_finish_restart", previous_inventory, false)
+
+# The final completion screen offers a new playthrough, not a level retry.
+func _replay_from_start() -> void:
+	completed = false
+	restarting = true
+	movement.input_locked = true
+	call_deferred("_finish_restart", {}, true)
+
+func _request_restart_scene(replay: bool) -> Error:
+	if replay:
+		return get_tree().change_scene_to_file(FIRST_LEVEL)
+	return get_tree().reload_current_scene()
+
+func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
+	var error := _request_restart_scene(replay)
+	if error == OK:
+		return
+	# The old scene is still live. Keep its inventory consistent with consumed
+	# pickups, and allow another restart or a return to the menu through pause.
+	if not replay:
+		Progress.restore_inventory(previous_inventory)
+		Progress.hearts = player_health.hearts
+	restarting = false
+	completed = replay
+	transitioning = replay
+	movement.input_locked = replay
+	_update_status()
+	status.text = "No se pudo reiniciar. Reintenta o vuelve al menú desde pausa."
+	push_warning("Level restart failed (error %d, replay=%s). Retry and pause remain available." % [error, replay])
 
 func _on_guard_defeated(guard: Node2D) -> void:
 	call_deferred("_spawn_guard_key", guard.global_position + Vector2(0, -52))
@@ -146,14 +185,20 @@ func _spawn_guard_key(at: Vector2) -> void:
 		key.monitoring = true
 
 func _show_completion() -> void:
+	_record_level_completion()
 	completed = true
 	add_child(COMPLETION_SCENE.instantiate())
+
+func _record_level_completion() -> void:
+	Progress.completed_levels[level_number] = true
 
 func _on_control_changed(label: String) -> void:
 	control_label = label
 	_update_status()
 
 func _on_collected(kind: int, points: int) -> void:
+	if player_health.dead or restarting:
+		return
 	Progress.score += points
 	if kind >= CollectibleItem.Kind.BLUE_DIAMOND and kind <= CollectibleItem.Kind.ORANGE_DIAMOND:
 		gem_sound.play()
@@ -223,4 +268,7 @@ func _open_door() -> void:
 		tween.tween_callback(_show_completion)
 	else:
 		tween.tween_property(fade, "modulate:a", 1.0, 0.45)
-		tween.tween_callback(func(): get_tree().change_scene_to_file(door.next_level))
+		tween.tween_callback(func():
+			_record_level_completion()
+			get_tree().change_scene_to_file(door.next_level)
+		)

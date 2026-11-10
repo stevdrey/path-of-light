@@ -51,8 +51,11 @@ func heal(amount: int = 1) -> bool:
 	health_changed.emit(hearts, max_hearts)
 	return true
 
-func take_damage(source: Vector2) -> bool:
-	if dead or invulnerability_left > 0.0 or movement.input_locked:
+func take_fall_damage() -> void:
+	take_damage(body.global_position, true)
+
+func take_damage(source: Vector2, is_fall: bool = false) -> bool:
+	if dead or (invulnerability_left > 0.0 and not is_fall) or movement.input_locked:
 		return false
 	hearts -= 1
 	invulnerability_left = invulnerability_duration
@@ -71,7 +74,7 @@ func take_damage(source: Vector2) -> bool:
 		movement.damage_locked = true
 		sound.stream = DEFEAT_SOUND
 		sound.play()
-		await get_tree().create_timer(defeat_duration).timeout
+		await get_tree().create_timer(defeat_duration, false).timeout
 		depleted.emit()
 	else:
 		sound.stream = HURT_SOUND

@@ -1,6 +1,13 @@
 extends "res://src/scenes/scripts/level.gd"
 
 const FALL_Y := 820.0
+# The existing bonus room is below the main route (floor around y=1220).
+const SECRET_FALL_Y := 1500.0
+# The window ahead is wider than one jump (about 189 px), so jumping past a
+# safe point still lands inside it.
+const CHECKPOINT_BEHIND := 32.0
+const CHECKPOINT_AHEAD := 220.0
+const CHECKPOINT_HEIGHT := 32.0
 const PORTAL_VORTEX := preload("res://src/scenes/shaders/portal_vortex.gdshader")
 const PORTAL_SOUND := preload("res://assets/sounds/sfx/portal_whoosh_sfx_engine.wav")
 @export_range(-40.0, 0.0, 1.0) var portal_sound_volume_db := -8.0
@@ -10,7 +17,7 @@ var vortex_overlay: ColorRect
 var vortex_material: ShaderMaterial
 var checkpoint := Vector2(100, 548)
 var checkpoint_index := 0
-@export var safe_checkpoints: Array[Vector2] = [Vector2(2190, 548), Vector2(3210, 548), Vector2(4352, 548), Vector2(5500, 548), Vector2(8500, 548), Vector2(11000, 548), Vector2(13000, 548)]
+@export var safe_checkpoints: Array[Vector2] = [Vector2(2190, 548), Vector2(3210, 548), Vector2(4352, 548), Vector2(5540, 548), Vector2(8500, 548), Vector2(11000, 548), Vector2(13000, 548)]
 
 func _ready() -> void:
 	super._ready()
@@ -68,6 +75,8 @@ func _use_portal(portal: Area2D) -> void:
 	transition.parallel().tween_property(fade, "modulate:a", 1.0, 0.18).set_delay(0.20)
 	await transition.finished
 	in_secret = portal.enters_bonus
+	if in_secret:
+		Progress.recorded_secrets[level_number] = true
 	$Character.global_position = portal.destination
 	$Character.velocity = Vector2.ZERO
 	$Character/LevelCamera.reset_smoothing()
@@ -83,19 +92,23 @@ func _use_portal(portal: Area2D) -> void:
 
 func _physics_process(_delta: float) -> void:
 	var player: CharacterBody2D = $Character
-	if player_health.dead or transitioning or portal_transitioning:
+	if player_health.dead or transitioning or portal_transitioning or movement.input_locked:
 		return
-	if in_secret:
-		return
-	if player.global_position.y > FALL_Y:
+	if player.global_position.y > (SECRET_FALL_Y if in_secret else FALL_Y):
 		# A fall always costs a heart, even if the player was already flashing.
-		player_health.invulnerability_left = 0.0
-		player_health.take_damage(player.global_position)
+		player_health.take_fall_damage()
+		in_secret = false
 		player.global_position = checkpoint
 		player.velocity = Vector2.ZERO
+		movement.reset_after_relocation()
+		$Character/LevelCamera.reset_smoothing()
 		return
-	if player.is_on_floor() and player.global_position.y > 520.0 and player.global_position.y < 570.0:
+	if not in_secret and player.is_on_floor():
 		for i in range(safe_checkpoints.size()):
-			if i >= checkpoint_index and player.global_position.x >= safe_checkpoints[i].x:
+			if i >= checkpoint_index and _is_at_checkpoint(player.global_position, safe_checkpoints[i]):
 				checkpoint = safe_checkpoints[i]
 				checkpoint_index = i + 1
+
+func _is_at_checkpoint(at: Vector2, point: Vector2) -> bool:
+	var ahead := at.x - point.x
+	return ahead >= -CHECKPOINT_BEHIND and ahead <= CHECKPOINT_AHEAD and absf(at.y - point.y) <= CHECKPOINT_HEIGHT
