@@ -37,6 +37,12 @@ The repository includes the `godot_mcp` plugin, which is enabled in the project 
 
 Controls and volume can be adjusted from the game menu.
 
+## Recovery in the solo prototype
+
+A hit or fall costs one heart. Falls return to the last visited safe point while keeping the current attempt's items. Losing all hearts or pressing **R** restarts the current level from its beginning with three hearts, restores its pickups and crates, and discards the attempt's inventory changes. Totals carried into level two are retained. Recorded secret visits and completed levels survive retries in memory; closing the application still loses these records. Campaign disk saves remain separate planned work.
+
+See the [attempt recovery evidence](docs/attempt-recovery-evidence.md) for checks and remaining playtest limitations.
+
 ## Import files
 
 By project choice, Git ignores `*.import` files. Godot regenerates them when importing assets, but they also store identifiers and import settings: a fresh copy may use default values and differ from the original configuration. The [Godot documentation recommends versioning these files](https://docs.godotengine.org/en/4.7/tutorials/assets_pipeline/import_process.html#files-generated). Check the results when changing import settings or working from another copy.

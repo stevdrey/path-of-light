@@ -2,7 +2,6 @@ extends Node2D
 
 const PAUSE_MENU := preload("res://src/ui/scripts/pause_menu.gd")
 const Progress = preload("res://src/scenes/scripts/game_progress.gd")
-const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
 const DOOR_SCENE := preload("res://src/scenes/level_door.tscn")
 const ITEM_SCENE := preload("res://src/collectibles/collectible.tscn")
 const HEALTH_SCENE := preload("res://src/character/components/player_health.tscn")
@@ -33,11 +32,11 @@ func _ready() -> void:
 	pause_menu.set_script(PAUSE_MENU)
 	add_child(pause_menu)
 	if level_number == 1:
-		Progress.reset()
+		Progress.reset_attempt()
 	else:
 		movement.use_player_control()
 		control_label = "Jugador"
-	entry_progress = {"score": Progress.score, "diamonds": Progress.diamonds, "counts": Progress.diamond_counts.duplicate(), "keys": Progress.keys.duplicate(true)}
+	entry_progress = Progress.snapshot_inventory()
 	$Character.add_to_group("player")
 	gem_sound = AudioStreamPlayer.new()
 	gem_sound.bus = &"SFX"
@@ -102,9 +101,9 @@ func _setup_exit() -> void:
 		key.collected.connect(_on_collected)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("restart_demo") and (not transitioning or completed):
+	if event.is_action_pressed("restart_demo") and not event.is_echo() and (not transitioning or completed):
 		get_viewport().set_input_as_handled()
-		get_tree().change_scene_to_file(FIRST_LEVEL)
+		_restart_attempt()
 		return
 	if transitioning or player_health.dead or movement.input_locked or movement.damage_locked:
 		return
@@ -121,12 +120,17 @@ func _on_health_changed(current: int, maximum: int) -> void:
 	collection_hud.set_health(current, maximum)
 
 func _on_health_depleted() -> void:
-	Progress.hearts = 3
-	Progress.score = entry_progress.score
-	Progress.diamonds = entry_progress.diamonds
-	Progress.diamond_counts.assign(entry_progress.counts)
-	Progress.keys = entry_progress.keys.duplicate(true)
-	get_tree().reload_current_scene()
+	_restart_attempt()
+
+func _restart_attempt() -> void:
+	if transitioning and not completed:
+		return
+	transitioning = true
+	completed = false
+	movement.input_locked = true
+	Progress.restore_inventory(entry_progress)
+	# Input/physics callbacks must finish before their scene is removed.
+	get_tree().call_deferred("reload_current_scene")
 
 func _on_guard_defeated(guard: Node2D) -> void:
 	call_deferred("_spawn_guard_key", guard.global_position + Vector2(0, -52))
@@ -146,6 +150,7 @@ func _spawn_guard_key(at: Vector2) -> void:
 		key.monitoring = true
 
 func _show_completion() -> void:
+	Progress.completed_levels[level_number] = true
 	completed = true
 	add_child(COMPLETION_SCENE.instantiate())
 
@@ -154,6 +159,8 @@ func _on_control_changed(label: String) -> void:
 	_update_status()
 
 func _on_collected(kind: int, points: int) -> void:
+	if player_health.dead or transitioning:
+		return
 	Progress.score += points
 	if kind >= CollectibleItem.Kind.BLUE_DIAMOND and kind <= CollectibleItem.Kind.ORANGE_DIAMOND:
 		gem_sound.play()
@@ -223,4 +230,7 @@ func _open_door() -> void:
 		tween.tween_callback(_show_completion)
 	else:
 		tween.tween_property(fade, "modulate:a", 1.0, 0.45)
-		tween.tween_callback(func(): get_tree().change_scene_to_file(door.next_level))
+		tween.tween_callback(func():
+			Progress.completed_levels[level_number] = true
+			get_tree().change_scene_to_file(door.next_level)
+		)

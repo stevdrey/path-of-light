@@ -53,6 +53,17 @@ func use_player_control() -> void:
 func use_scripted_control() -> void:
 	set_control(scripted_control)
 
+func reset_after_relocation() -> void:
+	coyote_left = 0.0
+	jump_buffer_left = 0.0
+	independent_jump_pressed = false
+	suppress_jump_once = false
+	is_crouching = false
+	climbing = false
+	nearby_ladders.clear()
+	ladder_contacts = 0
+	body.set_collision_mask_value(2, true)
+
 func _input(event: InputEvent) -> void:
 	if not event.is_echo() and event.is_action_pressed("jump") and not event.is_action_pressed("interact_up"):
 		independent_jump_pressed = true

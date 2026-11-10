@@ -8,4 +8,6 @@ The [existing-level measurement baseline](level-measurement-baseline.md) records
 
 The [import and integration-test baseline](import-test-baseline.md) records clean-import comparisons, commands and test results for E01-03.
 
+The [attempt recovery evidence](attempt-recovery-evidence.md) records solo falls, safe points, depletion, inventory resets and session-record retention for E02-02.
+
 All project documentation, issues, pull requests and agent instructions are in English. Player-facing language is a separate design decision: the GDD starts with Spanish.
