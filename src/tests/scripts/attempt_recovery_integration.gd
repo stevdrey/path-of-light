@@ -132,9 +132,20 @@ func run() -> void:
 		restart.action = &"restart_demo"
 		restart.pressed = true
 		level._input(restart)
+		var during_restart := Progress.snapshot_inventory()
+		level._on_collected(0, 50)
+		if not check(Progress.snapshot_inventory() == during_restart, "pickups cannot change inventory once restart is pending"):
+			return
 		level._input(restart)
 		await frames(5)
 		if not check(current_scene != level and current_scene.scene_file_path == PATHS[number - 1] and Progress.snapshot_inventory() == baseline and Progress.completed_levels.has(7) and Progress.recorded_secrets.has(7), "manual restart is idempotent and keeps current level and records"):
+			return
+		# A pickup reached during the door animation still counts toward the carried total.
+		level = current_scene
+		level._open_door()
+		var score_at_exit := Progress.score
+		level._on_collected(0, 7)
+		if not check(level.transitioning and Progress.score == score_at_exit + 7, "pickup during door exit is counted"):
 			return
 		print("PASS: level ", number, " fall, damage, healing, depletion, inventory, records and manual restart")
 		current_scene.free()

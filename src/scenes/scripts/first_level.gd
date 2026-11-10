@@ -3,7 +3,11 @@ extends "res://src/scenes/scripts/level.gd"
 const FALL_Y := 820.0
 # The existing bonus room is below the main route (floor around y=1220).
 const SECRET_FALL_Y := 1500.0
-const CHECKPOINT_RADIUS := 32.0
+# The window ahead is wider than one jump (about 189 px), so jumping past a
+# safe point still lands inside it.
+const CHECKPOINT_BEHIND := 32.0
+const CHECKPOINT_AHEAD := 220.0
+const CHECKPOINT_HEIGHT := 32.0
 const PORTAL_VORTEX := preload("res://src/scenes/shaders/portal_vortex.gdshader")
 const PORTAL_SOUND := preload("res://assets/sounds/sfx/portal_whoosh_sfx_engine.wav")
 @export_range(-40.0, 0.0, 1.0) var portal_sound_volume_db := -8.0
@@ -101,6 +105,10 @@ func _physics_process(_delta: float) -> void:
 		return
 	if not in_secret and player.is_on_floor():
 		for i in range(safe_checkpoints.size()):
-			if i >= checkpoint_index and player.global_position.distance_to(safe_checkpoints[i]) <= CHECKPOINT_RADIUS:
+			if i >= checkpoint_index and _is_at_checkpoint(player.global_position, safe_checkpoints[i]):
 				checkpoint = safe_checkpoints[i]
 				checkpoint_index = i + 1
+
+func _is_at_checkpoint(at: Vector2, point: Vector2) -> bool:
+	var ahead := at.x - point.x
+	return ahead >= -CHECKPOINT_BEHIND and ahead <= CHECKPOINT_AHEAD and absf(at.y - point.y) <= CHECKPOINT_HEIGHT

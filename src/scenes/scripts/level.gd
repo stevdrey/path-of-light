@@ -2,6 +2,7 @@ extends Node2D
 
 const PAUSE_MENU := preload("res://src/ui/scripts/pause_menu.gd")
 const Progress = preload("res://src/scenes/scripts/game_progress.gd")
+const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
 const DOOR_SCENE := preload("res://src/scenes/level_door.tscn")
 const ITEM_SCENE := preload("res://src/collectibles/collectible.tscn")
 const HEALTH_SCENE := preload("res://src/character/components/player_health.tscn")
@@ -17,6 +18,7 @@ var control_label := "Automático"
 var door: Area2D
 var transitioning := false
 var completed := false
+var restarting := false
 var fade: ColorRect
 @export var level_number := 1
 var gem_sound: AudioStreamPlayer
@@ -103,7 +105,10 @@ func _setup_exit() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("restart_demo") and not event.is_echo() and (not transitioning or completed):
 		get_viewport().set_input_as_handled()
-		_restart_attempt()
+		if completed:
+			_replay_from_start()
+		else:
+			_restart_attempt()
 		return
 	if transitioning or player_health.dead or movement.input_locked or movement.damage_locked:
 		return
@@ -123,14 +128,21 @@ func _on_health_depleted() -> void:
 	_restart_attempt()
 
 func _restart_attempt() -> void:
-	if transitioning and not completed:
+	if transitioning:
 		return
 	transitioning = true
-	completed = false
+	restarting = true
 	movement.input_locked = true
 	Progress.restore_inventory(entry_progress)
 	# Input/physics callbacks must finish before their scene is removed.
 	get_tree().call_deferred("reload_current_scene")
+
+# The final completion screen offers a new playthrough, not a level retry.
+func _replay_from_start() -> void:
+	completed = false
+	restarting = true
+	movement.input_locked = true
+	get_tree().call_deferred("change_scene_to_file", FIRST_LEVEL)
 
 func _on_guard_defeated(guard: Node2D) -> void:
 	call_deferred("_spawn_guard_key", guard.global_position + Vector2(0, -52))
@@ -159,7 +171,7 @@ func _on_control_changed(label: String) -> void:
 	_update_status()
 
 func _on_collected(kind: int, points: int) -> void:
-	if player_health.dead or transitioning:
+	if player_health.dead or restarting:
 		return
 	Progress.score += points
 	if kind >= CollectibleItem.Kind.BLUE_DIAMOND and kind <= CollectibleItem.Kind.ORANGE_DIAMOND:

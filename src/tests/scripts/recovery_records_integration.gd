@@ -67,9 +67,14 @@ func run() -> void:
 	await frames(160)
 	if not check(level.completed and Progress.completed_levels.get(2, false), "final exit records completion"):
 		return
-	level._restart_attempt()
+	# The completion screen offers a new playthrough through the real input path.
+	var replay := InputEventAction.new()
+	replay.action = &"restart_demo"
+	replay.pressed = true
+	level._input(replay)
+	level._input(replay)
 	await frames(5)
-	if not check(current_scene != level and current_scene.level_number == 2 and Progress.completed_levels.get(1, false) and Progress.completed_levels.get(2, false), "retry after completion retains both records"):
+	if not check(current_scene != level and current_scene.level_number == 1 and Progress.score == 0 and Progress.hearts == 3 and Progress.completed_levels.get(1, false) and Progress.completed_levels.get(2, false), "R after final completion starts again from level one and retains both records"):
 		return
 	print("PASS: real secret and exit records, bonus falls, optional secret, depletion and retry retention")
 	current_scene.free()

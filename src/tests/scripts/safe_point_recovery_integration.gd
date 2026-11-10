@@ -1,5 +1,8 @@
 extends SceneTree
 
+# Beyond the old 32 px contact radius, on supported ground in both levels.
+const FORWARD_LANDING_OFFSET := 80.0
+
 func _initialize() -> void:
 	call_deferred("run")
 
@@ -19,11 +22,11 @@ func run() -> void:
 		root.add_child(level)
 		current_scene = level
 		var body: CharacterBody2D = level.get_node("Character")
-		# Merely landing beyond a point does not retroactively activate it.
-		body.global_position = level.safe_checkpoints.back() + Vector2(64, 0)
+		# Landing far beyond a point does not retroactively activate it.
+		body.global_position = level.safe_checkpoints.back() + Vector2(level.CHECKPOINT_AHEAD + 192.0, 0)
 		body.velocity = Vector2.ZERO
 		await frames(10)
-		if not check(level.checkpoint_index == 0, "skipped checkpoints remain inactive"):
+		if not check(body.is_on_floor() and level.checkpoint_index == 0, "skipped checkpoints remain inactive on supported ground"):
 			return
 		for index in range(level.safe_checkpoints.size()):
 			var point: Vector2 = level.safe_checkpoints[index]
@@ -50,6 +53,13 @@ func run() -> void:
 		body.velocity = Vector2.ZERO
 		await frames(10)
 		if not check(level.checkpoint == level.safe_checkpoints.back(), "backtracking retains latest checkpoint"):
+			return
+		# Landing just past a point falls inside its forward window.
+		level.checkpoint_index = 0
+		body.global_position = level.safe_checkpoints[0] + Vector2(FORWARD_LANDING_OFFSET, 0)
+		body.velocity = Vector2.ZERO
+		await frames(10)
+		if not check(body.is_on_floor() and level.checkpoint_index == 1 and level.checkpoint == level.safe_checkpoints[0], "landing just past a point activates it"):
 			return
 		print("PASS: all safe points and falls on ", path)
 		level.free()
