@@ -2,10 +2,14 @@ extends CanvasLayer
 
 const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const MAIN_MENU := "res://src/ui/front_end.tscn"
+const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 
 var overlay: Control
 var resume_button: Button
 var owns_pause := false
+var menu_column: VBoxContainer
+var assists_panel: VBoxContainer
+var assists_button: Button
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -39,8 +43,11 @@ func _build_menu() -> void:
 	panel.add_theme_stylebox_override("panel", style)
 	center.add_child(panel)
 	var column := VBoxContainer.new()
+	menu_column = column
 	column.add_theme_constant_override("separation", 12)
-	panel.add_child(column)
+	var holder := VBoxContainer.new()
+	panel.add_child(holder)
+	holder.add_child(column)
 	var title := Label.new()
 	title.text = "PAUSA"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -52,9 +59,24 @@ func _build_menu() -> void:
 	hint.add_theme_font_size_override("font_size", 15)
 	column.add_child(hint)
 	resume_button = _button(column, "REANUDAR", resume)
+	assists_button = _button(column, "AYUDAS", _open_assists)
 	_button(column, "VOLVER AL INICIO", _return_to_menu)
 	_button(column, "SALIR DEL JUEGO", _quit_game)
+	assists_panel = VBoxContainer.new()
+	assists_panel.set_script(ASSIST_OPTIONS)
+	holder.add_child(assists_panel)
+	assists_panel.closed.connect(_close_assists)
+	assists_panel.hide()
 	overlay.hide()
+
+func _open_assists() -> void:
+	menu_column.hide()
+	assists_panel.open()
+
+func _close_assists() -> void:
+	assists_panel.hide()
+	menu_column.show()
+	assists_button.grab_focus()
 
 func _button(parent: Control, caption: String, callback: Callable) -> Button:
 	var button := Button.new()
@@ -67,7 +89,9 @@ func _button(parent: Control, caption: String, callback: Callable) -> Button:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel") or event.is_echo():
 		return
-	if owns_pause:
+	if owns_pause and assists_panel.visible:
+		_close_assists()
+	elif owns_pause:
 		resume()
 	elif not get_tree().paused:
 		pause()
@@ -80,6 +104,8 @@ func pause() -> void:
 		return
 	owns_pause = true
 	get_tree().paused = true
+	assists_panel.hide()
+	menu_column.show()
 	overlay.show()
 	resume_button.grab_focus()
 

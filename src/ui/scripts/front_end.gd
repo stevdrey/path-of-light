@@ -4,9 +4,12 @@ const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const SPLASH_ART: Texture2D = preload("res://assets/images/ui/splash_art.png")
 const MENU_ART: Texture2D = preload("res://assets/images/ui/menu_background.png")
 const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
+const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 const ACTION_LABELS := {"move_left": "Mover a la izquierda", "move_right": "Mover a la derecha", "jump": "Saltar", "crouch": "Agacharse / bajar", "interact_up": "Subir / interactuar", "restart_demo": "Reiniciar nivel"}
 var main_panel: VBoxContainer
 var options_panel: VBoxContainer
+var assists_panel: VBoxContainer
+var assists_button: Button
 var key_buttons := {}
 var waiting_action := ""
 var message: Label
@@ -70,6 +73,7 @@ func _build_ui() -> void:
 	options_panel.add_child(heading)
 	_add_slider("Música", "Music")
 	_add_slider("Efectos", "SFX")
+	assists_button = _add_button(options_panel, "AYUDAS", _open_assists)
 	options_panel.add_child(_label("CONTROLES · TECLADO", 17))
 	for action in GameSettings.ACTIONS:
 		var row := HBoxContainer.new()
@@ -88,6 +92,12 @@ func _build_ui() -> void:
 	options_panel.add_child(message)
 	_add_button(options_panel, "Restaurar controles", _restore)
 	_add_button(options_panel, "Volver", _close_options)
+	assists_panel = VBoxContainer.new()
+	assists_panel.set_script(ASSIST_OPTIONS)
+	holder.add_child(assists_panel)
+	_add_button_feedback(assists_panel.back_button)
+	assists_panel.closed.connect(_close_assists)
+	assists_panel.hide()
 	_refresh_keys()
 
 func _label(value: String, font_size: int) -> Label:
@@ -185,6 +195,16 @@ func _open_options() -> void:
 	main_panel.hide()
 	options_panel.show()
 	key_buttons["move_left"].grab_focus()
+
+func _open_assists() -> void:
+	waiting_action = ""
+	options_panel.hide()
+	assists_panel.open()
+
+func _close_assists() -> void:
+	assists_panel.hide()
+	options_panel.show()
+	assists_button.grab_focus()
 
 func _close_options() -> void:
 	waiting_action = ""

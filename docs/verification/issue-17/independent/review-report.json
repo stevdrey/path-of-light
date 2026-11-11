@@ -1,0 +1,399 @@
+{
+  "issue": 17,
+  "pull_request": 47,
+  "base_commit": "b16210a935a374398c7e9ea57d56794efb60e304",
+  "followup_baseline": "7a6a7cb",
+  "reviewed_utc": "2026-11-11T00:13:08.164397+00:00",
+  "implementation_verdict": "PASS",
+  "final_acceptance_verdict": "BLOCKED_PENDING_EVIDENCE_CONSOLIDATION_AND_NEW_CANDIDATE_REVALIDATION",
+  "findings": [],
+  "scope": "Fresh independent source/call-site/test review and headless execution of frozen 1745eaa candidate; no previous run treated as evidence for this head.",
+  "start_identity": {
+    "commit": "1745eaa29410540b3876b711f3ba1fb0f160e944",
+    "git_tree": "2ef79f6878bc6462bd44755e0eab86162bee4c15",
+    "status": "",
+    "file_count": 391,
+    "files_sha256": "243ba046eb32fc04a70b2a745689b1d7a7c76d4dbcddd99a2e4a4199ee565858",
+    "manifest_matches": true
+  },
+  "end_identity_after_all_checks": {
+    "commit": "1745eaa29410540b3876b711f3ba1fb0f160e944",
+    "git_tree": "2ef79f6878bc6462bd44755e0eab86162bee4c15",
+    "status": "",
+    "file_count": 391,
+    "files_sha256": "243ba046eb32fc04a70b2a745689b1d7a7c76d4dbcddd99a2e4a4199ee565858",
+    "source_only_sha256": "9f994cf226ffa29712865dc31890a0d39ce73861ff997e383331c7a4e94137fc"
+  },
+  "engine": {
+    "path": "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+    "sha256": "746a2bc89508d07801fe9ba9bbeaad5be0c74e05f13867977b314f2457f42701",
+    "version": "4.8.beta3.official.c51ff06e8"
+  },
+  "acceptance_mapping": [
+    {
+      "criterion": "Independently configurable extra hearts, frequent checkpoints, no fall damage with no content penalty",
+      "status": "PASS",
+      "evidence": [
+        "GameSettings default-off independent Boolean assist settings; unknown/malformed values covered by assist_settings checks",
+        "assist_recovery: all eight masks, both actual levels, all 15 extra authored safe points, floor requirement, relocation, contact depletion, configured retry health",
+        "assist_ui: real secret entry/exit and reward, score/hidden-heart carryover at level-one exit, final completion with all assists",
+        "Source inspection: hazard/beetle damage remains ordinary contact; no assist conditions added to collectible/door/key/score/secret/completion eligibility"
+      ]
+    },
+    {
+      "criterion": "Normal and assisted recovery tested",
+      "status": "PASS",
+      "evidence": [
+        "assist_recovery exit 0: eight combinations on each real level, inventory/records retained, main/secret falls and active checkpoint rules",
+        "assist_ui exit 0: paused toggles, hidden-heart transitions, defeat non-revival, pending retry state, focus, shared Volver handling and ui_cancel",
+        "restart_lifecycle, fall_depletion, attempt_recovery, recovery_records exit 0",
+        "Independent external reviewer_boundaries.gd: 58 assertions covering repeated 1..5-heart off/on states, healing while cap lowered, reset/restore APIs, suppressed fall feedback state, physical Escape in pause and initial menu"
+      ]
+    },
+    {
+      "criterion": "Exact-candidate test/review evidence and limitations documented",
+      "status": "BLOCKED_FOR_FINAL_DELIVERY",
+      "evidence": [
+        "This independently produced report and raw logs identify current 1745eaa / tree 2ef79f6878bc6462bd44755e0eab86162bee4c15 with complete manifest matching at start/end",
+        "Candidate evidence note clearly identifies the pre-fix digest as historical and lists follow-up behavior changes and manual gaps",
+        "Parent plans to commit these records plus the historical manifest into docs/verification/issue-17 and update the note; the resulting documentation-only candidate requires fresh exact-candidate revalidation"
+      ],
+      "reason": "Durable evidence consolidation is intentionally pending outside this frozen independent review; no functional defect found"
+    }
+  ],
+  "runs": [
+    {
+      "name": "assist_settings_write",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/assist_settings_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/cache"
+      },
+      "timeout_seconds": 30,
+      "elapsed_seconds": 0.268,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "assist_settings_write.stdout.log",
+      "stderr": "assist_settings_write.stderr.log",
+      "pass_lines": [
+        "PASS: defaults, old/malformed settings, independent options and persistence write"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "assist_settings_restore",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/assist_settings_integration.gd",
+        "--",
+        "--verify-persisted"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/settings/cache"
+      },
+      "timeout_seconds": 30,
+      "elapsed_seconds": 0.274,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "assist_settings_restore.stdout.log",
+      "stderr": "assist_settings_restore.stderr.log",
+      "pass_lines": [
+        "PASS: assists, audio and controls survive process restart"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted"
+      ]
+    },
+    {
+      "name": "assist_recovery",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/assist_recovery_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/recovery/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/recovery/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/recovery/cache"
+      },
+      "timeout_seconds": 150,
+      "elapsed_seconds": 45.252,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "assist_recovery.stdout.log",
+      "stderr": "assist_recovery.stderr.log",
+      "pass_lines": [
+        "PASS: recovery combination 0 on both levels",
+        "PASS: recovery combination 1 on both levels",
+        "PASS: recovery combination 2 on both levels",
+        "PASS: recovery combination 3 on both levels",
+        "PASS: recovery combination 4 on both levels",
+        "PASS: recovery combination 5 on both levels",
+        "PASS: recovery combination 6 on both levels",
+        "PASS: recovery combination 7 on both levels"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "assist_ui",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/assist_ui_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/ui/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/ui/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/ui/cache"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 11.066,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "assist_ui.stdout.log",
+      "stderr": "assist_ui.stderr.log",
+      "pass_lines": [
+        "PASS: menu/pause assists, live cap and checkpoint changes, defeat, secret rewards and both exits"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "restart_lifecycle",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/restart_lifecycle_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/lifecycle/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/lifecycle/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/lifecycle/cache"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 2.919,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "restart_lifecycle.stdout.log",
+      "stderr": "restart_lifecycle.stderr.log",
+      "pass_lines": [
+        "PASS: failed reload/replay recovery, menu playthrough lifetime and explicit reset"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.",
+        "WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.",
+        "WARNING: Level restart failed (error 20, replay=true). Retry and pause remain available.",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "fall_depletion",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/fall_depletion_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/depletion/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/depletion/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/depletion/cache"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 2.353,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "fall_depletion.stdout.log",
+      "stderr": "fall_depletion.stderr.log",
+      "pass_lines": [
+        "PASS: three falls consume hearts and restart expanded level"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "attempt_recovery",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/attempt_recovery_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/attempt/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/attempt/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/attempt/cache"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 6.092,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "attempt_recovery.stdout.log",
+      "stderr": "attempt_recovery.stderr.log",
+      "pass_lines": [
+        "PASS: level 1 fall, damage, healing, depletion, inventory, records and manual restart",
+        "PASS: level 2 fall, damage, healing, depletion, inventory, records and manual restart"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).",
+        "ERROR: 1 resources still in use at exit (run with --verbose for details)."
+      ]
+    },
+    {
+      "name": "recovery_records",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/recovery_records_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/records/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/records/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/records/cache"
+      },
+      "timeout_seconds": 60,
+      "elapsed_seconds": 11.864,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout": "recovery_records.stdout.log",
+      "stderr": "recovery_records.stderr.log",
+      "pass_lines": [
+        "PASS: real secret and exit records, bonus falls, optional secret, depletion and retry retention"
+      ],
+      "diagnostic_lines": [
+        "GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    {
+      "name": "reviewer_boundaries",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "/tmp/path-of-light-17-followup/independent/reviewer_boundaries.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/path-of-light-17-followup/independent/xdg/reviewer-boundaries/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-17-followup/independent/xdg/reviewer-boundaries/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-17-followup/independent/xdg/reviewer-boundaries/cache"
+      },
+      "timeout_seconds": 30,
+      "exit_code": 0,
+      "elapsed_seconds": 0.672,
+      "stdout": "reviewer_boundaries.stdout.log",
+      "stderr": "reviewer_boundaries.stderr.log",
+      "output": "Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org\n\nPASS: reviewer boundary checks 58; all heart-state round trips, healing/reset APIs, fall-feedback suppression and physical Escape navigation\n\nGameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted\nWARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).\n   at: cleanup (core/object/object.cpp:2609)\n"
+    }
+  ],
+  "checks": {
+    "git_diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "b16210a935a374398c7e9ea57d56794efb60e304..HEAD"
+      ],
+      "exit_code": 0
+    },
+    "identity_matches_original_manifest": true
+  },
+  "diagnostics": {
+    "all_runs_exit_zero": true,
+    "script_parse_assertion_failure_observed": false,
+    "gamemode_dbus_error_runs": 9,
+    "objectdb_exit_warning_runs": 8,
+    "resources_still_in_use_runs": 1,
+    "deliberate_restart_failure_warnings": 3,
+    "notes": "Environment GameMode D-Bus access denied in all runs; ObjectDB exit leaks in every run except settings restore; attempt_recovery also reports one resource still in use at exit. Lifecycle deliberately emits three failed reload/replay warnings. These are not diagnostic-free runs."
+  },
+  "editor_tooling": {
+    "health_check": "bridge_connected=false; port 9080 already in use; server 2026.11.04 contract 1",
+    "fallback": "Specified Godot executable, headless using existing imported cache; no editor mutations performed"
+  },
+  "limitations": [
+    "No human playthrough, unaided route completion, balance/accessibility assessment, child testing or satisfaction evidence",
+    "No rendered screenshot/readability review, audible playback verification, controller/hardware input validation or co-op checks",
+    "No additional OS/device/browser, clean import, export or production/release-readiness verification",
+    "Tests position actors and invoke handlers; physical Escape is synthetic keyboard input, not hardware or human navigation",
+    "Settings persist local preferences only; inventory/checkpoints/session records are not campaign disk saves",
+    "No candidate files changed; all produced artifacts are temporary until parent incorporates them"
+  ],
+  "raw_log_files": {
+    "assist_recovery.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+    "assist_recovery.stdout.log": "f3eda40ec91b5356cf494db89295196218b3667eab4933723cc2acb56d36320c",
+    "assist_settings_restore.stderr.log": "e72986c4d10092e663eb10910b2124b3d9995f3f1b51a3f4aac218acee56160b",
+    "assist_settings_restore.stdout.log": "4d68499422dfccb496f5863e4c4cda8d76b3a55e90ac4b70527bf033b8a2b6b9",
+    "assist_settings_write.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+    "assist_settings_write.stdout.log": "c7c32893fc6cbea990153758937d3056e0271f96f69208ec1e0e849318c7a7d6",
+    "assist_ui.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+    "assist_ui.stdout.log": "d46c62f728f3fa1955bc4499d29aaebba3981ce36f86543ada88d4c5cd4213d2",
+    "attempt_recovery.stderr.log": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+    "attempt_recovery.stdout.log": "b48baace761ae1f336fd3d76512f0ecca097b23cf9e156d0c32e7818fb43cb3c",
+    "fall_depletion.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+    "fall_depletion.stdout.log": "cd48105f51de7d7db79a8918a05233fa9f5021536c297493b3f17e0a35a43566",
+    "recovery_records.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+    "recovery_records.stdout.log": "7672b14a41f526b58a667a5dc24e9ee0e7ea406ec0e8a2aeb48784485cbb9338",
+    "restart_lifecycle.stderr.log": "483ba710be584c32ddc312d6a967cc01934cb7a114189bcd90625a9ee395c485",
+    "restart_lifecycle.stdout.log": "765e5c66d46a1510d11ed612bb83b225ab98e8845b530d1af5ced0b2793dfe51",
+    "reviewer_boundaries.stderr.log": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217",
+    "reviewer_boundaries.stdout.log": "f1cf6833f97f32b60256a4285ee8321b929723c81864adfc16eb290cd822379c"
+  },
+  "reproduction": {
+    "primary_runner": "/tmp/path-of-light-17-followup/independent/run_verification.py",
+    "primary_runner_command": [
+      "python",
+      "/tmp/path-of-light-17-followup/independent/run_verification.py"
+    ],
+    "supplement_runner": "/tmp/path-of-light-17-followup/independent/run_reviewer_boundaries.py",
+    "supplement_runner_command": [
+      "python",
+      "/tmp/path-of-light-17-followup/independent/run_reviewer_boundaries.py"
+    ],
+    "warning": "For another independent run, use a new output/XDG root; settings write and restore alone deliberately share directories."
+  }
+}

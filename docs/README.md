@@ -10,4 +10,6 @@ The [import and integration-test baseline](import-test-baseline.md) records clea
 
 The [attempt recovery evidence](attempt-recovery-evidence.md) records solo falls, safe points, depletion, inventory resets and session-record retention for E02-02.
 
+The [accessibility assist evidence](accessibility-assists-evidence.md) records configurable solo assists, local settings persistence and normal/assisted recovery checks for E02-03.
+
 All project documentation, issues, pull requests and agent instructions are in English. Player-facing language is a separate design decision: the GDD starts with Spanish.

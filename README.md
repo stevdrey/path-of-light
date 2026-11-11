@@ -35,15 +35,17 @@ The repository includes the `godot_mcp` plugin, which is enabled in the project 
 - **S or down arrow:** climb down ladders.
 - **Esc:** pause; **R:** restart.
 
-Controls and volume can be adjusted from the game menu.
+Controls and volume can be adjusted from the game menu. **OPCIONES → AYUDAS** and **Esc → AYUDAS** offer three independent assists: five hearts instead of three, more frequent safe points, and falls without heart loss. All start off, apply immediately and are saved on this device. Assists keep the same content and rewards; contact damage can still deplete hearts and restart the level.
 
 ## Recovery in the solo prototype
 
-A hit or fall costs one heart. Falls return to the last visited safe point while keeping the current attempt's items. Losing all hearts or pressing **R** restarts the current level from its beginning with three hearts, restores its pickups and crates, and discards the attempt's inventory changes. Totals carried into level two are retained. On the final completion screen, **R** starts again from level one. Recorded secret visits and completed levels survive retries in memory; closing the application still loses these records. Campaign disk saves remain separate planned work.
+With assists off, a hit or fall costs one heart. Falls return to the last visited safe point while keeping the current attempt's items. Losing all hearts or pressing **R** restarts the current level from its beginning with full health (three hearts, or five with extra hearts enabled), restores its pickups and crates, and discards the attempt's inventory changes. Totals carried into level two are retained. On the final completion screen, **R** starts again from level one. Recorded secret visits and completed levels survive retries in memory; closing the application still loses these records. Campaign disk saves remain separate planned work.
 
 Returning to the menu and selecting **JUGAR** starts another attempt from level one and keeps those session records. There is currently no destructive new-campaign menu action. If a restart cannot load its scene, the game reports the error and leaves retry and pause available.
 
 See the [attempt recovery evidence](docs/attempt-recovery-evidence.md) for checks and remaining playtest limitations.
+
+Changing the heart cap preserves missing hearts, with at least one remaining heart when disabling; it cannot revive a defeated character. Changing checkpoint frequency retains the last visited safe point for the current attempt. See the [assist evidence](docs/accessibility-assists-evidence.md) and [ADR 0005](docs/adr/0005-configurable-assists.md) for the prototype rules and validation limits.
 
 ## Import files
 

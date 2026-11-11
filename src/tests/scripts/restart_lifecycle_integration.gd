@@ -95,6 +95,10 @@ func run() -> void:
 		level._on_collected(0, 5)
 		level.get_node("PauseMenu").pause()
 		level.get_node("PauseMenu")._return_to_menu()
+		# Scene replacement finishes at the end of a process frame. Several
+		# physics steps may run before that frame, with current_scene still null.
+		await process_frame
+		await process_frame
 		await frames(5)
 		if not check(current_scene.scene_file_path == "res://src/ui/front_end.tscn" and Progress.recorded_secrets.has(1) and Progress.completed_levels.has(2) and not paused, "returning to menu keeps session records"):
 			return

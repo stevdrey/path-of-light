@@ -1,0 +1,97 @@
+extends SceneTree
+const Progress = preload("res://src/scenes/scripts/game_progress.gd")
+var checks := 0
+func _initialize() -> void:
+	call_deferred("run")
+func check(ok: bool, why: String) -> bool:
+	checks += 1
+	if not ok:
+		printerr("FAIL: ", why)
+		quit(1)
+	return ok
+func esc(pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = KEY_ESCAPE
+	event.physical_keycode = KEY_ESCAPE
+	event.pressed = pressed
+	Input.parse_input_event(event)
+func run() -> void:
+	var settings: Node = root.get_node("GameSettings")
+	settings.set_assist("extra_hearts", true)
+	Progress.reset()
+	if not check(Progress.hearts == 5 and Progress.hidden_missing == 0, "full reset uses configured cap"):
+		return
+	var level: Node2D = load("res://src/scenes/adventure_level_1.tscn").instantiate()
+	root.add_child(level)
+	current_scene = level
+	var health: Node2D = level.player_health
+	var body: CharacterBody2D = level.get_node("Character")
+	# Exercise all living cap states via the real settings and health signals.
+	for hearts in range(1, 6):
+		health.hearts = hearts
+		health.hidden_missing = 0
+		health.health_changed.emit(hearts, 5)
+		for cycle in 5:
+			settings.set_assist("extra_hearts", false)
+			if not check(health.hearts == maxi(1, hearts - 2) and Progress.hearts == health.hearts and not health.dead, "disable preserves state at %d hearts" % hearts):
+				return
+			settings.set_assist("extra_hearts", true)
+			if not check(health.hearts == hearts and health.hidden_missing == 0 and Progress.hidden_missing == 0, "round-trip preserves %d hearts" % hearts):
+				return
+	health.hearts = 1
+	health.hidden_missing = 0
+	settings.set_assist("extra_hearts", false)
+	health.heal()
+	settings.set_assist("extra_hearts", true)
+	if not check(health.hearts == 2 and Progress.hearts == 2, "healing while reduced cap retains hidden loss accurately"):
+		return
+	var snapshot := Progress.snapshot_inventory()
+	Progress.restore_inventory(snapshot)
+	if not check(Progress.hearts == 5 and Progress.hidden_missing == 0, "restore inventory initializes configured retry hearts"):
+		return
+	Progress.hidden_missing = 2
+	Progress.reset_attempt()
+	if not check(Progress.hearts == 5 and Progress.hidden_missing == 0, "attempt reset clears hidden loss"):
+		return
+	settings.set_assist("no_fall_damage", true)
+	health.sound.stop()
+	health.hurt_left = 0.0
+	health.invulnerability_left = 0.0
+	level.movement.damage_locked = false
+	body.velocity = Vector2.ZERO
+	health.take_fall_damage()
+	if not check(health.hearts == 2 and health.hurt_left == 0.0 and health.invulnerability_left == 0.0 and not level.movement.damage_locked and body.velocity == Vector2.ZERO and not health.sound.playing, "suppressed fall has no damage, knockback or hurt sound playback"):
+		return
+	var pause_menu: CanvasLayer = level.get_node("PauseMenu")
+	pause_menu.pause()
+	pause_menu._open_assists()
+	esc(true)
+	await process_frame
+	await process_frame
+	esc(false)
+	if not check(paused and not pause_menu.assists_panel.visible and pause_menu.assists_button.has_focus(), "physical Escape backs out of paused assists"):
+		return
+	esc(true)
+	await process_frame
+	await process_frame
+	esc(false)
+	if not check(not paused and not pause_menu.overlay.visible, "second physical Escape resumes"):
+		return
+	current_scene.free()
+	current_scene = null
+	root.set_meta("skip_intro_splash", true)
+	var menu: Control = load("res://src/ui/front_end.tscn").instantiate()
+	root.add_child(menu)
+	current_scene = menu
+	menu._open_options()
+	menu._open_assists()
+	esc(true)
+	await process_frame
+	await process_frame
+	esc(false)
+	if not check(menu.options_panel.visible and not menu.assists_panel.visible and menu.assists_button.has_focus(), "physical Escape restores initial options and focus"):
+		return
+	print("PASS: reviewer boundary checks ", checks, "; all heart-state round trips, healing/reset APIs, fall-feedback suppression and physical Escape navigation")
+	current_scene.free()
+	current_scene = null
+	quit(0)
