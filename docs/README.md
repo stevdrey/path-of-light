@@ -12,4 +12,6 @@ The [attempt recovery evidence](attempt-recovery-evidence.md) records solo falls
 
 The [accessibility assist evidence](accessibility-assists-evidence.md) records configurable solo assists, local settings persistence and normal/assisted recovery checks for E02-03.
 
+The [campaign save evidence](campaign-save-evidence.md) records the durable/attempt boundary, versioned local storage, recovery and restart/migration checks for E03-01.
+
 All project documentation, issues, pull requests and agent instructions are in English. Player-facing language is a separate design decision: the GDD starts with Spanish.

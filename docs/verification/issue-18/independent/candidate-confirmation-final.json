@@ -1,0 +1,7 @@
+{
+  "base": "f7d2d6bd35f469551bc1d78ca9bc7031e0fb0051",
+  "source_manifest_sha256": "11cd000c476cfb0a2329b4264b5bed08b847d03a8b38e289d9922434fb178e7a",
+  "matched_supplied_candidate": true,
+  "independent_invocations_passed": 18,
+  "supplemental_invocations_passed": 3
+}

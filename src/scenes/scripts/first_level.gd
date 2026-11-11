@@ -80,7 +80,8 @@ func _use_portal(portal: Area2D) -> void:
 	await transition.finished
 	in_secret = portal.enters_bonus
 	if in_secret:
-		Progress.recorded_secrets[level_number] = true
+		Progress.record_secret(level_number)
+		_update_status()
 	$Character.global_position = portal.destination
 	$Character.velocity = Vector2.ZERO
 	$Character/LevelCamera.reset_smoothing()

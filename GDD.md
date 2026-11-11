@@ -221,6 +221,8 @@ A file review describes a Godot 4.8 foundation with two levels and reusable scen
 
 This was a static review: no playtest was performed for this document. The story, eight worlds, level selection, persistent saves, unlocks, assist mode, and co-op described here are proposals, not verified features. The current README describes restarting the level when hearts are exhausted, consistent with this GDD's standard direction; the details and co-op behavior must be checked during implementation and testing.
 
+Subsequent E03-01 prototype work persists the existing completion and secret-portal records with versioned local saves, backup recovery and a defined migration fixture. See [ADR 0001](docs/adr/0001-campaign-state.md) and [campaign save evidence](docs/campaign-save-evidence.md). Attempts are not resumed after closing the application; the map, rewards/unlocks, co-op and browser/export persistence remain unverified or future work.
+
 Subsequent prototype work implements configurable solo assists in the two experimental levels: extra hearts, more frequent authored safe points and falls without heart loss. See [ADR 0005](docs/adr/0005-configurable-assists.md) and [assist evidence](docs/accessibility-assists-evidence.md) for the implemented rules, automated checks and remaining human evaluation. This does not establish accessibility, co-op assists or approval of the broader proposed scope.
 
 ## 12. Scope and production

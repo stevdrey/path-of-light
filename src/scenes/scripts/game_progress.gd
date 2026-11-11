@@ -8,17 +8,71 @@ static var score := 0
 static var diamonds := 0
 static var diamond_counts: Array[int] = [0, 0, 0, 0]
 static var keys: Dictionary = {}
-# GameProgress owns process-session records, including menu -> JUGAR and replay.
-# JUGAR starts another attempt, not a destructive new campaign. No current UI
-# offers a full reset; reset() is the explicit API for a future fresh campaign.
-# Disk saves and migration remain E03-01.
+const CampaignSave := preload("res://src/scenes/scripts/campaign_save.gd")
+# Durable facts, separate from inventory and scene state. JUGAR and replay
+# begin new attempts without erasing the campaign. No destructive reset UI.
 static var recorded_secrets: Dictionary = {}
 static var completed_levels: Dictionary = {}
+static var campaign_store := CampaignSave.new()
+static var campaign_loaded := false
+static var campaign_status := "new"
+static var campaign_error: int = OK
 
+# In-memory reset for callers/tests. Does not delete or replace disk saves.
+# A future fresh-campaign UI needs its own explicit persistent reset transaction.
 static func reset() -> void:
+	campaign_loaded = true
 	reset_attempt()
 	recorded_secrets.clear()
 	completed_levels.clear()
+	campaign_status = "new"
+	campaign_error = OK
+	campaign_store.load_campaign()
+
+static func ensure_campaign_loaded() -> void:
+	if not campaign_loaded:
+		load_campaign()
+
+static func load_campaign() -> void:
+	var result := campaign_store.load_campaign()
+	campaign_loaded = true
+	campaign_status = result.status
+	campaign_error = result.error
+	completed_levels.clear()
+	recorded_secrets.clear()
+	for id in result.data.completed_levels:
+		completed_levels[id] = true
+	for id in result.data.recorded_secrets:
+		recorded_secrets[id] = true
+	# Application restart never resumes an attempt or restores its key/health.
+	reset_attempt()
+
+static func save_campaign() -> Error:
+	ensure_campaign_loaded()
+	campaign_error = campaign_store.save_campaign({"schema_version": CampaignSave.VERSION,
+		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys()})
+	if campaign_error == OK:
+		campaign_status = "loaded"
+	return campaign_error as Error
+
+static func record_secret(level_id: int) -> Error:
+	ensure_campaign_loaded()
+	recorded_secrets[level_id] = true
+	return save_campaign()
+
+static func record_completion(level_id: int) -> Error:
+	ensure_campaign_loaded()
+	completed_levels[level_id] = true
+	return save_campaign()
+
+static func campaign_notice() -> String:
+	if campaign_status == "unsupported":
+		return "Partida de una versión más reciente. Puedes jugar sin guardarla."
+	if campaign_error != OK:
+		return "No se pudo guardar o recuperar la partida. El progreso de esta sesión podría perderse."
+	if campaign_status == "recovered":
+		return "Partida recuperada desde la copia de seguridad."
+	return ""
 
 # Runtime lookup avoids a compile-time dependency on the GameSettings autoload.
 static func configured_max_hearts() -> int:
