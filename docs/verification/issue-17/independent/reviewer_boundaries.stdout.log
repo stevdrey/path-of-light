@@ -1,0 +1,3 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PASS: reviewer boundary checks 58; all heart-state round trips, healing/reset APIs, fall-feedback suppression and physical Escape navigation

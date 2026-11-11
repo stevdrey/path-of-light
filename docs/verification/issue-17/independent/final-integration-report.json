@@ -1,0 +1,950 @@
+{
+  "schema_version": 1,
+  "issue": 17,
+  "pull_request": 47,
+  "review_kind": "Independent documentation and evidence integration; no additional runtime executions",
+  "reviewed_utc": "2026-11-11T00:17:45.856793+00:00",
+  "verdict": "PASS",
+  "findings": [],
+  "supersedes": {
+    "path": "docs/verification/issue-17/independent/review-report.json",
+    "sha256": "bed49c3d8dfb21be15748d9003728aae6f38702df9037fa9125748889557c531",
+    "field": "final_acceptance_verdict",
+    "previous_value": "BLOCKED_PENDING_EVIDENCE_CONSOLIDATION_AND_NEW_CANDIDATE_REVALIDATION",
+    "replacement": "PASS",
+    "meaning": "The original report is preserved unchanged. This final integration review resolves its preliminary pending-evidence status by verifying the documentation payload and its relationship to the independently executed runtime candidate."
+  },
+  "runtime_evidence_binding": {
+    "commit": "1745eaa29410540b3876b711f3ba1fb0f160e944",
+    "git_tree": "2ef79f6878bc6462bd44755e0eab86162bee4c15",
+    "historical_file_count": 391,
+    "historical_files_sha256": "243ba046eb32fc04a70b2a745689b1d7a7c76d4dbcddd99a2e4a4199ee565858",
+    "historical_manifest": "docs/verification/issue-17/candidate-1745eaa.json",
+    "unchanged_file_count_excluding_evidence_note": 390,
+    "unchanged_files_sha256": "9f994cf226ffa29712865dc31890a0d39ce73861ff997e383331c7a4e94137fc",
+    "manifest_reconstructed_from_historical_git_objects": true,
+    "runtime_and_test_sources_unchanged": true,
+    "engine": {
+      "path": "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "sha256": "746a2bc89508d07801fe9ba9bbeaad5be0c74e05f13867977b314f2457f42701",
+      "version": "4.8.beta3.official.c51ff06e8"
+    },
+    "independent_process_invocations": 9,
+    "supplemental_assertions": 58
+  },
+  "documentation_payload_identity": {
+    "file_count": 414,
+    "canonical_files_sha256": "1ef5031d7823b383f0c1839a24644b74c308deae1f1505cd9c6826132b72f62a",
+    "algorithm": "SHA-256 of UTF-8 json.dumps(files, sort_keys=True, separators=(',', ':')), where files maps sorted unique git ls-files -co --exclude-standard paths to SHA-256 file hashes",
+    "matches_supplied_manifest": true,
+    "changed_paths": [
+      "docs/accessibility-assists-evidence.md",
+      "docs/verification/issue-17/README.md",
+      "docs/verification/issue-17/candidate-1745eaa.json",
+      "docs/verification/issue-17/implementation-results.json",
+      "docs/verification/issue-17/independent/assist_recovery.stderr.log",
+      "docs/verification/issue-17/independent/assist_recovery.stdout.log",
+      "docs/verification/issue-17/independent/assist_settings_restore.stderr.log",
+      "docs/verification/issue-17/independent/assist_settings_restore.stdout.log",
+      "docs/verification/issue-17/independent/assist_settings_write.stderr.log",
+      "docs/verification/issue-17/independent/assist_settings_write.stdout.log",
+      "docs/verification/issue-17/independent/assist_ui.stderr.log",
+      "docs/verification/issue-17/independent/assist_ui.stdout.log",
+      "docs/verification/issue-17/independent/attempt_recovery.stderr.log",
+      "docs/verification/issue-17/independent/attempt_recovery.stdout.log",
+      "docs/verification/issue-17/independent/fall_depletion.stderr.log",
+      "docs/verification/issue-17/independent/fall_depletion.stdout.log",
+      "docs/verification/issue-17/independent/recovery_records.stderr.log",
+      "docs/verification/issue-17/independent/recovery_records.stdout.log",
+      "docs/verification/issue-17/independent/restart_lifecycle.stderr.log",
+      "docs/verification/issue-17/independent/restart_lifecycle.stdout.log",
+      "docs/verification/issue-17/independent/review-report.json",
+      "docs/verification/issue-17/independent/reviewer_boundaries.gd.txt",
+      "docs/verification/issue-17/independent/reviewer_boundaries.stderr.log",
+      "docs/verification/issue-17/independent/reviewer_boundaries.stdout.log"
+    ],
+    "only_evidence_note_and_verification_directory_changed": true,
+    "publication_commit_and_tree": "To be recorded in the PR description after commit; this document does not claim a future commit hash.",
+    "self_reference_boundary": "This report reviews the 414-file payload before its own addition. It is intended for docs/verification/issue-17/independent/final-integration-report.json. Final read-only identity confirmation must verify all 414 reviewed files remain unchanged and this exact report is the only added file; no runtime rerun is implied."
+  },
+  "acceptance_mapping": [
+    {
+      "criterion": "Independently configurable extra hearts, frequent checkpoints and no fall damage without content penalty",
+      "status": "PASS",
+      "basis": "Fresh independent review-report.json source/call-site inspection and nine process invocations at 1745eaa. Source identity is unchanged in this documentation payload. Tests cover all eight assist combinations on both levels, actual secret rewards and door/final completion transitions, and contact depletion despite assists."
+    },
+    {
+      "criterion": "Normal and assisted recovery tested",
+      "status": "PASS",
+      "basis": "Fresh independent assist recovery/UI/settings, lifecycle, fall depletion, attempt recovery and record-retention checks passed. Independently authored 58-assertion source is preserved and reproducible. The full primary suite was audited, not independently re-executed by this verifier."
+    },
+    {
+      "criterion": "Applicable test/review evidence, exact candidate and remaining limitations documented",
+      "status": "PASS",
+      "basis": "Updated evidence note and artifact index explicitly bind runtime executions to 1745eaa and its historical manifest; historical 7a6a7cb checks are separated. All independent raw logs and review report are preserved byte-for-byte, primary report hashes match local logs, portable reproduction instructions and manual/platform/import limitations are explicit. This report supplies the linked final acceptance verdict and supersedes preliminary pending status."
+    }
+  ],
+  "artifact_integrity": {
+    "reviewed_payload_files_sha256": {
+      "docs/accessibility-assists-evidence.md": "f45e0893208e0f96149a202b437fd22b52ae753b90237040e0ae69d5b0c9dc97",
+      "docs/verification/issue-17/README.md": "c963c32667f002ea7e2d0c7f07caa475d12408bb271ea8ab83716659fedeca53",
+      "docs/verification/issue-17/candidate-1745eaa.json": "b3331c6b74d7ab513d8632585b92a69c816ed9d1ebfe49b0547f712e8032dd25",
+      "docs/verification/issue-17/implementation-results.json": "5254499bdb92b4852a20914229a2abda20409d6b63af05c0d639d951db13d104",
+      "docs/verification/issue-17/independent/assist_recovery.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "docs/verification/issue-17/independent/assist_recovery.stdout.log": "f3eda40ec91b5356cf494db89295196218b3667eab4933723cc2acb56d36320c",
+      "docs/verification/issue-17/independent/assist_settings_restore.stderr.log": "e72986c4d10092e663eb10910b2124b3d9995f3f1b51a3f4aac218acee56160b",
+      "docs/verification/issue-17/independent/assist_settings_restore.stdout.log": "4d68499422dfccb496f5863e4c4cda8d76b3a55e90ac4b70527bf033b8a2b6b9",
+      "docs/verification/issue-17/independent/assist_settings_write.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "docs/verification/issue-17/independent/assist_settings_write.stdout.log": "c7c32893fc6cbea990153758937d3056e0271f96f69208ec1e0e849318c7a7d6",
+      "docs/verification/issue-17/independent/assist_ui.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "docs/verification/issue-17/independent/assist_ui.stdout.log": "d46c62f728f3fa1955bc4499d29aaebba3981ce36f86543ada88d4c5cd4213d2",
+      "docs/verification/issue-17/independent/attempt_recovery.stderr.log": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "docs/verification/issue-17/independent/attempt_recovery.stdout.log": "b48baace761ae1f336fd3d76512f0ecca097b23cf9e156d0c32e7818fb43cb3c",
+      "docs/verification/issue-17/independent/fall_depletion.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "docs/verification/issue-17/independent/fall_depletion.stdout.log": "cd48105f51de7d7db79a8918a05233fa9f5021536c297493b3f17e0a35a43566",
+      "docs/verification/issue-17/independent/recovery_records.stderr.log": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "docs/verification/issue-17/independent/recovery_records.stdout.log": "7672b14a41f526b58a667a5dc24e9ee0e7ea406ec0e8a2aeb48784485cbb9338",
+      "docs/verification/issue-17/independent/restart_lifecycle.stderr.log": "483ba710be584c32ddc312d6a967cc01934cb7a114189bcd90625a9ee395c485",
+      "docs/verification/issue-17/independent/restart_lifecycle.stdout.log": "765e5c66d46a1510d11ed612bb83b225ab98e8845b530d1af5ced0b2793dfe51",
+      "docs/verification/issue-17/independent/review-report.json": "bed49c3d8dfb21be15748d9003728aae6f38702df9037fa9125748889557c531",
+      "docs/verification/issue-17/independent/reviewer_boundaries.gd.txt": "57862f939ab7daa88f106f99eeec1744c5587a6820d8351baa82bdafe8eb90e7",
+      "docs/verification/issue-17/independent/reviewer_boundaries.stderr.log": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217",
+      "docs/verification/issue-17/independent/reviewer_boundaries.stdout.log": "f1cf6833f97f32b60256a4285ee8321b929723c81864adfc16eb290cd822379c"
+    },
+    "independent_report_matches_original_bytes": true,
+    "independent_raw_log_count": 18,
+    "independent_logs": [
+      {
+        "path": "docs/verification/issue-17/independent/assist_recovery.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_recovery.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "f3eda40ec91b5356cf494db89295196218b3667eab4933723cc2acb56d36320c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_settings_restore.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "e72986c4d10092e663eb10910b2124b3d9995f3f1b51a3f4aac218acee56160b"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_settings_restore.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "4d68499422dfccb496f5863e4c4cda8d76b3a55e90ac4b70527bf033b8a2b6b9"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_settings_write.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_settings_write.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "c7c32893fc6cbea990153758937d3056e0271f96f69208ec1e0e849318c7a7d6"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_ui.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/assist_ui.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "d46c62f728f3fa1955bc4499d29aaebba3981ce36f86543ada88d4c5cd4213d2"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/attempt_recovery.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/attempt_recovery.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "b48baace761ae1f336fd3d76512f0ecca097b23cf9e156d0c32e7818fb43cb3c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/fall_depletion.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/fall_depletion.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "cd48105f51de7d7db79a8918a05233fa9f5021536c297493b3f17e0a35a43566"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/recovery_records.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/recovery_records.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "7672b14a41f526b58a667a5dc24e9ee0e7ea406ec0e8a2aeb48784485cbb9338"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/restart_lifecycle.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "483ba710be584c32ddc312d6a967cc01934cb7a114189bcd90625a9ee395c485"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/restart_lifecycle.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "765e5c66d46a1510d11ed612bb83b225ab98e8845b530d1af5ced0b2793dfe51"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/reviewer_boundaries.stderr.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      },
+      {
+        "path": "docs/verification/issue-17/independent/reviewer_boundaries.stdout.log",
+        "matches_local": true,
+        "matches_report_hash": true,
+        "sha256": "f1cf6833f97f32b60256a4285ee8321b929723c81864adfc16eb290cd822379c"
+      }
+    ],
+    "supplemental_source_path": "docs/verification/issue-17/independent/reviewer_boundaries.gd.txt",
+    "supplemental_source_matches_executed_temporary_gd_bytes": true,
+    "primary_report_matches_local_results_bytes": true
+  },
+  "primary_run_record_audit": {
+    "producer": "Implementing/coordinating agent",
+    "activity_by_this_verifier": "Read and hash all 36 existing local raw logs; compare pass lines, diagnostic classifications, failure lines and report metadata. No additional suite execution.",
+    "summary": {
+      "checks": 36,
+      "unique_scripts": 35,
+      "all_reported_exit_codes_zero": true,
+      "failure_lines": 0,
+      "suite_diagnostics": {
+        "gamemode_unavailable": 35,
+        "objectdb_exit_warning": 33,
+        "resources_in_use_at_exit": 15,
+        "intentional_restart_warning_count": 3
+      },
+      "restore_diagnostics": {
+        "gamemode_unavailable": true,
+        "objectdb_exit_warning": true,
+        "resources_in_use_at_exit": false,
+        "intentional_restart_warning_count": 0
+      },
+      "script_coverage_matches_current_files": true
+    },
+    "checks": [
+      {
+        "script": "src/tests/scripts/adventure_new_gaps_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/adventure_new_gaps_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/adventure_obstacles_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/adventure_obstacles_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/assist_recovery_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/assist_recovery_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/assist_settings_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/assist_settings_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/assist_ui_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/assist_ui_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/attempt_recovery_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/attempt_recovery_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/beetle_collision_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/beetle_collision_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/bonus_portal_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/bonus_portal_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/bonus_route_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/bonus_route_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/breakable_crate_contacts_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/breakable_crate_contacts_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/breakable_crate_contents_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/breakable_crate_contents_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/breakable_crate_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/breakable_crate_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/contextual_interaction_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/contextual_interaction_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/crate_sound_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/crate_sound_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/diamond_pickup_effect_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/diamond_pickup_effect_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/door_interaction_conflict_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/door_interaction_conflict_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/expanded_level_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/expanded_level_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/fall_depletion_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/fall_depletion_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/first_level_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/first_level_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/health_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/health_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": false,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/jump_assists_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/jump_assists_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/moving_saw_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/moving_saw_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/pause_menu_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/pause_menu_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/portal_nearby_collectible_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/portal_nearby_collectible_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/precipice_jumps_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/precipice_jumps_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": false,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/recovery_records_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/recovery_records_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/restart_lifecycle_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/restart_lifecycle_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 3
+        }
+      },
+      {
+        "script": "src/tests/scripts/safe_point_recovery_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/safe_point_recovery_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/second_door_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/second_door_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/second_level_jumps_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/second_level_jumps_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/second_level_life_progress_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/second_level_life_progress_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/second_level_playtest_regression.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/second_level_playtest_regression.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/sound_health_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/sound_health_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/spike_corridor_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/spike_corridor_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/two_levels_integration.gd",
+        "arguments": [],
+        "log": "/tmp/path-of-light-17-followup/implementation/two_levels_integration.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": true,
+          "intentional_restart_warning_count": 0
+        }
+      },
+      {
+        "script": "src/tests/scripts/assist_settings_integration.gd",
+        "arguments": [
+          "--",
+          "--verify-persisted"
+        ],
+        "log": "/tmp/path-of-light-17-followup/implementation/assist_settings_integration-second-process.log",
+        "log_hash_matches": true,
+        "pass_lines_match": true,
+        "diagnostics_match": true,
+        "failure_lines": [],
+        "reported_exit_code": 0,
+        "observed_diagnostics": {
+          "gamemode_unavailable": true,
+          "objectdb_exit_warning": true,
+          "resources_in_use_at_exit": false,
+          "intentional_restart_warning_count": 0
+        }
+      }
+    ],
+    "exit_code_evidence_limit": "All 36 exit codes are recorded as zero by the primary runner report. Raw logs were audited for content and hash consistency; this review does not relabel the primary executions as independently executed tests.",
+    "durability": "implementation-results.json is committed; full primary raw logs remain temporary local artifacts. Independent raw logs are committed."
+  },
+  "documentation_review": {
+    "files": [
+      "docs/accessibility-assists-evidence.md",
+      "docs/verification/issue-17/README.md"
+    ],
+    "historical_current_separation": "Accurate: 7a6a7cb digests are historical, 1745eaa is the runtime candidate, and documentation publication has separate identity.",
+    "reproduction": "Reviewed portable engine/XDG commands, intentional write/restore sharing, historical Git-object manifest verification, and copying supplemental .gd.txt into a temporary .gd file. No commands were re-executed as runtime checks during this integration review.",
+    "local_links": [
+      {
+        "from": "docs/accessibility-assists-evidence.md",
+        "target": "verification/issue-17/candidate-1745eaa.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/accessibility-assists-evidence.md",
+        "target": "verification/issue-17/README.md",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/accessibility-assists-evidence.md",
+        "target": "verification/issue-17/implementation-results.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/accessibility-assists-evidence.md",
+        "target": "verification/issue-17/independent/review-report.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/accessibility-assists-evidence.md",
+        "target": "adr/0005-configurable-assists.md",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "../../accessibility-assists-evidence.md",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "candidate-1745eaa.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "implementation-results.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "independent/review-report.json",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "independent/reviewer_boundaries.gd.txt",
+        "exists": true,
+        "expected_final_report_placeholder": false
+      },
+      {
+        "from": "docs/verification/issue-17/README.md",
+        "target": "independent/final-integration-report.json",
+        "exists": false,
+        "expected_final_report_placeholder": true
+      }
+    ],
+    "pending_link_resolution": "The sole absent linked local artifact at review time is this final report at its declared intended path. Copying this report unchanged resolves that link; final identity confirmation follows.",
+    "claims_and_limits": "Independent execution, primary record audit and documentation verification are distinguished. Headless/synthetic tests are not presented as human, hardware, rendered, audible or co-op validation."
+  },
+  "focused_runtime_diagnostics": {
+    "all_runs_exit_zero": true,
+    "script_parse_assertion_failure_observed": false,
+    "gamemode_dbus_error_runs": 9,
+    "objectdb_exit_warning_runs": 8,
+    "resources_still_in_use_runs": 1,
+    "deliberate_restart_failure_warnings": 3,
+    "notes": "Environment GameMode D-Bus access denied in all runs; ObjectDB exit leaks in every run except settings restore; attempt_recovery also reports one resource still in use at exit. Lifecycle deliberately emits three failed reload/replay warnings. These are not diagnostic-free runs."
+  },
+  "integration_checks": {
+    "git_diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "candidate_files_edited_by_verifier": false,
+    "runtime_test_executions_during_integration_review": 0
+  },
+  "limitations": [
+    "No human playthrough, unaided route completion, balance/accessibility assessment, child testing or satisfaction evidence",
+    "No rendered screenshot/readability review, audible playback verification, controller/hardware input validation or co-op checks",
+    "No additional OS/device/browser, clean import, export or production/release-readiness verification",
+    "Tests position actors and invoke handlers; physical Escape is synthetic keyboard input, not hardware or human navigation",
+    "Settings persist local preferences only; inventory/checkpoints/session records are not campaign disk saves",
+    "This final integration verdict concerns the reviewed 414-file documentation payload and exact report addition described above. Any additional change requires revalidation. It does not grant GitHub approval, authorize merging, or establish release readiness.",
+    "The verifier edited no repository files. Independent logs, runtime review, supplemental source and primary results have been integrated into the reviewed documentation payload; this final report remains temporary until copied unchanged to its declared repository path."
+  ],
+  "future_final_identity_confirmation": {
+    "expected_total_file_count": 415,
+    "allowed_addition": "docs/verification/issue-17/independent/final-integration-report.json",
+    "required_condition": "Every path/hash in the supplied 414-file manifest must remain unchanged, with exactly this independently produced report added byte-for-byte."
+  }
+}
