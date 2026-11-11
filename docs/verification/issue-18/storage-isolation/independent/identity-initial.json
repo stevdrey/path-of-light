@@ -1,0 +1,11 @@
+{
+  "base": "ffd8ceaa51b98ef083836263616a220f533f4bdc",
+  "manifest": "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform/docs/verification/issue-18/storage-isolation/candidate.json",
+  "file_count": 426,
+  "expected_digest": "00383c26b2d796b16de83c2a8891a65a4936631caf78fe6a899f8802b82dec37",
+  "actual_digest": "00383c26b2d796b16de83c2a8891a65a4936631caf78fe6a899f8802b82dec37",
+  "match": true,
+  "added": [],
+  "missing": [],
+  "changed": []
+}

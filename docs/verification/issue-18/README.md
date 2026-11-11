@@ -18,3 +18,7 @@ The implementation runner manifest and initial review manifest differ only in a 
 ## PR publication candidate
 
 After the final integration review, Godot generated four `.gd.uid` sidecars for the new save script and campaign test scripts. `candidate-publication.json` binds that publication source tree; `independent/publication-report.md` revalidates the metadata additions and retained evidence. Runtime/test source, scenes, settings, assets and previously reviewed documentation are unchanged. Earlier manifests and reports are historical snapshots and are retained intact.
+
+## Storage-isolation review correction
+
+The high-depth P2 review identified unsafe XDG-only fixture isolation on Windows/macOS. The runner now refuses non-Linux hosts before starting any engine process or creating output/storage directories. New guard tests and re-executed campaign checks, source manifests and independent review are indexed in [storage-isolation/README.md](storage-isolation/README.md). Existing artifacts above are retained as historical evidence rather than overwritten.

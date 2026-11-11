@@ -30,7 +30,7 @@ A separate verifier independently reviewed the exact initial candidate, reproduc
 
 ## Reproduce
 
-From an imported checkout, run:
+From an imported checkout on Linux with a native Linux Godot executable, run:
 
 ```bash
 python3 src/tests/run_campaign_checks.py \
@@ -38,10 +38,18 @@ python3 src/tests/run_campaign_checks.py \
   --output /tmp/path-of-light-18-evidence
 ```
 
-The runner creates fresh isolated user directories on every invocation, retains exact commands and raw logs, and exits nonzero for failures/timeouts/script diagnostics. It does not import the project or modify editor/plugin settings. Inspect the recorded engine/source hashes before relying on a reproduction.
+The runner now explicitly supports Linux only. Other host platforms are rejected before any engine invocation (including `--version`), output directory or sandbox is created, because XDG overrides do not isolate Godot storage on Windows/macOS. `--help` remains available on all hosts. On Linux the runner creates fresh isolated user directories on every invocation, retains exact commands and raw logs, and exits nonzero for failures/timeouts/script diagnostics. It does not import the project or modify editor/plugin settings. Inspect the recorded engine/source hashes before relying on a reproduction.
 
 ## Remaining limitations
 
 Headless fault injection does not simulate actual power loss, filesystem caches, low disk space, all file-permission configurations, simultaneous writers or a process killed at every instruction. The same-directory rename/flush protocol is checked on this Linux host only; a valid backup may be one event behind. There is no tamper detection for otherwise valid JSON. Unrecoverable/newer files require explicit repair or a compatible build; there is no destructive automatic recovery/reset flow.
 
 Windows/macOS, exported desktop builds, web/browser storage and eviction, private browsing, target devices and clean-import behavior were not tested. No human visual/audio/controller, accessibility or child/co-op playtest occurred. Spanish error/recovery notices have automated text/visibility assertions only; visual readability remains unverified. Host GameMode D-Bus errors, exit ObjectDB leak warnings, some resource-still-in-use exit errors and expected injected restart-failure warnings are retained in raw logs and do not establish an error-free runtime. No release clearance or completion of the four-level playable slice is implied.
+
+## PR #48 storage-isolation P2 correction
+
+The later high-depth review found that the original runner did not refuse unsupported hosts: its XDG-only environment could leave Windows/macOS fixtures using real player storage. The correction adds the Linux-only fail-fast gate and makes the entry point importable for regression tests. Campaign runtime, scenes, save format and gameplay are unchanged. Historical implementation/independent evidence above remains attributable to its original candidate; it does not by itself verify this correction.
+
+Run the guard regression checks with `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s src/tests -p test_campaign_runner.py -v`. They simulate Windows, macOS (`Darwin`), FreeBSD and unknown hosts and assert zero engine/Git subprocesses, sandbox/output creation or changes to sentinel campaign/backup/preferences; they also check Linux child environments, intended restart/migration sharing, nonzero failure results and safe `--help`. Simulated host/subprocess tests are not native Windows/macOS engine runs.
+
+See the [correction evidence index](verification/issue-18/storage-isolation/README.md) for the new implementation and independent checks, exact candidate and final integration verdict. Windows/macOS remain unsupported by the runner and untested as game targets; browser/export and human playtest limits above remain.

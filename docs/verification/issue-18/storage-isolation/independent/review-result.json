@@ -1,0 +1,245 @@
+{
+  "verdict": "PASS",
+  "base_head": "ffd8ceaa51b98ef083836263616a220f533f4bdc",
+  "source_file_count": 426,
+  "source_manifest_sha256": "00383c26b2d796b16de83c2a8891a65a4936631caf78fe6a899f8802b82dec37",
+  "source_unchanged": true,
+  "tracked_patch_matches": true,
+  "tracked_patch_sha256": "30cb82b79706c9110abcfb8d5c6c4215f9dd0cc0ee2b8f2a200ebf2aff5650ad",
+  "engine_version": "4.8.beta3.official.c51ff06e8",
+  "engine_sha256": "746a2bc89508d07801fe9ba9bbeaad5be0c74e05f13867977b314f2457f42701",
+  "platform": "Linux-7.2.15-300.fc45.x86_64-x86_64-with-glibc2.44",
+  "guard_unittest_methods_passed": 4,
+  "supplemental_mocked_probes_passed": 10,
+  "real_engine_invocations_passed": 18,
+  "real_engine_total": 18,
+  "distinct_storage_groups": 15,
+  "raw_log_hash_checks": [
+    {
+      "file": "reproduction/storage.stdout.log",
+      "sha256": "a846462665e58d2accf5c453ffa5f3de9c6508aeb37ad07d9df8490527c0a645",
+      "match": true
+    },
+    {
+      "file": "reproduction/storage.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/campaign-write.stdout.log",
+      "sha256": "e1e13eee5895cd83564ffacfe2501b0446b0107bb5f82e9f3834db18397d2be1",
+      "match": true
+    },
+    {
+      "file": "reproduction/campaign-write.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/campaign-restore.stdout.log",
+      "sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
+      "match": true
+    },
+    {
+      "file": "reproduction/campaign-restore.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-seed.stdout.log",
+      "sha256": "56b9bf144b54309124e15bd5fac06a09173ffb07696bc78237bc018728e1c9c4",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-seed.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-restore.stdout.log",
+      "sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-restore.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-second-restart.stdout.log",
+      "sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
+      "match": true
+    },
+    {
+      "file": "reproduction/migration-second-restart.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-future.stdout.log",
+      "sha256": "902c9124a8ab57549e64e4058b52fe68bd599d606f77dc0a57c02c3e138bf7fa",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-future.stderr.log",
+      "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-corrupt.stdout.log",
+      "sha256": "7112983c91ee7019380e73032256e67c030da0d83c6568ad3c7f87da561e3c54",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-corrupt.stderr.log",
+      "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-recovered.stdout.log",
+      "sha256": "60c4116ec5ea99823a68cdfa221754e118189c833af472186801bc2775319d0f",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-recovered.stderr.log",
+      "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-write-failure.stdout.log",
+      "sha256": "f88c5735b75fe036fa018913bcb724983b39d5e0e23a90130bc7f03898afcb70",
+      "match": true
+    },
+    {
+      "file": "reproduction/failure-write-failure.stderr.log",
+      "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "match": true
+    },
+    {
+      "file": "reproduction/attempt_recovery.stdout.log",
+      "sha256": "b48baace761ae1f336fd3d76512f0ecca097b23cf9e156d0c32e7818fb43cb3c",
+      "match": true
+    },
+    {
+      "file": "reproduction/attempt_recovery.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/recovery_records.stdout.log",
+      "sha256": "7672b14a41f526b58a667a5dc24e9ee0e7ea406ec0e8a2aeb48784485cbb9338",
+      "match": true
+    },
+    {
+      "file": "reproduction/recovery_records.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/restart_lifecycle.stdout.log",
+      "sha256": "765e5c66d46a1510d11ed612bb83b225ab98e8845b530d1af5ced0b2793dfe51",
+      "match": true
+    },
+    {
+      "file": "reproduction/restart_lifecycle.stderr.log",
+      "sha256": "3ac5d075c999644ecd73f34d28f4afd7554b69cebc19b0d5b9b8c076008534db",
+      "match": true
+    },
+    {
+      "file": "reproduction/fall_depletion.stdout.log",
+      "sha256": "cd48105f51de7d7db79a8918a05233fa9f5021536c297493b3f17e0a35a43566",
+      "match": true
+    },
+    {
+      "file": "reproduction/fall_depletion.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/assist_recovery.stdout.log",
+      "sha256": "f3eda40ec91b5356cf494db89295196218b3667eab4933723cc2acb56d36320c",
+      "match": true
+    },
+    {
+      "file": "reproduction/assist_recovery.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/assist_ui.stdout.log",
+      "sha256": "d46c62f728f3fa1955bc4499d29aaebba3981ce36f86543ada88d4c5cd4213d2",
+      "match": true
+    },
+    {
+      "file": "reproduction/assist_ui.stderr.log",
+      "sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c",
+      "match": true
+    },
+    {
+      "file": "reproduction/pause_menu.stdout.log",
+      "sha256": "c114276fa7115e997c1e590c9dab929a39ab6461f09f10dd8a94699b9d26c6e8",
+      "match": true
+    },
+    {
+      "file": "reproduction/pause_menu.stderr.log",
+      "sha256": "e72986c4d10092e663eb10910b2124b3d9995f3f1b51a3f4aac218acee56160b",
+      "match": true
+    },
+    {
+      "file": "reproduction/two_levels.stdout.log",
+      "sha256": "16f21aeb72aa0bf75605be80fc40d1c7debe11f40091ad96fa355fd83a3a4427",
+      "match": true
+    },
+    {
+      "file": "reproduction/two_levels.stderr.log",
+      "sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f",
+      "match": true
+    }
+  ],
+  "criteria": [
+    {
+      "criterion": "Refuse unsafe/unsupported hosts before child launch or storage/output creation",
+      "verdict": "PASS",
+      "evidence": "guard.stderr.log and supplemental-results.json; source gate precedes side effects"
+    },
+    {
+      "criterion": "Fresh Linux per-case storage and deliberate restart/migration sharing",
+      "verdict": "PASS",
+      "evidence": "reproduction/results.json; 18 invocations, 15 sandbox storage groups"
+    },
+    {
+      "criterion": "Refusal regression tests assert no child calls or player-data changes",
+      "verdict": "PASS",
+      "evidence": "4 unittest methods plus 10 independent mocked probes; no native non-Linux execution claimed"
+    },
+    {
+      "criterion": "Original issue durable versus attempt state",
+      "verdict": "PASS",
+      "evidence": "unchanged ADR/game progress/save implementation; real process restart and attempt/record tests pass"
+    },
+    {
+      "criterion": "Versioned safe save/reload and corruption handling",
+      "verdict": "PASS",
+      "evidence": "real storage and future/corrupt/recovered/write-failure cases pass"
+    },
+    {
+      "criterion": "Restart and migration",
+      "verdict": "PASS",
+      "evidence": "separate write/restore and seed/migrate/second-restart processes pass"
+    },
+    {
+      "criterion": "Applicable exact-build evidence and honest limitations",
+      "verdict": "PASS",
+      "evidence": "candidate/source/engine manifests and 36 verified raw-log hashes retained; final PR evidence integration remains separate"
+    }
+  ],
+  "actionable_findings": [],
+  "limitations": [
+    "Non-Linux refusal results use mocked platform APIs; no native Windows/macOS engine run.",
+    "MCP editor bridge disconnected; tests use installed native Linux engine directly.",
+    "Headless local tests use current imported cache; no export/browser/target-device or visual/audio/controller/child/co-op playtest.",
+    "Host/GameMode D-Bus, ObjectDB leak, exit resource warnings/errors and injected restart errors remain in raw logs; passing checks do not establish error-free runtime.",
+    "No actual power-loss, low-disk, arbitrary filesystem-permission or concurrent-writer simulation.",
+    "Full PR evidence integration review follows separately; this report binds the frozen correction source candidate."
+  ]
+}
