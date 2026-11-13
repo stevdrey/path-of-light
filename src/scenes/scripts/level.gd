@@ -31,6 +31,7 @@ var player_health: Node2D
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
+	Progress.retry_failed_save()
 	var pause_menu := CanvasLayer.new()
 	pause_menu.name = "PauseMenu"
 	pause_menu.set_script(PAUSE_MENU)
@@ -176,8 +177,7 @@ func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
 	completed = replay
 	transitioning = replay
 	movement.input_locked = replay
-	_update_status()
-	status.text = "No se pudo reiniciar. Reintenta o vuelve al menú desde pausa."
+	_update_status("No se pudo reiniciar. Reintenta o vuelve al menú desde pausa.")
 	push_warning("Level restart failed (error %d, replay=%s). Retry and pause remain available." % [error, replay])
 
 func _on_guard_defeated(guard: Node2D) -> void:
@@ -228,10 +228,11 @@ func _on_collected(kind: int, points: int) -> void:
 func _on_box_item_released(item: CollectibleItem) -> void:
 	item.collected.connect(_on_collected)
 
-func _update_status() -> void:
-	status.text = "Control: %s" % control_label
-	if not Progress.campaign_notice().is_empty():
-		status.text += "\n" + Progress.campaign_notice()
+func _update_status(headline := "") -> void:
+	status.text = headline if not headline.is_empty() else "Control: %s" % control_label
+	var notice := Progress.campaign_notice()
+	if not notice.is_empty():
+		status.text += "\n" + notice
 	var key_kind: int = door.required_key if door != null else CollectibleItem.Kind.BLUE_KEY
 	collection_hud.set_inventory(Progress.diamond_counts, Progress.keys.get(key_kind, false), key_kind, present_colors, Progress.score, door != null)
 

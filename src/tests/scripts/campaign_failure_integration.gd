@@ -30,22 +30,22 @@ func run() -> void:
 	var mode := OS.get_cmdline_user_args()[0]
 	match mode:
 		"--future":
-			put("user://campaign.json", '{"schema_version":2,"future_data":"preserve"}')
+			put(Store.default_path(), '{"schema_version":2,"future_data":"preserve"}')
 		"--corrupt":
-			put("user://campaign.json", "broken primary")
-			put("user://campaign.json.bak", "broken backup")
+			put(Store.default_path(), "broken primary")
+			put(Store.default_path() + ".bak", "broken backup")
 		"--recovered":
-			put("user://campaign.json", "broken primary")
-			put("user://campaign.json.bak", '{"schema_version":1,"completed_levels":[1],"recorded_secrets":[]}')
+			put(Store.default_path(), "broken primary")
+			put(Store.default_path() + ".bak", '{"schema_version":1,"completed_levels":[1],"recorded_secrets":[]}')
 		"--write-failure":
 			Progress.campaign_store = FailingStore.new()
-	var before := FileAccess.get_file_as_string("user://campaign.json") if FileAccess.file_exists("user://campaign.json") else ""
+	var before := FileAccess.get_file_as_string(Store.default_path()) if FileAccess.file_exists(Store.default_path()) else ""
 	root.set_meta("skip_intro_splash", true)
 	var menu: Control = load("res://src/ui/front_end.tscn").instantiate()
 	root.add_child(menu)
 	current_scene = menu
 	if mode != "--write-failure":
-		var notice: Label = menu.main_panel.get_child(5)
+		var notice: Label = menu.save_notice
 		if not check(notice.visible and not notice.text.is_empty(), "startup displays recovery/version/corruption notice"):
 			return
 	menu._play()
@@ -59,13 +59,15 @@ func run() -> void:
 	if not check(Progress.completed_levels.has(1), "completion still recorded in memory"):
 		return
 	if mode in ["--future", "--corrupt"]:
-		if not check(FileAccess.get_file_as_string("user://campaign.json") == before and Progress.campaign_error != OK and not Progress.campaign_notice().is_empty() and level.status.text.contains(Progress.campaign_notice()), "protected files unchanged and gameplay reports unsaved state"):
+		if not check(FileAccess.get_file_as_string(Store.default_path()) == before and Progress.campaign_error != OK and not Progress.campaign_notice().is_empty() and level.status.text.contains(Progress.campaign_notice()), "protected files unchanged and gameplay reports unsaved state"):
 			return
 	elif mode == "--write-failure":
 		if not check(Progress.campaign_error != OK and level.status.text.contains("No se pudo guardar"), "I/O failure is visible during play"):
 			return
 		Progress.campaign_store.failing = false
-		if not check(Progress.save_campaign() == OK and Progress.campaign_notice().is_empty() and Store.new().load_campaign().data.recorded_secrets == [1], "later retry saves retained memory progress and clears failure"):
+		# The menu/level boundary retry, not a manual save, must persist it.
+		Progress.retry_failed_save()
+		if not check(Progress.campaign_error == OK and Progress.campaign_notice().is_empty() and Store.new().load_campaign().data.recorded_secrets == [1], "later retry saves retained memory progress and clears failure"):
 			return
 	else:
 		if not check(Progress.campaign_error == OK and Store.new().load_campaign().data.recorded_secrets == [1], "recovered data can be saved with new progress"):

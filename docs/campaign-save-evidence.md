@@ -40,6 +40,8 @@ python3 src/tests/run_campaign_checks.py \
 
 The runner now explicitly supports Linux only. Other host platforms are rejected before any engine invocation (including `--version`), output directory or sandbox is created, because XDG overrides do not isolate Godot storage on Windows/macOS. `--help` remains available on all hosts. On Linux the runner creates fresh isolated user directories on every invocation, retains exact commands and raw logs, and exits nonzero for failures/timeouts/script diagnostics. It does not import the project or modify editor/plugin settings. Inspect the recorded engine/source hashes before relying on a reproduction.
 
+Review follow-up: `--script` harnesses on any OS now default to `user://test-campaign.json`, so direct test runs cannot replace the player's campaign; the Linux XDG runner still isolates settings and cache. `GameProgress.reset()` disables autosave until the next load, failed writes are retried at menu/level boundaries, unchanged records skip writing, any integral schema version above 1 is protected as newer, and migration keeps the untouched v0 document as `campaign.json.v0.bak`. The retained evidence above predates this follow-up.
+
 ## Remaining limitations
 
 Headless fault injection does not simulate actual power loss, filesystem caches, low disk space, all file-permission configurations, simultaneous writers or a process killed at every instruction. The same-directory rename/flush protocol is checked on this Linux host only; a valid backup may be one event behind. There is no tamper detection for otherwise valid JSON. Unrecoverable/newer files require explicit repair or a compatible build; there is no destructive automatic recovery/reset flow.

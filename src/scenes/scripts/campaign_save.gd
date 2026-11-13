@@ -11,8 +11,18 @@ const FIELDS := ["schema_version", "completed_levels", "recorded_secrets"]
 var path: String
 var writable := false
 
-func _init(save_path: String = "user://campaign.json") -> void:
-	path = save_path
+func _init(save_path: String = "") -> void:
+	path = save_path if not save_path.is_empty() else default_path()
+
+# `--script` test harnesses run with a scripted main loop. They must never touch
+# the player's campaign on any OS, so they get a separate default file.
+## Static stores may be built while a test script is still loading, before its
+## main loop exists, so the command line is checked too.
+static func default_path() -> String:
+	var loop := Engine.get_main_loop()
+	var args := OS.get_cmdline_args()
+	var harness := (loop != null and loop.get_script() != null) or args.has("--script") or args.has("-s")
+	return "user://test-campaign.json" if harness else "user://campaign.json"
 
 func empty_data() -> Dictionary:
 	return {"schema_version": VERSION, "completed_levels": [], "recorded_secrets": []}
@@ -57,6 +67,11 @@ func save_campaign(data: Dictionary) -> Error:
 	if not has_primary and not has_backup and (primary.status != "missing" or backup.status != "missing"):
 		writable = false
 		return ERR_FILE_CORRUPT
+	# Keep the untouched pre-migration document so a faulty migration can be redone.
+	if primary.status == "migrated" and not FileAccess.file_exists(path + ".v0.bak"):
+		var copy_error := DirAccess.copy_absolute(ProjectSettings.globalize_path(path), ProjectSettings.globalize_path(path + ".v0.bak"))
+		if copy_error != OK:
+			return copy_error
 	var error := _stage(path + ".tmp", decoded.data)
 	if error != OK:
 		return error
@@ -76,14 +91,15 @@ func _stage(destination: String, data: Dictionary) -> Error:
 	var file := FileAccess.open(destination, FileAccess.WRITE)
 	if file == null:
 		return FileAccess.get_open_error()
-	file.store_string(JSON.stringify(data, "\t") + "\n")
+	var text := JSON.stringify(data, "\t") + "\n"
+	file.store_string(text)
 	file.flush()
 	var error := file.get_error()
 	file.close()
 	if error != OK:
 		return error
-	var verification := _read(destination)
-	if verification.status != "loaded" or verification.data != data:
+	# Byte comparison is enough: `data` was already validated by _decode.
+	if FileAccess.get_file_as_string(destination) != text:
 		return ERR_FILE_CORRUPT
 	return OK
 
@@ -114,11 +130,12 @@ func _failure(status: String, error: int) -> Dictionary:
 	return {"status": status, "data": empty_data(), "error": error}
 
 func _decode(value: Variant) -> Dictionary:
-	if not value is Dictionary or not _is_integer(value.get("schema_version"), 0, MAX_LEVEL_ID):
+	# Any integral version above ours is newer, however large; never treat it as corrupt.
+	if not value is Dictionary or not _is_integer(value.get("schema_version"), 0, INF):
 		return _failure("corrupt", ERR_FILE_CORRUPT)
-	var version := int(value.schema_version)
-	if version > VERSION:
+	if value.schema_version > VERSION:
 		return _failure("unsupported", ERR_UNAVAILABLE)
+	var version := int(value.schema_version)
 	if value.size() != FIELDS.size():
 		return _failure("corrupt", ERR_FILE_CORRUPT)
 	var result := empty_data()
@@ -148,5 +165,5 @@ func _decode(value: Variant) -> Dictionary:
 		result[field].sort()
 	return {"status": "migrated" if version == 0 else "loaded", "data": result, "error": OK}
 
-func _is_integer(value: Variant, minimum: int, maximum: int) -> bool:
+func _is_integer(value: Variant, minimum: int, maximum: float) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value >= minimum and value <= maximum and float(value) == floor(float(value))

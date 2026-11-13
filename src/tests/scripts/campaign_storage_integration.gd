@@ -106,7 +106,18 @@ func run() -> void:
 		return
 	store = fresh("migration")
 	put(store.path, {"schema_version": 0, "completed_levels": {"2": true, "1": true}, "recorded_secrets": {"2": true}})
+	var legacy := FileAccess.get_file_as_string(store.path)
 	if not check(store.load_campaign().status == "migrated" and store.load_campaign().data == NEXT and store.save_campaign(store.load_campaign().data) == OK and store.load_campaign().status == "loaded", "defined v0 fixture migrates deterministically and upgrades on write"):
+		return
+	if not check(FileAccess.get_file_as_string(store.path + ".v0.bak") == legacy, "migration keeps the untouched v0 document"):
+		return
+	store = fresh("future-huge")
+	var huge := JSON.stringify({"schema_version": 1700000000, "completed_levels": [], "recorded_secrets": []})
+	put(store.path, huge, true)
+	put(store.path + ".bak", DATA)
+	if not check(store.load_campaign().status == "unsupported" and store.save_campaign(DATA) != OK and FileAccess.get_file_as_string(store.path) == huge, "very large newer versions are protected, not corrupt"):
+		return
+	if not check(Store.default_path() == "user://test-campaign.json" and Store.new().path == Store.default_path(), "script harness never uses the player's campaign file"):
 		return
 	for phase in ["stage-primary", "stage-backup", "promote-backup", "promote-primary"]:
 		var fault := FaultStore.new("user://storage-tests/" + phase + ".json")

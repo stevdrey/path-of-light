@@ -14,9 +14,11 @@ var assists_button: Button
 var key_buttons := {}
 var waiting_action := ""
 var message: Label
+var save_notice: Label
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
+	Progress.retry_failed_save()
 	BackgroundMusic.play_menu()
 	theme = MENU_THEME
 	_build_ui()
@@ -66,7 +68,7 @@ func _build_ui() -> void:
 	_add_button(main_panel, "JUGAR", _play)
 	_add_button(main_panel, "OPCIONES", _open_options)
 	_add_button(main_panel, "SALIR", func(): get_tree().quit())
-	var save_notice := _label(Progress.campaign_notice(), 14)
+	save_notice = _label(Progress.campaign_notice(), 14)
 	save_notice.custom_minimum_size.x = 380
 	save_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	save_notice.visible = not save_notice.text.is_empty()
