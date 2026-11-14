@@ -111,6 +111,28 @@ func run() -> void:
 		return
 	if not check(FileAccess.get_file_as_string(store.path + ".v0.bak") == legacy, "migration keeps the untouched v0 document"):
 		return
+	for primary_state in ["corrupt", "missing"]:
+		store = fresh("migration-backup-" + primary_state)
+		if primary_state == "corrupt":
+			put(store.path, "broken primary", true)
+		# Deliberate CRLF/spacing/order must survive exactly, not just as JSON.
+		var original := "{\r\n  \"recorded_secrets\": {\"2\": true}, \"schema_version\": 0,\r\n  \"completed_levels\": {\"1\": true}\r\n}\r\n".to_utf8_buffer()
+		var file := FileAccess.open(store.path + ".bak", FileAccess.WRITE)
+		file.store_buffer(original)
+		file.close()
+		if not check(store.load_campaign().status == "recovered" and store.load_campaign().data == DATA, "recover v0 backup with " + primary_state + " primary"):
+			return
+		# A real copy obstruction must fail before either committed input changes.
+		DirAccess.make_dir_absolute(store.path + ".v0.bak.tmp")
+		var failed: Error = store.save_campaign(NEXT)
+		var primary_untouched := FileAccess.get_file_as_string(store.path) == "broken primary" if primary_state == "corrupt" else not FileAccess.file_exists(store.path)
+		if not check(failed != OK and primary_untouched and FileAccess.get_file_as_bytes(store.path + ".bak") == original and not FileAccess.file_exists(store.path + ".v0.bak"), "failed legacy copy preserves both inputs: " + primary_state):
+			return
+		DirAccess.remove_absolute(store.path + ".v0.bak.tmp")
+		if not check(store.save_campaign(NEXT) == OK and FileAccess.get_file_as_bytes(store.path + ".v0.bak") == original, "first save archives recovered v0 bytes: " + primary_state):
+			return
+		if not check(store.save_campaign(NEXT) == OK and store._read(store.path + ".bak").status == "loaded" and FileAccess.get_file_as_bytes(store.path + ".v0.bak") == original, "second save rotates backup without losing original v0 bytes: " + primary_state):
+			return
 	store = fresh("future-huge")
 	var huge := JSON.stringify({"schema_version": 1700000000, "completed_levels": [], "recorded_secrets": []})
 	put(store.path, huge, true)

@@ -1,0 +1,52 @@
+extends SceneTree
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
+const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+const DATA := {"schema_version":1,"completed_levels":[1],"recorded_secrets":[1]}
+var checks := 0
+class CountStore extends "res://src/scenes/scripts/campaign_save.gd":
+	var calls := 0
+	var fail := false
+	func save_campaign(data: Dictionary) -> Error:
+		calls += 1
+		return ERR_FILE_CANT_WRITE if fail else super.save_campaign(data)
+func check(condition: bool, message: String) -> bool:
+	checks += 1
+	if not condition:
+		printerr("FAIL: ", message)
+		quit(1)
+	return condition
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	var store := CountStore.new("user://progress-challenges.json")
+	store.load_campaign()
+	store.save_campaign(DATA)
+	Progress.campaign_store = store
+	Progress.load_campaign()
+	var before := FileAccess.get_file_as_bytes(store.path)
+	Progress.reset()
+	if not check(Progress.record_secret(2) == ERR_UNAUTHORIZED and FileAccess.get_file_as_bytes(store.path) == before, "reset then record cannot overwrite seeded durable progress"):
+		return
+	Progress.load_campaign()
+	if not check(Progress.completed_levels == {1:true} and Progress.recorded_secrets == {1:true} and Progress.campaign_persistent, "explicit reload restores old facts and re-enables persistence"):
+		return
+	store.calls = 0
+	if not check(Progress.record_secret(1) == OK and Progress.record_completion(1) == OK and store.calls == 0, "unchanged facts avoid all writes"):
+		return
+	if not check(Progress.record_completion(2) == OK and store.calls == 1 and Store.new(store.path).load_campaign().data.completed_levels == [1,2], "new fact saves durable data"):
+		return
+	store.fail = true
+	if not check(Progress.record_secret(2) == ERR_FILE_CANT_WRITE and Progress.recorded_secrets.has(2) and not Progress.campaign_notice().is_empty(), "failure keeps discovery and exposes failure"):
+		return
+	store.fail = false
+	var calls: int = store.calls
+	if not check(Progress.record_secret(2) == OK and store.calls == calls + 1 and Progress.campaign_notice().is_empty(), "unchanged fact retries failed write and clears notice"):
+		return
+	store.fail = true
+	Progress.record_secret(3)
+	store.fail = false
+	Progress.retry_failed_save()
+	if not check(Progress.campaign_error == OK and Store.new(store.path).load_campaign().data.recorded_secrets == [1,2,3], "boundary retry persists pending fact"):
+		return
+	print("PASS: supplemental GameProgress hardening ", checks, " assertions against seeded committed data")
+	quit(0)

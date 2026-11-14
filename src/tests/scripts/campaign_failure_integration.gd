@@ -2,6 +2,7 @@ extends SceneTree
 
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+const SceneWait := preload("res://src/tests/scripts/scene_test_wait.gd")
 
 class FailingStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var failing := true
@@ -49,8 +50,9 @@ func run() -> void:
 		if not check(notice.visible and not notice.text.is_empty(), "startup displays recovery/version/corruption notice"):
 			return
 	menu._play()
-	await frames(5)
-	var level: Node2D = current_scene
+	var level: Node2D = await SceneWait.for_scene(self, "res://src/scenes/adventure_level_1.tscn")
+	if not check(level != null, "menu must load a ready level-one scene within %d ms" % SceneWait.TIMEOUT_MSEC):
+		return
 	level._use_portal(level.get_node("BonusEntrance"))
 	await frames(60)
 	if not check(level.in_secret and not level.movement.input_locked and Progress.recorded_secrets.has(1), "save problems do not lock play or lose in-memory discovery"):

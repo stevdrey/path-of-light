@@ -2,6 +2,7 @@ extends SceneTree
 
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+const SceneWait := preload("res://src/tests/scripts/scene_test_wait.gd")
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -37,8 +38,10 @@ func run() -> void:
 			if not check(Progress.campaign_status == "migrated" and Progress.save_campaign() == OK and Store.new().load_campaign().status == "loaded", "migration upgrades to current schema and reloads"):
 				return
 		menu._play()
-		await frames(5)
-		if not check(current_scene.level_number == 1 and Progress.completed_levels.has(2) and Progress.recorded_secrets.has(1) and Progress.score == 0, "JUGAR starts clean level one with campaign records retained"):
+		var started: Node = await SceneWait.for_scene(self, "res://src/scenes/adventure_level_1.tscn")
+		if not check(started != null, "menu must load a ready level-one scene within %d ms" % SceneWait.TIMEOUT_MSEC):
+			return
+		if not check(started.level_number == 1 and Progress.completed_levels.has(2) and Progress.recorded_secrets.has(1) and Progress.score == 0, "JUGAR starts clean level one with campaign records retained"):
 			return
 		print("PASS: second process restores campaign without attempt inventory; menu remains playable")
 	else:
@@ -52,7 +55,9 @@ func run() -> void:
 		level._on_collected(level.door.required_key, 0)
 		level._open_door()
 		await frames(190)
-		level = current_scene
+		level = await SceneWait.for_scene(self, "res://src/scenes/adventure_level_2.tscn")
+		if not check(level != null, "exit must load a ready level-two scene within %d ms" % SceneWait.TIMEOUT_MSEC):
+			return
 		if not check(level.level_number == 2 and Store.new().load_campaign().data.completed_levels == [1], "real exit autosaves before scene transition"):
 			return
 		level._on_collected(level.door.required_key, 0)

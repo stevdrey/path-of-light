@@ -80,7 +80,8 @@ def main(argv=None):
         checks.append(run('failure-' + mode, 'campaign_failure_integration', ['--' + mode]))
     # These exercise the affected record, reset, retry, menu and assist boundaries.
     for script in ('attempt_recovery', 'recovery_records', 'restart_lifecycle',
-                   'fall_depletion', 'assist_recovery', 'assist_ui', 'pause_menu', 'two_levels'):
+                   'fall_depletion', 'assist_recovery', 'assist_ui', 'pause_menu', 'two_levels',
+                   'scene_transition_wait'):
         checks.append(run(script, script + '_integration'))
     report['passed'] = sum(checks)
     report['total'] = len(checks)

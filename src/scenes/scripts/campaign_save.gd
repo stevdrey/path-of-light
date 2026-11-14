@@ -67,9 +67,11 @@ func save_campaign(data: Dictionary) -> Error:
 	if not has_primary and not has_backup and (primary.status != "missing" or backup.status != "missing"):
 		writable = false
 		return ERR_FILE_CORRUPT
-	# Keep the untouched pre-migration document so a faulty migration can be redone.
-	if primary.status == "migrated" and not FileAccess.file_exists(path + ".v0.bak"):
-		var copy_error := DirAccess.copy_absolute(ProjectSettings.globalize_path(path), ProjectSettings.globalize_path(path + ".v0.bak"))
+	# Either input can be the migration source. Preserve it before publishing a
+	# primary or rotating a backup, including v0 backups beside a v1 primary.
+	var migration_source := path if primary.status == "migrated" else path + ".bak" if backup.status == "migrated" else ""
+	if not migration_source.is_empty():
+		var copy_error := _preserve_v0(migration_source)
 		if copy_error != OK:
 			return copy_error
 	var error := _stage(path + ".tmp", decoded.data)
@@ -86,6 +88,23 @@ func save_campaign(data: Dictionary) -> Error:
 		if error != OK:
 			return error
 	return _promote(path + ".tmp", path)
+
+func _preserve_v0(source: String) -> Error:
+	var destination := path + ".v0.bak"
+	var retained := _read(destination)
+	if retained.status == "migrated":
+		return OK  # Retain the first valid original; never rotate this archive.
+	if retained.status != "missing":
+		return ERR_FILE_CORRUPT if retained.error == OK else retained.error as Error
+	# A failed copy must not leave a partial archive that a later save mistakes
+	# for successful preservation. Only promote a validated, byte-identical copy.
+	var temporary := destination + ".tmp"
+	var error := DirAccess.copy_absolute(ProjectSettings.globalize_path(source), ProjectSettings.globalize_path(temporary))
+	if error != OK:
+		return error
+	if _read(temporary).status != "migrated" or FileAccess.get_file_as_bytes(source) != FileAccess.get_file_as_bytes(temporary):
+		return ERR_FILE_CORRUPT
+	return _promote(temporary, destination)
 
 func _stage(destination: String, data: Dictionary) -> Error:
 	var file := FileAccess.open(destination, FileAccess.WRITE)

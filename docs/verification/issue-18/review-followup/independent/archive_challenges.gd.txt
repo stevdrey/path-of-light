@@ -1,0 +1,64 @@
+extends SceneTree
+const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+const V1 := {"schema_version":1,"completed_levels":[1],"recorded_secrets":[]}
+const NEXT := {"schema_version":1,"completed_levels":[1,2],"recorded_secrets":[]}
+const RAW := "{\r\n \"schema_version\":0,\"completed_levels\":{\"1\":true},\"recorded_secrets\":{}\r\n}\r\n"
+var checks := 0
+class FaultArchive extends "res://src/scenes/scripts/campaign_save.gd":
+	var mode := ""
+	func _read(source: String) -> Dictionary:
+		if source.ends_with(".v0.bak.tmp") and mode in ["invalid-copy", "unequal-copy"]:
+			var file := FileAccess.open(source, FileAccess.WRITE)
+			file.store_string("broken" if mode == "invalid-copy" else '{"schema_version":0,"completed_levels":{"1":true},"recorded_secrets":{}}')
+			file.close()
+		return super._read(source)
+	func _promote(source: String, destination: String) -> Error:
+		if destination.ends_with(".v0.bak") and mode == "archive-promote":
+			return ERR_FILE_CANT_WRITE
+		return super._promote(source, destination)
+func put(path: String, contents: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_buffer(contents.to_utf8_buffer())
+	file.close()
+func check(condition: bool, message: String) -> bool:
+	checks += 1
+	if not condition:
+		printerr("FAIL: ", message)
+		quit(1)
+	return condition
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	DirAccess.make_dir_recursive_absolute("user://archive-challenges")
+	for primary in ["v0", "v1", "corrupt", "missing"]:
+		for mode in ["invalid-copy", "unequal-copy", "archive-promote", "corrupt-archive", "future-archive", "v1-archive", "directory-archive", "retained-archive"]:
+			var path: String = "user://archive-challenges/" + primary + "-" + mode
+			if primary != "missing":
+				put(path, RAW if primary == "v0" else JSON.stringify(V1) if primary == "v1" else "broken primary")
+			put(path + ".bak", RAW)
+			var store := FaultArchive.new(path)
+			store.mode = mode
+			var existing := ""
+			if mode.ends_with("archive") and mode not in ["archive-promote", "directory-archive"]:
+				existing = "broken archive" if mode == "corrupt-archive" else '{"schema_version":99}' if mode == "future-archive" else JSON.stringify(V1) if mode == "v1-archive" else '{"schema_version":0,"completed_levels":{"7":true},"recorded_secrets":{}}'
+				put(path + ".v0.bak", existing)
+			elif mode == "directory-archive":
+				DirAccess.make_dir_absolute(path + ".v0.bak")
+			var before := FileAccess.get_file_as_bytes(path)
+			if not check(store.load_campaign().status in ["loaded", "migrated", "recovered"], "load " + primary + " " + mode):
+				return
+			var error: Error = store.save_campaign(NEXT)
+			if mode == "retained-archive":
+				if not check(error == OK and FileAccess.get_file_as_string(path + ".v0.bak") == existing, "retain first valid archive " + primary):
+					return
+				continue
+			if not check(error != OK and FileAccess.get_file_as_bytes(path) == before and FileAccess.get_file_as_string(path + ".bak") == RAW, "archive failure leaves committed inputs " + primary + " " + mode):
+				return
+			if not check((FileAccess.get_file_as_string(path + ".v0.bak") == existing) if not existing.is_empty() else not FileAccess.file_exists(path + ".v0.bak"), "archive evidence untouched " + primary + " " + mode):
+				return
+			if mode in ["invalid-copy", "unequal-copy", "archive-promote"]:
+				store.mode = ""
+				if not check(store.save_campaign(NEXT) == OK and store.save_campaign(NEXT) == OK and FileAccess.get_file_as_string(path + ".v0.bak") == RAW, "retry and two saves after staging/promotion failure " + primary + " " + mode):
+					return
+	print("PASS: supplemental archive preservation ", checks, " assertions across 32 primary/fault combinations")
+	quit(0)
