@@ -1,0 +1,83 @@
+extends SceneTree
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
+const Wait := preload("res://src/tests/scripts/scene_test_wait.gd")
+const MAP := "res://src/ui/level_map.tscn"
+const MENU := "res://src/ui/front_end.tscn"
+class FailingPause extends "res://src/ui/scripts/pause_menu.gd":
+	var calls := 0
+	func _request_map_scene() -> Error:
+		calls += 1
+		return ERR_CANT_CREATE
+class FailingLevel extends "res://src/scenes/scripts/second_level.gd":
+	var calls := 0
+	func _request_map_scene() -> Error:
+		calls += 1
+		return ERR_CANT_CREATE
+func _initialize() -> void:
+	call_deferred("run")
+func check(condition: bool, message: String) -> bool:
+	if not condition:
+		printerr("FAIL: ", message)
+		quit(1)
+	else:
+		print("PASS: ", message)
+	return condition
+func settle() -> void:
+	for i in 3:
+		await process_frame
+func run() -> void:
+	Progress.reset()
+	var level: Node = load("res://src/scenes/adventure_level_1.tscn").instantiate()
+	root.add_child(level)
+	current_scene = level
+	level.get_node("PauseMenu").free()
+	var pause_menu := FailingPause.new()
+	level.add_child(pause_menu)
+	Progress.score = 123
+	Progress.diamonds = 4
+	Progress.keys[4] = true
+	Progress.hearts = 2
+	Progress.recorded_secrets[1] = true
+	var inventory := Progress.snapshot_inventory()
+	pause_menu.pause()
+	for attempt in 2:
+		pause_menu._return_to_map()
+		pause_menu._return_to_map()
+		await settle()
+		if not check(pause_menu.calls == attempt + 1 and paused and pause_menu.owns_pause and not pause_menu.map_return_requested and not pause_menu.map_button.disabled and pause_menu.map_button.has_focus() and Progress.snapshot_inventory() == inventory and Progress.hearts == 2 and Progress.recorded_secrets == {1:true}, "pause failure attempt %d preserves paused attempt, inventory and secrets; one request, focused retry" % attempt):
+			return
+	# The menu action detaches the old scene before its deferred map callback.
+	pause_menu._return_to_map()
+	pause_menu._return_to_menu()
+	var menu: Node = await Wait.for_scene(self, MENU)
+	if not check(menu != null and not paused, "competing pause menu action safely supersedes queued map callback"):
+		return
+	menu.free()
+	level = load("res://src/scenes/adventure_level_2.tscn").instantiate()
+	level.set_script(FailingLevel)
+	root.add_child(level)
+	current_scene = level
+	level.transitioning = true
+	level._show_completion()
+	var content: Node = level.get_node("Completion/Panel/Margin/Content")
+	var button: Button = content.get_child(content.get_child_count() - 1)
+	Progress.score = 456
+	Progress.hearts = 1
+	inventory = Progress.snapshot_inventory()
+	for attempt in 2:
+		level._request_return_to_map(button)
+		level._request_return_to_map(button)
+		await settle()
+		if not check(level.calls == attempt + 1 and current_scene == level and level.completed and level.transitioning and not level.map_return_requested and not button.disabled and button.has_focus() and Progress.snapshot_inventory() == inventory and Progress.hearts == 1 and Progress.completed_levels == {2:true}, "completion failure attempt %d preserves completion, inventory and retry; one request" % attempt):
+			return
+	level._replay_from_start()
+	level._request_return_to_map(button)
+	if not check(level.restarting and not level.map_return_requested, "replay requested before map suppresses competing map callback"):
+		return
+	var first: Node = await Wait.for_scene(self, "res://src/scenes/adventure_level_1.tscn")
+	if not check(first != null and Progress.completed_levels == {2:true}, "replay after map failure succeeds and preserves durable completion"):
+		return
+	first.free()
+	current_scene = null
+	await process_frame
+	quit(0)

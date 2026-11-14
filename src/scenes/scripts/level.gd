@@ -2,7 +2,8 @@ extends Node2D
 
 const PAUSE_MENU := preload("res://src/ui/scripts/pause_menu.gd")
 const Progress = preload("res://src/scenes/scripts/game_progress.gd")
-const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
+const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
+const LEVEL_MAP := "res://src/ui/level_map.tscn"
 const DOOR_SCENE := preload("res://src/scenes/level_door.tscn")
 const ITEM_SCENE := preload("res://src/collectibles/collectible.tscn")
 const HEALTH_SCENE := preload("res://src/character/components/player_health.tscn")
@@ -20,6 +21,7 @@ var door: Area2D
 var transitioning := false
 var completed := false
 var restarting := false
+var map_return_requested := false
 var fade: ColorRect
 @export var level_number := 1
 var gem_sound: AudioStreamPlayer
@@ -110,6 +112,8 @@ func _setup_exit() -> void:
 		key.collected.connect(_on_collected)
 
 func _input(event: InputEvent) -> void:
+	if map_return_requested:
+		return
 	if event.is_action_pressed("restart_demo") and not event.is_echo() and (not transitioning or completed):
 		get_viewport().set_input_as_handled()
 		if completed:
@@ -160,7 +164,7 @@ func _replay_from_start() -> void:
 
 func _request_restart_scene(replay: bool) -> Error:
 	if replay:
-		return get_tree().change_scene_to_file(FIRST_LEVEL)
+		return get_tree().change_scene_to_file(Registry.level(1).scene_path)
 	return get_tree().reload_current_scene()
 
 func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
@@ -200,7 +204,34 @@ func _spawn_guard_key(at: Vector2) -> void:
 func _show_completion() -> void:
 	_record_level_completion()
 	completed = true
-	add_child(COMPLETION_SCENE.instantiate())
+	var celebration := COMPLETION_SCENE.instantiate()
+	add_child(celebration)
+	var map_button := Button.new()
+	map_button.text = "MAPA DE NIVELES"
+	map_button.custom_minimum_size.y = 40
+	map_button.pressed.connect(_request_return_to_map.bind(map_button))
+	celebration.get_node("Panel/Margin/Content").add_child(map_button)
+	map_button.grab_focus()
+
+func _request_return_to_map(button: Button) -> void:
+	if map_return_requested or restarting:
+		return
+	map_return_requested = true
+	button.disabled = true
+	call_deferred("_return_to_map", button)
+
+func _request_map_scene() -> Error:
+	return get_tree().change_scene_to_file(LEVEL_MAP)
+
+func _return_to_map(button: Button) -> void:
+	if not is_inside_tree():
+		return
+	var error := _request_map_scene()
+	if error != OK:
+		map_return_requested = false
+		button.disabled = false
+		button.text = "No se pudo abrir el mapa · Reintentar"
+		button.grab_focus()
 
 func _record_level_completion() -> void:
 	Progress.record_completion(level_number)

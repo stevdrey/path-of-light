@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+    "--headless",
+    "--path",
+    "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+    "--script",
+    "/tmp/path-light-19-independent/reviewer_layout.gd"
+  ],
+  "environment": {
+    "XDG_DATA_HOME": "/tmp/path-light-19-layout-jo9bfiav/data",
+    "XDG_CONFIG_HOME": "/tmp/path-light-19-layout-jo9bfiav/config",
+    "XDG_CACHE_HOME": "/tmp/path-light-19-layout-jo9bfiav/cache"
+  },
+  "returncode": 0
+}

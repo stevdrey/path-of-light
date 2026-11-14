@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+    "--headless",
+    "--path",
+    "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+    "--script",
+    "/tmp/path-light-19-independent/reviewer_boundaries.gd"
+  ],
+  "environment": {
+    "XDG_DATA_HOME": "/tmp/path-light-19-boundaries-aibv79zl/data",
+    "XDG_CONFIG_HOME": "/tmp/path-light-19-boundaries-aibv79zl/config",
+    "XDG_CACHE_HOME": "/tmp/path-light-19-boundaries-aibv79zl/cache"
+  },
+  "returncode": 0
+}
