@@ -1,0 +1,48 @@
+extends SceneTree
+const Wait := preload("res://src/tests/scripts/scene_test_wait.gd")
+const EXPECTED := "res://src/scenes/adventure_level_1.tscn"
+var checks := 0
+func check(condition: bool, message: String) -> bool:
+	checks += 1
+	if not condition:
+		printerr("FAIL: ", message)
+		quit(1)
+	return condition
+func _initialize() -> void:
+	call_deferred("run")
+func reattach(fixture: Node) -> void:
+	root.add_child(fixture)
+	current_scene = fixture
+func run() -> void:
+	var begin := Time.get_ticks_msec()
+	var scene: Node = await Wait.for_scene(self, EXPECTED, 35)
+	var elapsed := Time.get_ticks_msec() - begin
+	if not check(scene == null and elapsed >= 35 and elapsed < 1000, "absent scene respects measured lower/upper bound"):
+		return
+	begin = Time.get_ticks_msec()
+	scene = await Wait.for_scene(self, EXPECTED, -10)
+	if not check(scene == null and Time.get_ticks_msec() - begin < 100, "negative timeout terminates immediately"):
+		return
+	var fixture := Node.new()
+	fixture.scene_file_path = EXPECTED
+	root.add_child(fixture)
+	current_scene = fixture
+	if not check(fixture.is_node_ready(), "independent fixture starts ready"):
+		return
+	fixture.request_ready()
+	if not check(not fixture.is_node_ready(), "independent fixture has requested another ready notification"):
+		return
+	begin = Time.get_ticks_msec()
+	scene = await Wait.for_scene(self, EXPECTED, 35)
+	elapsed = Time.get_ticks_msec() - begin
+	if not check(scene == null and elapsed >= 35 and elapsed < 1000, "correct-path but unready current scene is rejected within bound"):
+		return
+	root.remove_child(fixture)
+	call_deferred("reattach", fixture)
+	scene = await Wait.for_scene(self, EXPECTED, 1000)
+	if not check(scene == fixture and fixture.is_node_ready(), "deferred readiness completes and satisfies wait"):
+		return
+	fixture.free()
+	current_scene = null
+	print("PASS: supplemental scene waiter ", checks, " assertions; measured deadlines and readiness gate")
+	quit(0)

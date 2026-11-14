@@ -1,0 +1,15 @@
+GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted
+ERROR: Failed to open '/tmp/path-of-light-18-ex5fgdsb/storage/data/godot/app_userdata/Experiment 2d Platform/storage-tests/migration-backup-corrupt.json.v0.bak.tmp'.
+   at: copy (core/io/dir_access.cpp:426)
+   GDScript backtrace (most recent call first):
+       [0] _preserve_v0 (res://src/scenes/scripts/campaign_save.gd:102)
+       [1] save_campaign (res://src/scenes/scripts/campaign_save.gd:74)
+       [2] run (res://src/tests/scripts/campaign_storage_integration.gd:127)
+ERROR: Failed to open '/tmp/path-of-light-18-ex5fgdsb/storage/data/godot/app_userdata/Experiment 2d Platform/storage-tests/migration-backup-missing.json.v0.bak.tmp'.
+   at: copy (core/io/dir_access.cpp:426)
+   GDScript backtrace (most recent call first):
+       [0] _preserve_v0 (res://src/scenes/scripts/campaign_save.gd:102)
+       [1] save_campaign (res://src/scenes/scripts/campaign_save.gd:74)
+       [2] run (res://src/tests/scripts/campaign_storage_integration.gd:127)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2609)

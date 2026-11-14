@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "src/tests",
+    "-p",
+    "test_campaign_runner.py",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "python": "3.15.2",
+  "platform": "Linux-7.3.3-300.fc45.x86_64-x86_64-with-glibc2.44",
+  "base_commit": "b0f70c358c5c4d9c16ed2b96f273cd7e0f24a564",
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3c19758594685267234ab04e4ae829827233958698e4b6cb96a60bc9f2c7edaf",
+  "scope": "4 Python methods with mocked host/engine APIs; expected 19 engine invocations, not native non-Linux verification"
+}

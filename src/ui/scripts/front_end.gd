@@ -5,6 +5,7 @@ const SPLASH_ART: Texture2D = preload("res://assets/images/ui/splash_art.png")
 const MENU_ART: Texture2D = preload("res://assets/images/ui/menu_background.png")
 const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const ACTION_LABELS := {"move_left": "Mover a la izquierda", "move_right": "Mover a la derecha", "jump": "Saltar", "crouch": "Agacharse / bajar", "interact_up": "Subir / interactuar", "restart_demo": "Reiniciar nivel"}
 var main_panel: VBoxContainer
 var options_panel: VBoxContainer
@@ -13,8 +14,11 @@ var assists_button: Button
 var key_buttons := {}
 var waiting_action := ""
 var message: Label
+var save_notice: Label
 
 func _ready() -> void:
+	Progress.ensure_campaign_loaded()
+	Progress.retry_failed_save()
 	BackgroundMusic.play_menu()
 	theme = MENU_THEME
 	_build_ui()
@@ -64,6 +68,11 @@ func _build_ui() -> void:
 	_add_button(main_panel, "JUGAR", _play)
 	_add_button(main_panel, "OPCIONES", _open_options)
 	_add_button(main_panel, "SALIR", func(): get_tree().quit())
+	save_notice = _label(Progress.campaign_notice(), 14)
+	save_notice.custom_minimum_size.x = 380
+	save_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	save_notice.visible = not save_notice.text.is_empty()
+	main_panel.add_child(save_notice)
 	options_panel = VBoxContainer.new()
 	options_panel.add_theme_constant_override("separation", 5)
 	holder.add_child(options_panel)
@@ -186,8 +195,7 @@ func _show_splash() -> void:
 	main_panel.get_child(2).grab_focus()
 
 func _play() -> void:
-	# JUGAR starts at level one within the same session; preserve discoveries
-	# and completions. A future new-campaign action must call GameProgress.reset().
+	# JUGAR starts a level-one attempt while preserving durable campaign facts.
 	BackgroundMusic.play_game()
 	get_tree().change_scene_to_file(FIRST_LEVEL)
 

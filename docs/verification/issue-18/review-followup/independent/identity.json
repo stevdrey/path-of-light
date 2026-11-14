@@ -1,0 +1,8 @@
+{
+  "head": "b0f70c358c5c4d9c16ed2b96f273cd7e0f24a564",
+  "source_count": 430,
+  "source_manifest_sha256": "cb91f1f1d3e0932dd678b97f0a15b74bb77eb660895449c367f934fdaf00e3b3",
+  "matches_candidate": true,
+  "expected_sha": "cb91f1f1d3e0932dd678b97f0a15b74bb77eb660895449c367f934fdaf00e3b3",
+  "differences": []
+}

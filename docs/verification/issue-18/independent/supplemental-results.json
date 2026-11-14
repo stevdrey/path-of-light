@@ -1,0 +1,87 @@
+[
+  {
+    "mode": "real-stage-collisions",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "/tmp/path-of-light-18-independent/supplemental.gd",
+      "--",
+      "--real-stage-collisions"
+    ],
+    "environment": {
+      "XDG_MENU_PREFIX": "gnome-",
+      "XDG_SESSION_DESKTOP": "gnome",
+      "XDG_SESSION_TYPE": "wayland",
+      "XDG_CURRENT_DESKTOP": "GNOME",
+      "XDG_SESSION_CLASS": "user",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_DATA_DIRS": "/home/stevdrey/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/",
+      "XDG_SESSION_EXTRA_DEVICE_ACCESS": "render:accel",
+      "XDG_DATA_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/real-stage-collisions/data",
+      "XDG_CONFIG_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/real-stage-collisions/config",
+      "XDG_CACHE_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/real-stage-collisions/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": []
+  },
+  {
+    "mode": "unreadable",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "/tmp/path-of-light-18-independent/supplemental.gd",
+      "--",
+      "--unreadable"
+    ],
+    "environment": {
+      "XDG_MENU_PREFIX": "gnome-",
+      "XDG_SESSION_DESKTOP": "gnome",
+      "XDG_SESSION_TYPE": "wayland",
+      "XDG_CURRENT_DESKTOP": "GNOME",
+      "XDG_SESSION_CLASS": "user",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_DATA_DIRS": "/home/stevdrey/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/",
+      "XDG_SESSION_EXTRA_DEVICE_ACCESS": "render:accel",
+      "XDG_DATA_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/unreadable/data",
+      "XDG_CONFIG_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/unreadable/config",
+      "XDG_CACHE_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/unreadable/cache",
+      "REVIEW_SAVE_PATH": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/unreadable/protected.json"
+    },
+    "exit_code": 0,
+    "diagnostics": []
+  },
+  {
+    "mode": "direct-level2",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "/tmp/path-of-light-18-independent/supplemental.gd",
+      "--",
+      "--direct-level2"
+    ],
+    "environment": {
+      "XDG_MENU_PREFIX": "gnome-",
+      "XDG_SESSION_DESKTOP": "gnome",
+      "XDG_SESSION_TYPE": "wayland",
+      "XDG_CURRENT_DESKTOP": "GNOME",
+      "XDG_SESSION_CLASS": "user",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_DATA_DIRS": "/home/stevdrey/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/",
+      "XDG_SESSION_EXTRA_DEVICE_ACCESS": "render:accel",
+      "XDG_DATA_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/direct-level2/data",
+      "XDG_CONFIG_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/direct-level2/config",
+      "XDG_CACHE_HOME": "/tmp/path-of-light-18-independent/supplemental-qxs2egaz/direct-level2/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": []
+  }
+]

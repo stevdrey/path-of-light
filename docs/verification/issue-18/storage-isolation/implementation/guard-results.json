@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "src/tests",
+    "-p",
+    "test_campaign_runner.py",
+    "-v"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "python": "3.15.2",
+  "platform": "Linux-7.2.15-300.fc45.x86_64-x86_64-with-glibc2.44",
+  "base_commit": "ffd8ceaa51b98ef083836263616a220f533f4bdc",
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "257057f62dd2cde6e05836522b32910f7b4de4b198c56b78ac4f0452c84126eb",
+  "scope": "4 Python test methods; unsupported host names and engine subprocesses mocked, not native cross-platform Godot execution"
+}

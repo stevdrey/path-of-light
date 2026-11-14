@@ -1,0 +1,61 @@
+{
+  "mocked_only": true,
+  "results": [
+    {
+      "name": "import has no child/storage effects",
+      "pass": true
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "Windows",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "Darwin",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "FreeBSD",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "OpenBSD",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": "linux",
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "refusal before all effects",
+      "mocked_host": null,
+      "pass": true,
+      "stderr": "usage: supplemental_guards.py [-h] --godot GODOT --output OUTPUT\nsupplemental_guards.py: error: Campaign checks require Linux: XDG isolation is not supported by this runner on other hosts. No Godot process or save fixture was started.\n"
+    },
+    {
+      "name": "timeout fails closed for 18 fixtures",
+      "pass": true
+    },
+    {
+      "name": "zero-exit-script-error fails closed for 18 fixtures",
+      "pass": true
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}

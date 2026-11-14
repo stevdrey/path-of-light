@@ -111,6 +111,10 @@ func run() -> void:
 	Progress.reset()
 	if not check(Progress.recorded_secrets.is_empty() and Progress.completed_levels.is_empty() and Progress.score == 0, "explicit full-reset API clears session records"):
 		return
+	var store_path: String = Progress.campaign_store.path
+	var disk_before := FileAccess.get_file_as_string(store_path) if FileAccess.file_exists(store_path) else ""
+	if not check(Progress.record_secret(3) != OK and Progress.campaign_notice().is_empty() and (FileAccess.get_file_as_string(store_path) if FileAccess.file_exists(store_path) else "") == disk_before, "in-memory reset never autosaves cleared records over disk"):
+		return
 	print("PASS: failed reload/replay recovery, menu playthrough lifetime and explicit reset")
 	await frames(2)
 	quit(0)

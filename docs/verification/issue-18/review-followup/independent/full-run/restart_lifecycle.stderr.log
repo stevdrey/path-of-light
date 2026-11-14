@@ -1,0 +1,13 @@
+GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted
+WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:181)
+WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:181)
+WARNING: Level restart failed (error 20, replay=true). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:181)

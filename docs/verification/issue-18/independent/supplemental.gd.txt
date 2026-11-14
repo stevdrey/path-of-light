@@ -1,0 +1,41 @@
+extends SceneTree
+const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
+const DATA := {"schema_version": 1, "completed_levels": [1], "recorded_secrets": [1]}
+const NEXT := {"schema_version": 1, "completed_levels": [1,2], "recorded_secrets": [1]}
+func _initialize() -> void:
+	call_deferred("run")
+func check(ok: bool, message: String) -> bool:
+	print("PASS: " if ok else "FAIL: ", message)
+	if not ok:
+		quit(1)
+	return ok
+func run() -> void:
+	var mode: String = OS.get_cmdline_user_args()[0]
+	if mode == "--real-stage-collisions":
+		for suffix in [".tmp", ".bak.tmp"]:
+			var store := Store.new("user://collision" + suffix + ".json")
+			store.load_campaign()
+			if not check(store.save_campaign(DATA) == OK, "seed " + suffix): return
+			var committed := FileAccess.get_file_as_string(store.path)
+			DirAccess.make_dir_absolute(store.path + suffix)
+			if not check(store.save_campaign(NEXT) != OK and Store.new(store.path).load_campaign().data == DATA and FileAccess.get_file_as_string(store.path) == committed, "real directory staging collision preserves previous commit " + suffix): return
+			DirAccess.remove_absolute(store.path + suffix)
+			if not check(store.save_campaign(NEXT) == OK and Store.new(store.path).load_campaign().data == NEXT, "retry after real staging obstruction " + suffix): return
+	elif mode == "--unreadable":
+		var store := Store.new(OS.get_environment("REVIEW_SAVE_PATH"))
+		var result := store.load_campaign()
+		print("Observed unreadable load status: ", result.status)
+		if not check(result.status == "recovered" and result.data == DATA and store.save_campaign(NEXT) != OK, "unreadable primary recovers backup and rejects overwrite"): return
+	elif mode == "--direct-level2":
+		var file := FileAccess.open("user://campaign.json", FileAccess.WRITE)
+		file.store_string(JSON.stringify(DATA))
+		file.close()
+		root.get_node("GameSettings").set_assist("extra_hearts", true)
+		var level: Node = load("res://src/scenes/adventure_level_2.tscn").instantiate()
+		root.add_child(level)
+		current_scene = level
+		if not check(Progress.completed_levels == {1:true} and Progress.recorded_secrets == {1:true} and Progress.hearts == 5 and level.player_health.hearts == 5 and Progress.keys.is_empty() and Progress.score == 0, "direct level-two startup loads campaign and configured assist hearts without attempt inventory"): return
+		current_scene.free()
+		current_scene = null
+	quit(0)
