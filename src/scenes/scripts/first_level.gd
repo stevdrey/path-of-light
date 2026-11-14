@@ -27,8 +27,8 @@ func _ready() -> void:
 	game_settings.assists_changed.connect(_refresh_checkpoints)
 	movement.use_player_control()
 	control_label = "Jugador"
-	if level_number == 1 and door != null:
-		door.next_level = "res://src/scenes/adventure_level_2.tscn"
+	if door != null and not Registry.level(level_number).is_empty():
+		door.next_level = Registry.next_level_path(level_number)
 	$CanvasLayer/Instructions/Title.text = "Sendero de descubrimiento"
 	$CanvasLayer/Instructions/Help.text = "Esc: pausa  •  Cambia los controles en Opciones desde el menú inicial."
 	_create_vortex_overlay()

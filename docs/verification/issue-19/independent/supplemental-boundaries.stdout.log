@@ -1,0 +1,9 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PASS: pause failure attempt 0 preserves paused attempt, inventory and secrets; one request, focused retry
+PASS: pause failure attempt 1 preserves paused attempt, inventory and secrets; one request, focused retry
+PASS: competing pause menu action safely supersedes queued map callback
+PASS: completion failure attempt 0 preserves completion, inventory and retry; one request
+PASS: completion failure attempt 1 preserves completion, inventory and retry; one request
+PASS: replay requested before map suppresses competing map callback
+PASS: replay after map failure succeeds and preserves durable completion

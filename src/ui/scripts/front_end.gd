@@ -3,7 +3,8 @@ extends Control
 const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const SPLASH_ART: Texture2D = preload("res://assets/images/ui/splash_art.png")
 const MENU_ART: Texture2D = preload("res://assets/images/ui/menu_background.png")
-const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
+const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
+const LEVEL_MAP := "res://src/ui/level_map.tscn"
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const ACTION_LABELS := {"move_left": "Mover a la izquierda", "move_right": "Mover a la derecha", "jump": "Saltar", "crouch": "Agacharse / bajar", "interact_up": "Subir / interactuar", "restart_demo": "Reiniciar nivel"}
@@ -15,6 +16,7 @@ var key_buttons := {}
 var waiting_action := ""
 var message: Label
 var save_notice: Label
+var map_button: Button
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -24,7 +26,11 @@ func _ready() -> void:
 	_build_ui()
 	if get_tree().root.has_meta("skip_intro_splash"):
 		get_tree().root.remove_meta("skip_intro_splash")
-		main_panel.get_child(2).grab_focus()
+		if get_tree().root.has_meta("focus_level_map"):
+			get_tree().root.remove_meta("focus_level_map")
+			map_button.grab_focus()
+		else:
+			main_panel.get_child(2).grab_focus()
 	else:
 		_show_splash()
 
@@ -67,6 +73,7 @@ func _build_ui() -> void:
 	main_panel.add_child(subtitle)
 	_add_button(main_panel, "JUGAR", _play)
 	_add_button(main_panel, "OPCIONES", _open_options)
+	map_button = _add_button(main_panel, "MAPA DE NIVELES", _open_map)
 	_add_button(main_panel, "SALIR", func(): get_tree().quit())
 	save_notice = _label(Progress.campaign_notice(), 14)
 	save_notice.custom_minimum_size.x = 380
@@ -197,7 +204,13 @@ func _show_splash() -> void:
 func _play() -> void:
 	# JUGAR starts a level-one attempt while preserving durable campaign facts.
 	BackgroundMusic.play_game()
-	get_tree().change_scene_to_file(FIRST_LEVEL)
+	get_tree().change_scene_to_file(Registry.level(1).scene_path)
+
+func _open_map() -> void:
+	var error := get_tree().change_scene_to_file(LEVEL_MAP)
+	if error != OK:
+		save_notice.text = "No se pudo abrir el mapa. Reintenta."
+		save_notice.show()
 
 func _open_options() -> void:
 	main_panel.hide()

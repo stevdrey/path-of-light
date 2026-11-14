@@ -1,0 +1,37 @@
+extends SceneTree
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
+const Wait := preload("res://src/tests/scripts/scene_test_wait.gd")
+const MAP := "res://src/ui/level_map.tscn"
+func _initialize() -> void:
+	call_deferred("run")
+func accept() -> void:
+	for pressed in [true, false]:
+		var event := InputEventAction.new()
+		event.action = "ui_accept"
+		event.pressed = pressed
+		Input.parse_input_event(event)
+func run() -> void:
+	var mode := OS.get_cmdline_user_args()[0]
+	var path := "res://src/scenes/adventure_level_2.tscn" if mode == "completion" else "res://src/scenes/adventure_level_1.tscn"
+	var level: Node = load(path).instantiate()
+	root.add_child(level)
+	current_scene = level
+	if mode == "completion":
+		level._show_completion()
+	else:
+		var pause_menu: Node = level.get_node("PauseMenu")
+		pause_menu.pause()
+		pause_menu.map_button.grab_focus()
+	await process_frame
+	accept()
+	accept()
+	var map: Node = await Wait.for_scene(self, MAP)
+	if map == null or paused:
+		printerr("FAIL: repeated ui_accept did not reach unpaused map: ", mode)
+		quit(1)
+		return
+	print("PASS: repeated ui_accept reached unpaused map: ", mode)
+	map.free()
+	current_scene = null
+	await process_frame
+	quit(0)

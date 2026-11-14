@@ -1,0 +1,25 @@
+extends SceneTree
+const Progress := preload("res://src/scenes/scripts/game_progress.gd")
+const Wait := preload("res://src/tests/scripts/scene_test_wait.gd")
+const MAP := "res://src/ui/level_map.tscn"
+const LEVEL := "res://src/scenes/adventure_level_1.tscn"
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	var level: Node = load(LEVEL).instantiate()
+	root.add_child(level)
+	current_scene = level
+	var pause_menu: Node = level.get_node("PauseMenu")
+	pause_menu.pause()
+	pause_menu.map_button.pressed.emit()
+	pause_menu.map_button.pressed.emit()
+	var map: Node = await Wait.for_scene(self, MAP)
+	if map == null or paused:
+		printerr("FAIL: duplicate pause selection did not reach unpaused map")
+		quit(1)
+		return
+	print("PASS: duplicate pause selection reached unpaused map")
+	map.free()
+	current_scene = null
+	await process_frame
+	quit(0)
