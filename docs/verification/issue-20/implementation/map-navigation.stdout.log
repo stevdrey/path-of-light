@@ -1,0 +1,4 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PASS: Space on completion preserves the screen without requesting the map
+PASS: repeated UI confirm and retry after pause/completion navigation failure

@@ -8,11 +8,15 @@ static var score := 0
 static var diamonds := 0
 static var diamond_counts: Array[int] = [0, 0, 0, 0]
 static var keys: Dictionary = {}
+const Rewards := preload("res://src/scenes/scripts/campaign_rewards.gd")
 const CampaignSave := preload("res://src/scenes/scripts/campaign_save.gd")
 # Durable facts, separate from inventory and scene state. JUGAR and replay
 # begin new attempts without erasing the campaign. No destructive reset UI.
 static var recorded_secrets: Dictionary = {}
 static var completed_levels: Dictionary = {}
+static var recorded_discoveries: Dictionary = {}
+static var world_rewards: Dictionary = {}
+static var character_unlocks: Dictionary = {}
 static var campaign_store := CampaignSave.new()
 static var campaign_loaded := false
 static var campaign_status := "new"
@@ -32,6 +36,9 @@ static func reset() -> void:
 	reset_attempt()
 	recorded_secrets.clear()
 	completed_levels.clear()
+	recorded_discoveries.clear()
+	world_rewards.clear()
+	character_unlocks.clear()
 	campaign_status = "new"
 	campaign_error = OK
 
@@ -46,11 +53,19 @@ static func load_campaign() -> void:
 	campaign_status = result.status
 	campaign_error = result.error
 	completed_levels.clear()
+	recorded_discoveries.clear()
+	world_rewards.clear()
+	character_unlocks.clear()
 	recorded_secrets.clear()
 	for id in result.data.completed_levels:
 		completed_levels[id] = true
 	for id in result.data.recorded_secrets:
 		recorded_secrets[id] = true
+	for field in ["recorded_discoveries", "world_rewards", "character_unlocks"]:
+		for id in result.data[field]:
+			_collection(field)[id] = true
+	# Legacy portal records identify the existing chamber, not a new reward.
+	_reconcile_records()
 	# Application restart never resumes an attempt or restores its key/health.
 	reset_attempt()
 
@@ -59,7 +74,9 @@ static func save_campaign() -> Error:
 	if not campaign_persistent:
 		return ERR_UNAUTHORIZED
 	campaign_error = campaign_store.save_campaign({"schema_version": CampaignSave.VERSION,
-		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys()})
+		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys(),
+		"recorded_discoveries": recorded_discoveries.keys(), "world_rewards": world_rewards.keys(),
+		"character_unlocks": character_unlocks.keys()})
 	if campaign_error == OK:
 		campaign_status = "loaded"
 	return campaign_error as Error
@@ -76,6 +93,7 @@ static func record_secret(level_id: int) -> Error:
 	if recorded_secrets.has(level_id) and campaign_error == OK:
 		return OK
 	recorded_secrets[level_id] = true
+	_reconcile_records()
 	return save_campaign()
 
 static func record_completion(level_id: int) -> Error:
@@ -83,7 +101,36 @@ static func record_completion(level_id: int) -> Error:
 	if completed_levels.has(level_id) and campaign_error == OK:
 		return OK
 	completed_levels[level_id] = true
+	_reconcile_records()
 	return save_campaign()
+
+# Named discovery events are accepted only for authored records. No arbitrary
+# public reward-grant API: rewards follow explicit completion policy.
+static func record_discovery(discovery_id: String) -> Error:
+	ensure_campaign_loaded()
+	for discovery in Rewards.DISCOVERIES:
+		if discovery.id == discovery_id:
+			if recorded_discoveries.has(discovery_id) and campaign_error == OK:
+				return OK
+			recorded_discoveries[discovery_id] = true
+			return save_campaign()
+	return ERR_INVALID_PARAMETER
+
+static func _collection(field: String) -> Dictionary:
+	match field:
+		"recorded_discoveries": return recorded_discoveries
+		"world_rewards": return world_rewards
+		"character_unlocks": return character_unlocks
+	return {}
+
+static func _reconcile_records() -> void:
+	for discovery in Rewards.DISCOVERIES:
+		if recorded_secrets.get(discovery.level_id, false):
+			recorded_discoveries[discovery.id] = true
+	var earned := Rewards.earned(completed_levels)
+	for field in ["world_rewards", "character_unlocks"]:
+		for id in earned[field]:
+			_collection(field)[id] = true
 
 static func campaign_notice() -> String:
 	if campaign_status == "unsupported":

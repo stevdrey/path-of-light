@@ -1,0 +1,26 @@
+[
+  {
+    "name": "runner-unit",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "src/tests",
+      "-p",
+      "test_campaign_runner.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0
+  }
+]

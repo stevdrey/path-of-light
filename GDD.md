@@ -227,6 +227,8 @@ E03-02 adds a registry and connected selection map for the two existing solo lev
 
 Subsequent prototype work implements configurable solo assists in the two experimental levels: extra hearts, more frequent authored safe points and falls without heart loss. See [ADR 0005](docs/adr/0005-configurable-assists.md) and [assist evidence](docs/accessibility-assists-evidence.md) for the implemented rules, automated checks and remaining human evaluation. This does not establish accessibility, co-op assists or approval of the broader proposed scope.
 
+E03-03 extends local saves to separate discovery, world-reward and character-unlock records, with v0/v1 migration and a map-accessible log for the existing secret chamber. By explicit scope decision, world rewards and the prototype unlock stay locked until authored finales exist; the two experimental routes do not constitute a finished campaign. Synthetic reward fixtures verify persistence without adding campaign content or a character selector. See [ADR 0007](docs/adr/0007-discoveries-rewards.md) and [reward evidence](docs/campaign-rewards-evidence.md).
+
 ## 12. Scope and production
 
 ### First milestone: representative playable slice

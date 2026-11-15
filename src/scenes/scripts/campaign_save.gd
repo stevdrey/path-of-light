@@ -2,11 +2,13 @@ extends RefCounted
 ## Data-only campaign storage. Never instantiate objects from a save file.
 ## One local writer; temporary files are never considered committed saves.
 
-const VERSION := 1
+const VERSION := 2
 const MAX_BYTES := 1048576
 const MAX_RECORDS := 4096
 const MAX_LEVEL_ID := 1000000
-const FIELDS := ["schema_version", "completed_levels", "recorded_secrets"]
+const LEGACY_FIELDS := ["schema_version", "completed_levels", "recorded_secrets"]
+const REWARD_FIELDS := ["recorded_discoveries", "world_rewards", "character_unlocks"]
+const MAX_RECORD_ID_LENGTH := 96
 
 var path: String
 var writable := false
@@ -25,7 +27,8 @@ static func default_path() -> String:
 	return "user://test-campaign.json" if harness else "user://campaign.json"
 
 func empty_data() -> Dictionary:
-	return {"schema_version": VERSION, "completed_levels": [], "recorded_secrets": []}
+	return {"schema_version": VERSION, "completed_levels": [], "recorded_secrets": [],
+		"recorded_discoveries": [], "world_rewards": [], "character_unlocks": []}
 
 func load_campaign() -> Dictionary:
 	writable = false
@@ -52,7 +55,7 @@ func save_campaign(data: Dictionary) -> Error:
 	if not writable:
 		return ERR_UNAUTHORIZED
 	var decoded := _decode(data)
-	if decoded.status != "loaded":
+	if decoded.status != "loaded" or (JSON.stringify(decoded.data, "\t") + "\n").to_utf8_buffer().size() > MAX_BYTES:
 		return ERR_INVALID_DATA
 	# Recheck disk before replacing anything. Preserve unreadable or newer files.
 	var primary := _read(path)
@@ -67,13 +70,14 @@ func save_campaign(data: Dictionary) -> Error:
 	if not has_primary and not has_backup and (primary.status != "missing" or backup.status != "missing"):
 		writable = false
 		return ERR_FILE_CORRUPT
-	# Either input can be the migration source. Preserve it before publishing a
-	# primary or rotating a backup, including v0 backups beside a v1 primary.
-	var migration_source := path if primary.status == "migrated" else path + ".bak" if backup.status == "migrated" else ""
-	if not migration_source.is_empty():
-		var copy_error := _preserve_v0(migration_source)
-		if copy_error != OK:
-			return copy_error
+	# Archive each legacy input before rotation, including a legacy backup beside
+	# an already upgraded primary. Preserve exact bytes, never an inferred copy.
+	for source in [path, path + ".bak"]:
+		var original := _read(source)
+		if original.status == "migrated":
+			var copy_error := _preserve_legacy(source, original.source_version)
+			if copy_error != OK:
+				return copy_error
 	var error := _stage(path + ".tmp", decoded.data)
 	if error != OK:
 		return error
@@ -89,10 +93,10 @@ func save_campaign(data: Dictionary) -> Error:
 			return error
 	return _promote(path + ".tmp", path)
 
-func _preserve_v0(source: String) -> Error:
-	var destination := path + ".v0.bak"
+func _preserve_legacy(source: String, version: int) -> Error:
+	var destination := path + ".v%d.bak" % version
 	var retained := _read(destination)
-	if retained.status == "migrated":
+	if retained.status == "migrated" and retained.source_version == version:
 		return OK  # Retain the first valid original; never rotate this archive.
 	if retained.status != "missing":
 		return ERR_FILE_CORRUPT if retained.error == OK else retained.error as Error
@@ -102,7 +106,8 @@ func _preserve_v0(source: String) -> Error:
 	var error := DirAccess.copy_absolute(ProjectSettings.globalize_path(source), ProjectSettings.globalize_path(temporary))
 	if error != OK:
 		return error
-	if _read(temporary).status != "migrated" or FileAccess.get_file_as_bytes(source) != FileAccess.get_file_as_bytes(temporary):
+	var staged := _read(temporary)
+	if staged.status != "migrated" or staged.source_version != version or FileAccess.get_file_as_bytes(source) != FileAccess.get_file_as_bytes(temporary):
 		return ERR_FILE_CORRUPT
 	return _promote(temporary, destination)
 
@@ -155,7 +160,7 @@ func _decode(value: Variant) -> Dictionary:
 	if value.schema_version > VERSION:
 		return _failure("unsupported", ERR_UNAVAILABLE)
 	var version := int(value.schema_version)
-	if value.size() != FIELDS.size():
+	if value.size() != LEGACY_FIELDS.size() + (REWARD_FIELDS.size() if version == VERSION else 0):
 		return _failure("corrupt", ERR_FILE_CORRUPT)
 	var result := empty_data()
 	for field in ["completed_levels", "recorded_secrets"]:
@@ -182,7 +187,26 @@ func _decode(value: Variant) -> Dictionary:
 			seen[int(id)] = true
 		result[field] = seen.keys()
 		result[field].sort()
-	return {"status": "migrated" if version == 0 else "loaded", "data": result, "error": OK}
+	if version == VERSION:
+		for field in REWARD_FIELDS:
+			if not value.has(field) or not value[field] is Array or value[field].size() > MAX_RECORDS:
+				return _failure("corrupt", ERR_FILE_CORRUPT)
+			var seen := {}
+			for id in value[field]:
+				if not valid_record_id(id) or seen.has(id):
+					return _failure("corrupt", ERR_FILE_CORRUPT)
+				seen[id] = true
+			result[field] = seen.keys()
+			result[field].sort()
+	return {"status": "migrated" if version < VERSION else "loaded", "data": result, "error": OK, "source_version": version}
+
+static func valid_record_id(value: Variant) -> bool:
+	if not value is String or value.is_empty() or value.length() > MAX_RECORD_ID_LENGTH:
+		return false
+	for character in value:
+		if not character in "abcdefghijklmnopqrstuvwxyz0123456789_-":
+			return false
+	return true
 
 func _is_integer(value: Variant, minimum: int, maximum: float) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and value >= minimum and value <= maximum and float(value) == floor(float(value))

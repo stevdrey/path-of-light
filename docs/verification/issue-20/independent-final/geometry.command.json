@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+    "--headless",
+    "--path",
+    "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+    "--script",
+    "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform/docs/verification/issue-20/independent-final/geometry_probe.gd"
+  ],
+  "environment": {
+    "XDG_DATA_HOME": "/tmp/issue20-independent-geometry-sbezvzjy/data",
+    "XDG_CONFIG_HOME": "/tmp/issue20-independent-geometry-sbezvzjy/config",
+    "XDG_CACHE_HOME": "/tmp/issue20-independent-geometry-sbezvzjy/cache"
+  },
+  "returncode": 0
+}

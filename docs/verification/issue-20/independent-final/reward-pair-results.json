@@ -1,0 +1,40 @@
+[
+  {
+    "name": "reward-pair-write",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "res://src/tests/scripts/campaign_rewards_integration.gd",
+      "--",
+      "--write"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/data",
+      "XDG_CONFIG_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/config",
+      "XDG_CACHE_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/cache"
+    },
+    "exit_code": 0
+  },
+  {
+    "name": "reward-pair-verify",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "res://src/tests/scripts/campaign_rewards_integration.gd",
+      "--",
+      "--verify"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/data",
+      "XDG_CONFIG_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/config",
+      "XDG_CACHE_HOME": "/tmp/issue20-independent-reward-pair-fzhe81zx/cache"
+    },
+    "exit_code": 1
+  }
+]

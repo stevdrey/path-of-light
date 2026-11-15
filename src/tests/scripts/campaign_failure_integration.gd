@@ -31,7 +31,7 @@ func run() -> void:
 	var mode := OS.get_cmdline_user_args()[0]
 	match mode:
 		"--future":
-			put(Store.default_path(), '{"schema_version":2,"future_data":"preserve"}')
+			put(Store.default_path(), '{"schema_version":3,"future_data":"preserve"}')
 		"--corrupt":
 			put(Store.default_path(), "broken primary")
 			put(Store.default_path() + ".bak", "broken backup")

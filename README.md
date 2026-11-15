@@ -66,3 +66,5 @@ The original game code in `src/**/*.gd` is distributed under the [MIT License](L
 - The provenance and redistribution permissions for some visual assets and generated audio still need to be verified. In particular, the [SFX Engine terms](https://sfxengine.com/terms-of-service) restrict the redistribution of sound effects as standalone files. Their presence in this repository does not imply an open license to reuse them; the applicable terms must be reviewed or the files replaced before distributing them in that form.
 
 Therefore, it has not yet been verified that **all game assets** can be redistributed and modified as open content. The code and assets have different license scopes.
+
+**MAPA DE NIVELES → DESCUBRIMIENTOS Y RECOMPENSAS** shows the saved secret-chamber discovery. Schema-2 saves retain separate discovery, world-reward and character-unlock records and migrate earlier saves with byte-preserved archives. World rewards and the prototype unlock remain locked until explicitly authored finales exist; the two experimental levels do not count as a completed campaign. See [reward persistence evidence](docs/campaign-rewards-evidence.md).
