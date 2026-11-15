@@ -1,0 +1,17 @@
+extends SceneTree
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	root.set_meta("skip_intro_splash", true)
+	var menu: Node = load("res://src/ui/front_end.tscn").instantiate()
+	root.add_child(menu)
+	current_scene = menu
+	menu.map_button.pressed.emit()
+	menu.main_panel.get_child(2).pressed.emit()
+	for i in 5:
+		await process_frame
+	print("Observed scene: ", current_scene.scene_file_path if current_scene != null else "null")
+	if current_scene != null:
+		current_scene.free()
+	current_scene = null
+	quit(0)

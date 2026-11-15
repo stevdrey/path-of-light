@@ -1,0 +1,20 @@
+{
+  "verdict": "PASS",
+  "source_commit": "232048253c73f9f752ce7f80b8afc810c777a68f",
+  "source_tree": "7a0781f4ab3cf5a2f3ff06bdf52aedc37a58b15b",
+  "source_file_count": 425,
+  "source_manifest_sha256": "5579900907d166220b8f011f753c27d3999235af24d5f344291adc51c15c9a2f",
+  "reviewer_runtime_assertions": 31,
+  "independent_runtime_processes": 5,
+  "independent_python_tests": 4,
+  "implementation_processes_audited": 26,
+  "findings": [],
+  "preparation_failure_retained": "editor-import.stderr.log",
+  "limitations": [
+    "headless Linux only",
+    "no human visual/audio/controller/accessibility/playtest",
+    "no co-op/export/browser/native Windows/macOS test",
+    "environment/editor-import and test-cleanup diagnostics retained"
+  ],
+  "publication_performed": false
+}

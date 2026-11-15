@@ -3,7 +3,8 @@ extends Control
 const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const SPLASH_ART: Texture2D = preload("res://assets/images/ui/splash_art.png")
 const MENU_ART: Texture2D = preload("res://assets/images/ui/menu_background.png")
-const FIRST_LEVEL := "res://src/scenes/adventure_level_1.tscn"
+const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
+const MapNavigation := preload("res://src/ui/scripts/map_navigation.gd")
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const ACTION_LABELS := {"move_left": "Mover a la izquierda", "move_right": "Mover a la derecha", "jump": "Saltar", "crouch": "Agacharse / bajar", "interact_up": "Subir / interactuar", "restart_demo": "Reiniciar nivel"}
@@ -15,6 +16,9 @@ var key_buttons := {}
 var waiting_action := ""
 var message: Label
 var save_notice: Label
+var map_button: Button
+var play_button: Button
+var pending_scene := ""
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -24,7 +28,11 @@ func _ready() -> void:
 	_build_ui()
 	if get_tree().root.has_meta("skip_intro_splash"):
 		get_tree().root.remove_meta("skip_intro_splash")
-		main_panel.get_child(2).grab_focus()
+		if get_tree().root.has_meta("focus_level_map"):
+			get_tree().root.remove_meta("focus_level_map")
+			map_button.grab_focus()
+		else:
+			main_panel.get_child(2).grab_focus()
 	else:
 		_show_splash()
 
@@ -65,8 +73,9 @@ func _build_ui() -> void:
 	var subtitle := _label("Una aventura por descubrir", 16)
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	main_panel.add_child(subtitle)
-	_add_button(main_panel, "JUGAR", _play)
+	play_button = _add_button(main_panel, "JUGAR", _play)
 	_add_button(main_panel, "OPCIONES", _open_options)
+	map_button = _add_button(main_panel, "MAPA DE NIVELES", _open_map)
 	_add_button(main_panel, "SALIR", func(): get_tree().quit())
 	save_notice = _label(Progress.campaign_notice(), 14)
 	save_notice.custom_minimum_size.x = 380
@@ -196,8 +205,46 @@ func _show_splash() -> void:
 
 func _play() -> void:
 	# JUGAR starts a level-one attempt while preserving durable campaign facts.
-	BackgroundMusic.play_game()
-	get_tree().change_scene_to_file(FIRST_LEVEL)
+	_queue_scene(Registry.first_level_path())
+
+func _open_map() -> void:
+	_queue_scene(MapNavigation.SCENE)
+
+func _queue_scene(path: String) -> void:
+	if not is_inside_tree() or not pending_scene.is_empty():
+		return
+	pending_scene = path
+	_set_transition_controls(true)
+	# Serialize MAPA and JUGAR before queuing either replacement.
+	call_deferred("_finish_scene", path)
+
+func _set_transition_controls(disabled: bool) -> void:
+	for child in main_panel.get_children():
+		if child is Button:
+			child.disabled = disabled
+
+func _request_menu_scene(path: String) -> Error:
+	if path == MapNavigation.SCENE:
+		return MapNavigation.open(get_tree())
+	return get_tree().change_scene_to_file(path)
+
+func _finish_scene(path: String) -> void:
+	# A caller outside these buttons may already have detached the menu.
+	if not is_inside_tree() or pending_scene != path:
+		return
+	var music: Node = get_node("/root/BackgroundMusic")
+	if _request_menu_scene(path) == OK:
+		if path != MapNavigation.SCENE:
+			music.play_game()
+		return
+	pending_scene = ""
+	_set_transition_controls(false)
+	# Keep campaign warnings and inventory intact after either failed request.
+	var campaign := Progress.campaign_notice()
+	var error_text := "No se pudo abrir el mapa. Reintenta." if path == MapNavigation.SCENE else "No se pudo iniciar el nivel. Reintenta."
+	save_notice.text = (campaign + "\n" if not campaign.is_empty() else "") + error_text
+	save_notice.show()
+	(map_button if path == MapNavigation.SCENE else play_button).grab_focus()
 
 func _open_options() -> void:
 	main_panel.hide()

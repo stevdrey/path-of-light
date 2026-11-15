@@ -7,3 +7,4 @@ An ADR captures a consequential decision, alternatives, tradeoffs and evidence. 
 - [ADR 0003: asset import metadata](0003-import-metadata.md) — proposed.
 - [ADR 0004: solo attempt recovery](0004-attempt-recovery.md) — accepted for solo attempt recovery; ADR 0001 extends its records to disk.
 - [ADR 0005: configurable solo assists](0005-configurable-assists.md) — proposed balance/contract, implemented in the two-level prototype for evaluation.
+- [ADR 0006: campaign registry and map](0006-campaign-registry-map.md) — proposed contract, implemented for two existing solo routes and revisiting.

@@ -1,0 +1,27 @@
+{
+  "source_manifest_sha256": "464ba9d377044d849b3ec2ac7f1ffce467840bda26091d6d8e22ed79e420c41c",
+  "source_matches_final_run": true,
+  "implementation_process_checks": {
+    "passed": 25,
+    "total": 25
+  },
+  "runner_unit_checks": {
+    "passed": 4,
+    "total": 4
+  },
+  "independent_verdict": "PASS",
+  "criteria": {
+    "metadata_unlocks_revisiting": "PASS",
+    "map_and_solo_transitions": "PASS",
+    "evidence_identity_limits_documentation": "PASS"
+  },
+  "candidate_source_changed_after_review": false,
+  "scope": "existing two-level solo prototype; local implementation",
+  "remaining_validation": [
+    "human visual/audio/accessibility playtest",
+    "physical controllers",
+    "co-op",
+    "exported target platforms"
+  ],
+  "remote_publication_performed": false
+}

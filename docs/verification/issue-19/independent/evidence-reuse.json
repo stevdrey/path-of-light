@@ -1,0 +1,177 @@
+{
+  "prior_manifest": "a2b4fa1f1888b0f02fa91de7c7cc410f970597bc941d20f27100eb92c6bc0483",
+  "current_manifest": "464ba9d377044d849b3ec2ac7f1ffce467840bda26091d6d8e22ed79e420c41c",
+  "changed_files": {
+    "docs/campaign-map-evidence.md": {
+      "before": "89084c2f9b1153da0bc811140b515ef30bb4eb85daf05d6aa40184b43a889872",
+      "after": "5c54b559d7551bdbee557d803776ef6e7a3260f636db8d3224c967e17fef3d5a"
+    },
+    "src/scenes/scripts/level.gd": {
+      "before": "631ba74dd282e5330f1fe7bbcd41595d8fea9f5b103e84f98ffde2d29b07d579",
+      "after": "a0b54533ab5598ef5d67606dc72593b1150094c813249c2a4b6d57d3f319bc4b"
+    },
+    "src/tests/run_campaign_checks.py": {
+      "before": "1bf913938e8a6f2809dcb58b93c06d87fd9df540f6e9b0e0f39e88ee5b77fa8f",
+      "after": "d1090c6e1e5e7ad887b4eba8e37832e924357303c264aa67a4487893768cb5cf"
+    },
+    "src/tests/scripts/map_navigation_integration.gd": {
+      "before": null,
+      "after": "37486b4542a5ff377b5d4d005fd8f375b0e2611ba7bb7b2ff2c2873234622172"
+    },
+    "src/tests/scripts/map_navigation_integration.gd.uid": {
+      "before": null,
+      "after": "2b84faf96f05f93d0c32bb43ec7415d24bc5e8a85f2b824444b8681ba52f14f1"
+    },
+    "src/ui/scripts/pause_menu.gd": {
+      "before": "ba701627c2a4895571ddb493204c80a39dd6b2b530e6b524cf09b17e1a0b2768",
+      "after": "e164e4cadb49e185be0b8910a397413f0a656b485af496ef8e521c8227c86124"
+    }
+  },
+  "prior_results": [
+    {
+      "name": "storage",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "campaign-write",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "campaign-restore",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "migration-seed",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "migration-restore",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "migration-second-restart",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "failure-future",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "failure-corrupt",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "failure-recovered",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "failure-write-failure",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "attempt_recovery",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "recovery_records",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "restart_lifecycle",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "fall_depletion",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "assist_recovery",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "assist_ui",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "pause_menu",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "two_levels",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "scene_transition_wait",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "level-map",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "level-map-restore",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "map-future",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "map-corrupt",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    },
+    {
+      "name": "map-recovered",
+      "exit_code": 0,
+      "diagnostics": [],
+      "log_hashes_valid": true
+    }
+  ],
+  "reuse_rationale": "Registry, map implementation, persistence implementation, scenes, original test scripts and runner isolation are unchanged. The correction changes only pause/completion map callbacks plus runner navigation test registration and evidence prose. Focused current-candidate navigation tests independently validate those changes. Prior suite evidence is retained as regression context, not represented as a full current-candidate rerun."
+}

@@ -1,0 +1,219 @@
+{
+  "result_count": 26,
+  "reported_all_passed": true,
+  "reported_passed": 26,
+  "expected_candidate": true,
+  "manifest_matches": true,
+  "manifest_sha256": "5579900907d166220b8f011f753c27d3999235af24d5f344291adc51c15c9a2f",
+  "copied_source_files_changed": [],
+  "checks": [
+    {
+      "name": "storage",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "campaign-write",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "campaign-restore",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "migration-seed",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "migration-restore",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "migration-second-restart",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "failure-future",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "failure-corrupt",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "failure-recovered",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "failure-write-failure",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "attempt_recovery",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "recovery_records",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "restart_lifecycle",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "fall_depletion",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "assist_recovery",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "assist_ui",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "pause_menu",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "two_levels",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "scene_transition_wait",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "level-map",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "level-map-restore",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "map-future",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "map-corrupt",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "map-recovered",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "map-navigation",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    },
+    {
+      "name": "front-end-navigation",
+      "log_hashes_match": true,
+      "zero_exit": true,
+      "diagnostics_match": true,
+      "xdg_isolated": true,
+      "pass_lines_match": true
+    }
+  ]
+}

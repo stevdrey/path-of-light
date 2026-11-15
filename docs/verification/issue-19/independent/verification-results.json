@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS",
+  "base_commit": "a63b7984ee68b17e3bfd4c6dbfd256dc6561c5ca",
+  "source_manifest_sha256": "464ba9d377044d849b3ec2ac7f1ffce467840bda26091d6d8e22ed79e420c41c",
+  "source_file_count": 419,
+  "criteria": {
+    "metadata_unlocks_revisiting": "PASS",
+    "map_and_solo_transitions": "PASS",
+    "evidence_identity_limits_documentation": "PASS"
+  },
+  "findings": [],
+  "initial_p2": "corrected and independently reverified",
+  "focused_current_scenarios_passed": 4,
+  "focused_current_scenarios_total": 4,
+  "implementation_evidence_audited_passed": 25,
+  "implementation_evidence_audited_total": 25,
+  "runner_unit_tests_passed": 4,
+  "diff_check": "PASS",
+  "source_before_after_match": true,
+  "report": "final-integration-report.md"
+}

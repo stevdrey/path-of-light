@@ -1,0 +1,23 @@
+{
+  "verdict": "fail",
+  "candidate_manifest_sha256": "a2b4fa1f1888b0f02fa91de7c7cc410f970597bc941d20f27100eb92c6bc0483",
+  "criteria": {
+    "metadata_unlocks_revisiting": "pass",
+    "display_and_transitions": "fail",
+    "evidence_and_documentation": "pass"
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "title": "Guard repeated deferred return-to-map requests",
+      "locations": [
+        "src/ui/scripts/pause_menu.gd:133-141",
+        "src/scenes/scripts/level.gd:206-214"
+      ],
+      "reproduced": true
+    }
+  ],
+  "reproduction_cases_passed": 24,
+  "reproduction_cases_total": 24,
+  "python_tests_passed": 4
+}

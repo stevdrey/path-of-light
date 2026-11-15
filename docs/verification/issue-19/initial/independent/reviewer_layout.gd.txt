@@ -1,0 +1,23 @@
+extends SceneTree
+const Store := preload("res://src/scenes/scripts/campaign_save.gd")
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	root.size = Vector2i(640,480)
+	var file := FileAccess.open(Store.default_path(), FileAccess.WRITE)
+	file.store_string('{"schema_version":2}')
+	file.close()
+	var map: Control = load("res://src/ui/level_map.tscn").instantiate()
+	root.add_child(map)
+	current_scene = map
+	for i in 6:
+		await process_frame
+	print("FRAME: ", map.frame.get_global_rect(), " VIEWPORT: ",root.get_visible_rect(), " NOTICE: ",map.notice.get_global_rect(), " BACK: ",map.back_button.get_global_rect())
+	if not root.get_visible_rect().encloses(map.frame.get_global_rect()):
+		printerr("FAIL: protected-save map frame exceeds 640x480 viewport")
+		quit(1)
+	else:
+		print("PASS: protected-save map fits 640x480 viewport")
+		map.free()
+		current_scene = null
+		quit(0)

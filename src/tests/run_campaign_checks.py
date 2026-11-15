@@ -18,6 +18,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--godot', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--skip-map', action='store_true', help='Omit the level selection and cold map restore checks (run by default).')
     args = parser.parse_args(argv)
     # XDG overrides protect player storage only on the verified Linux host.
     # Refuse before starting even --version or creating any fixture/output paths.
@@ -30,7 +31,7 @@ def main(argv=None):
 
     source_paths = subprocess.check_output(['git', 'ls-files', '-c', '-o', '--exclude-standard', '-z'], cwd=ROOT).decode().split('\0')
     sources = {name: sha(ROOT / name) for name in sorted(set(source_paths))
-               if name and (ROOT / name).is_file() and not name.startswith('docs/verification/issue-18/')}
+               if name and (ROOT / name).is_file() and not name.startswith('docs/verification/')}
     report = {
         'source_files_sha256': sources,
         'source_manifest_sha256': hashlib.sha256(json.dumps(sources, sort_keys=True, separators=(',', ':')).encode()).hexdigest(),
@@ -83,6 +84,13 @@ def main(argv=None):
                    'fall_depletion', 'assist_recovery', 'assist_ui', 'pause_menu', 'two_levels',
                    'scene_transition_wait'):
         checks.append(run(script, script + '_integration'))
+    if not args.skip_map:
+        checks += [run('level-map', 'level_map_integration', storage='map-restart'),
+                   run('level-map-restore', 'level_map_integration', ['--verify'], 'map-restart')]
+        for mode in ('future', 'corrupt', 'recovered'):
+            checks.append(run('map-' + mode, 'level_map_storage_integration', ['--' + mode]))
+        checks.append(run('map-navigation', 'map_navigation_integration'))
+        checks.append(run('front-end-navigation', 'front_end_navigation_integration'))
     report['passed'] = sum(checks)
     report['total'] = len(checks)
     report['all_passed'] = all(checks)

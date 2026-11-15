@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const MAIN_MENU := "res://src/ui/front_end.tscn"
+const MapNavigation := preload("res://src/ui/scripts/map_navigation.gd")
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 
 var overlay: Control
@@ -10,6 +11,8 @@ var owns_pause := false
 var menu_column: VBoxContainer
 var assists_panel: VBoxContainer
 var assists_button: Button
+var map_button: Button
+var map_return_requested := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -60,6 +63,7 @@ func _build_menu() -> void:
 	column.add_child(hint)
 	resume_button = _button(column, "REANUDAR", resume)
 	assists_button = _button(column, "AYUDAS", _open_assists)
+	map_button = _button(column, "MAPA · DEJAR ESTE INTENTO", _return_to_map)
 	_button(column, "VOLVER AL INICIO", _return_to_menu)
 	_button(column, "SALIR DEL JUEGO", _quit_game)
 	assists_panel = VBoxContainer.new()
@@ -126,6 +130,27 @@ func _return_to_menu() -> void:
 
 func _quit_game() -> void:
 	get_tree().quit()
+
+func _return_to_map() -> void:
+	# Keep the scene paused until a request is accepted; failure is retryable.
+	if not owns_pause or map_return_requested:
+		return
+	map_return_requested = true
+	map_button.disabled = true
+	call_deferred("_finish_return_to_map")
+
+func _request_map_scene() -> Error:
+	return MapNavigation.open(get_tree())
+
+func _finish_return_to_map() -> void:
+	# Another menu action may already have detached this scene.
+	if not is_inside_tree():
+		return
+	# On success the tree stays paused until this scene leaves; _exit_tree()
+	# releases pause before the map is ready, so the old level never runs again.
+	if _request_map_scene() != OK:
+		map_return_requested = false
+		MapNavigation.show_retry(map_button)
 
 func _exit_tree() -> void:
 	if owns_pause:

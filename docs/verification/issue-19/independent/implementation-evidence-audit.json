@@ -1,0 +1,183 @@
+{
+  "source_manifest": "464ba9d377044d849b3ec2ac7f1ffce467840bda26091d6d8e22ed79e420c41c",
+  "results": [
+    {
+      "name": "storage",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "campaign-write",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "campaign-restore",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "migration-seed",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "migration-restore",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "migration-second-restart",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "failure-future",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "failure-corrupt",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "failure-recovered",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "failure-write-failure",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "attempt_recovery",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "recovery_records",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "restart_lifecycle",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "fall_depletion",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "assist_recovery",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "assist_ui",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "pause_menu",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "two_levels",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "scene_transition_wait",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "level-map",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "level-map-restore",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "map-future",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "map-corrupt",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "map-recovered",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    },
+    {
+      "name": "map-navigation",
+      "exit_code": 0,
+      "log_hashes_valid": true,
+      "independently_scanned_diagnostics": [],
+      "isolated_xdg": true
+    }
+  ],
+  "passed": 25,
+  "total": 25,
+  "all_passed": true
+}

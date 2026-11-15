@@ -81,7 +81,7 @@ class CampaignRunnerIsolationTests(unittest.TestCase):
                 result = RUNNER.main(['--godot', str(root / 'godot'),
                                       '--output', str(output)])
             calls = run.call_args_list
-            self.assertEqual(len(calls), 19)
+            self.assertEqual(len(calls), 26)
             roots = []
             for call in calls:
                 env = call.kwargs['env']
@@ -94,11 +94,13 @@ class CampaignRunnerIsolationTests(unittest.TestCase):
             self.assertEqual(roots[1], roots[2])
             self.assertEqual(roots[3], roots[4])
             self.assertEqual(roots[4], roots[5])
-            self.assertEqual(len(set(roots)), 16)
-            self.assertEqual(len(set(roots[6:])), 13)
+            # Default map checks: one cold map restore pair, five isolated checks.
+            self.assertEqual(roots[19], roots[20])
+            self.assertEqual(len(set(roots)), 22)
+            self.assertEqual(len(set(roots[6:])), 19)
             report = json.loads((output / 'results.json').read_text())
             self.assertEqual(report['all_passed'], not fail)
-            self.assertEqual(report['passed'], 0 if fail else 19)
+            self.assertEqual(report['passed'], 0 if fail else 26)
             self.assertEqual(result, 1 if fail else 0)
 
     def test_linux_replaces_inherited_storage_for_all_fixtures(self):

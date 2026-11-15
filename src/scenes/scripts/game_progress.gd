@@ -19,6 +19,9 @@ static var campaign_status := "new"
 static var campaign_error: int = OK
 # False after reset(): the cleared records must never be autosaved over disk.
 static var campaign_persistent := true
+# Set by entry points (map selection) whose next level must start a clean
+# attempt; consumed by that level's _ready().
+static var fresh_attempt_pending := false
 
 # In-memory reset for callers/tests. Disables autosave until load_campaign(), so
 # it never deletes or replaces disk saves. A future fresh-campaign UI needs its
@@ -96,6 +99,14 @@ static func configured_max_hearts() -> int:
 	var tree := Engine.get_main_loop() as SceneTree
 	var settings: Node = tree.root.get_node_or_null("GameSettings") if tree != null else null
 	return settings.get_max_hearts() if settings != null else 3
+
+static func request_fresh_attempt() -> void:
+	fresh_attempt_pending = true
+
+static func consume_fresh_attempt() -> bool:
+	var pending := fresh_attempt_pending
+	fresh_attempt_pending = false
+	return pending
 
 static func reset_attempt() -> void:
 	hearts = configured_max_hearts()

@@ -4,13 +4,13 @@ Status: Proposed · 2026-11-10. Implemented for E03-01's two-level solo prototyp
 
 ## Context
 
-GDD sections 6, 9 and 13 distinguish retained discoveries/completions from items reset on depletion. ADR 0004 introduced process-session records. Settings already persist separately in `user://settings.cfg`. The map/registry (#19), rewards/unlocks/album (#20), co-op and the four-level slice remain separate work.
+GDD sections 6, 9 and 13 distinguish retained discoveries/completions from items reset on depletion. ADR 0004 introduced process-session records. Settings already persist separately in `user://settings.cfg`. The map/registry (#19) is specified in ADR 0006. Rewards/unlocks/album (#20), co-op and the four-level slice remain separate work.
 
 ## Prototype decision
 
 `GameProgress` loads durable facts once at menu startup or direct level entry. Persist only `completed_levels` and `recorded_secrets`: positive integer level IDs corresponding to the existing prototype's `level_number`. Do not renumber published IDs; future registry work must explicitly map/migrate them. Secret records currently mean a portal visit per level, not individual reward collection or an album. These existing facts establish a persistence seam without inventing unlocks or declaring the two experimental levels a finished campaign.
 
-Hearts, hidden missing hearts, score, diamond counts, keys, entry inventory, safe points, position, crate/enemy state and transitions remain attempt state. Nothing resumes an interrupted attempt after application restart. Current in-process level transitions still carry inventory/health under ADR 0004. **JUGAR** and final-screen replay start at level one and retain campaign facts; this is not a continue/map feature. Settings and assists remain independent and confer no save/reward penalty. `GameProgress.reset()` is an in-memory reset for existing callers/tests; it does not delete disk data. A future destructive fresh-campaign UI needs a separately reviewed persistent reset transaction, including backup policy. This supersedes ADR 0004's suggestion to use that API alone for a future fresh campaign.
+Hearts, hidden missing hearts, score, diamond counts, keys, entry inventory, safe points, position, crate/enemy state and transitions remain attempt state. Nothing resumes an interrupted attempt after application restart. Current in-process level transitions still carry inventory/health under ADR 0004. **JUGAR** and final-screen replay start at level one and retain campaign facts; this is not an attempt-resume feature. ADR 0006 adds separate map selection with clean attempt entry at either existing level. Settings and assists remain independent and confer no save/reward penalty. `GameProgress.reset()` is an in-memory reset for existing callers/tests; it does not delete disk data. A future destructive fresh-campaign UI needs a separately reviewed persistent reset transaction, including backup policy. This supersedes ADR 0004's suggestion to use that API alone for a future fresh campaign.
 
 ### Format and migration
 

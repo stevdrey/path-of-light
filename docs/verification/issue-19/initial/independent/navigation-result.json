@@ -1,0 +1,40 @@
+[
+  {
+    "mode": "pause",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "/tmp/path-light-19-independent/reviewer_navigation.gd",
+      "--",
+      "pause"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/path-light-19-navigation-9x7oft41/data",
+      "XDG_CONFIG_HOME": "/tmp/path-light-19-navigation-9x7oft41/config",
+      "XDG_CACHE_HOME": "/tmp/path-light-19-navigation-9x7oft41/cache"
+    },
+    "returncode": 0
+  },
+  {
+    "mode": "completion",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+      "--script",
+      "/tmp/path-light-19-independent/reviewer_navigation.gd",
+      "--",
+      "completion"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/path-light-19-navigation-xci6yrxv/data",
+      "XDG_CONFIG_HOME": "/tmp/path-light-19-navigation-xci6yrxv/config",
+      "XDG_CACHE_HOME": "/tmp/path-light-19-navigation-xci6yrxv/cache"
+    },
+    "returncode": 0
+  }
+]

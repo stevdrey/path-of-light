@@ -14,4 +14,6 @@ The [accessibility assist evidence](accessibility-assists-evidence.md) records c
 
 The [campaign save evidence](campaign-save-evidence.md) records the durable/attempt boundary, versioned local storage, recovery and restart/migration checks for E03-01.
 
+The [campaign map evidence](campaign-map-evidence.md) records the two-route registry, sequential availability, clean map-entry attempts, revisiting and transition checks for E03-02.
+
 All project documentation, issues, pull requests and agent instructions are in English. Player-facing language is a separate design decision: the GDD starts with Spanish.

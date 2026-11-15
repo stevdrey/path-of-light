@@ -1,0 +1,11 @@
+GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted
+ERROR: Parameter "data.tree" is null.
+   at: get_tree (scene/main/node.h:559)
+   GDScript backtrace (most recent call first):
+       [0] _finish_return_to_map (res://src/ui/scripts/pause_menu.gd:140)
+SCRIPT ERROR: Cannot call method 'change_scene_to_file' on a null value.
+          at: _finish_return_to_map (res://src/ui/scripts/pause_menu.gd:141)
+          GDScript backtrace (most recent call first):
+              [0] _finish_return_to_map (res://src/ui/scripts/pause_menu.gd:141)
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2609)

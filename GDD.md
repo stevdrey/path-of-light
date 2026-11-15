@@ -223,6 +223,8 @@ This was a static review: no playtest was performed for this document. The story
 
 Subsequent E03-01 prototype work persists the existing completion and secret-portal records with versioned local saves, backup recovery and a defined migration fixture. See [ADR 0001](docs/adr/0001-campaign-state.md) and [campaign save evidence](docs/campaign-save-evidence.md). Attempts are not resumed after closing the application; the map, rewards/unlocks, co-op and browser/export persistence remain unverified or future work.
 
+E03-02 adds a registry and connected selection map for the two existing solo levels, deriving sequential availability and revisiting from those saved completion IDs. Map entry starts a clean attempt; ordinary exits retain carry-over. See [ADR 0006](docs/adr/0006-campaign-registry-map.md) and [map evidence](docs/campaign-map-evidence.md). This does not implement the proposed world atlas, reward album or expanded campaign, or establish human usability, co-op or target-platform compatibility.
+
 Subsequent prototype work implements configurable solo assists in the two experimental levels: extra hearts, more frequent authored safe points and falls without heart loss. See [ADR 0005](docs/adr/0005-configurable-assists.md) and [assist evidence](docs/accessibility-assists-evidence.md) for the implemented rules, automated checks and remaining human evaluation. This does not establish accessibility, co-op assists or approval of the broader proposed scope.
 
 ## 12. Scope and production
