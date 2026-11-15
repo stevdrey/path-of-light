@@ -4,7 +4,7 @@ const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const SPLASH_ART: Texture2D = preload("res://assets/images/ui/splash_art.png")
 const MENU_ART: Texture2D = preload("res://assets/images/ui/menu_background.png")
 const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
-const LEVEL_MAP := "res://src/ui/level_map.tscn"
+const MapNavigation := preload("res://src/ui/scripts/map_navigation.gd")
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const ACTION_LABELS := {"move_left": "Mover a la izquierda", "move_right": "Mover a la derecha", "jump": "Saltar", "crouch": "Agacharse / bajar", "interact_up": "Subir / interactuar", "restart_demo": "Reiniciar nivel"}
@@ -17,6 +17,7 @@ var waiting_action := ""
 var message: Label
 var save_notice: Label
 var map_button: Button
+var map_requested := false
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -204,13 +205,24 @@ func _show_splash() -> void:
 func _play() -> void:
 	# JUGAR starts a level-one attempt while preserving durable campaign facts.
 	BackgroundMusic.play_game()
-	get_tree().change_scene_to_file(Registry.level(1).scene_path)
+	get_tree().change_scene_to_file(Registry.first_level_path())
 
 func _open_map() -> void:
-	var error := get_tree().change_scene_to_file(LEVEL_MAP)
-	if error != OK:
-		save_notice.text = "No se pudo abrir el mapa. Reintenta."
-		save_notice.show()
+	if map_requested:
+		return
+	map_requested = true
+	# Button callbacks must finish before their scene is removed.
+	call_deferred("_finish_open_map")
+
+func _finish_open_map() -> void:
+	if MapNavigation.open(get_tree()) == OK:
+		return
+	map_requested = false
+	# Keep any campaign save warning visible alongside the map error.
+	var campaign := Progress.campaign_notice()
+	save_notice.text = (campaign + "\n" if not campaign.is_empty() else "") + "No se pudo abrir el mapa. Reintenta."
+	save_notice.show()
+	map_button.grab_focus()
 
 func _open_options() -> void:
 	main_panel.hide()

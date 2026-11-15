@@ -81,7 +81,7 @@ func _fit_width() -> void:
 	frame.custom_minimum_size.x = minf(600, maxf(0, size.x - 32))
 
 func refresh() -> void:
-	var entries := Registry.levels()
+	var entries := Registry.LEVELS
 	for index in entries.size():
 		var entry: Dictionary = entries[index]
 		var open := Registry.is_open(entry.id, Progress.completed_levels)
@@ -111,9 +111,9 @@ func _finish_selection(level_id: int) -> void:
 	var music: Node = get_node("/root/BackgroundMusic")
 	var error := _request_level_scene(Registry.level(level_id).scene_path)
 	if error == OK:
-		# Replacement _ready() runs later. Reset only after acceptance, so a
-		# failed request leaves the still-live attempt inventory untouched.
-		Progress.reset_attempt()
+		# Replacement _ready() runs later and consumes the request. Mark it only
+		# after acceptance, so a failed request leaves the live inventory untouched.
+		Progress.request_fresh_attempt()
 		music.play_game()
 		return
 	transitioning = false
@@ -126,6 +126,7 @@ func _return_to_menu() -> void:
 	if transitioning:
 		return
 	transitioning = true
+	refresh()
 	call_deferred("_finish_return")
 
 func _finish_return() -> void:
@@ -136,8 +137,10 @@ func _finish_return() -> void:
 		get_tree().root.remove_meta("skip_intro_splash")
 		get_tree().root.remove_meta("focus_level_map")
 		transitioning = false
+		refresh()
 		notice.text = "No se pudo volver al inicio. Reintenta."
 		notice.show()
+		back_button.grab_focus()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():

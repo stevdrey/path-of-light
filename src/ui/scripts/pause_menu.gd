@@ -2,7 +2,7 @@ extends CanvasLayer
 
 const MENU_THEME: Theme = preload("res://src/ui/menu_theme.tres")
 const MAIN_MENU := "res://src/ui/front_end.tscn"
-const LEVEL_MAP := "res://src/ui/level_map.tscn"
+const MapNavigation := preload("res://src/ui/scripts/map_navigation.gd")
 const ASSIST_OPTIONS := preload("res://src/ui/scripts/assist_options.gd")
 
 var overlay: Control
@@ -140,22 +140,17 @@ func _return_to_map() -> void:
 	call_deferred("_finish_return_to_map")
 
 func _request_map_scene() -> Error:
-	return get_tree().change_scene_to_file(LEVEL_MAP)
+	return MapNavigation.open(get_tree())
 
 func _finish_return_to_map() -> void:
 	# Another menu action may already have detached this scene.
 	if not is_inside_tree():
 		return
-	var tree := get_tree()
-	var error := _request_map_scene()
-	if error == OK:
-		owns_pause = false
-		tree.paused = false
-	else:
+	# On success the tree stays paused until this scene leaves; _exit_tree()
+	# releases pause before the map is ready, so the old level never runs again.
+	if _request_map_scene() != OK:
 		map_return_requested = false
-		map_button.disabled = false
-		map_button.text = "No se pudo abrir el mapa · Reintentar"
-		map_button.grab_focus()
+		MapNavigation.show_retry(map_button)
 
 func _exit_tree() -> void:
 	if owns_pause:

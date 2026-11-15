@@ -18,7 +18,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--godot', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--include-map', action='store_true', help='Also exercise level selection and cold map restore.')
+    parser.add_argument('--skip-map', action='store_true', help='Omit the level selection and cold map restore checks (run by default).')
     args = parser.parse_args(argv)
     # XDG overrides protect player storage only on the verified Linux host.
     # Refuse before starting even --version or creating any fixture/output paths.
@@ -84,7 +84,7 @@ def main(argv=None):
                    'fall_depletion', 'assist_recovery', 'assist_ui', 'pause_menu', 'two_levels',
                    'scene_transition_wait'):
         checks.append(run(script, script + '_integration'))
-    if args.include_map:
+    if not args.skip_map:
         checks += [run('level-map', 'level_map_integration', storage='map-restart'),
                    run('level-map-restore', 'level_map_integration', ['--verify'], 'map-restart')]
         for mode in ('future', 'corrupt', 'recovered'):

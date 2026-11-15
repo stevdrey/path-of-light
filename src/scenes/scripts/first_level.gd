@@ -29,7 +29,8 @@ func _ready() -> void:
 	control_label = "Jugador"
 	if door != null and not Registry.level(level_number).is_empty():
 		door.next_level = Registry.next_level_path(level_number)
-	$CanvasLayer/Instructions/Title.text = "Sendero de descubrimiento"
+	var route := Registry.level(level_number)
+	$CanvasLayer/Instructions/Title.text = route.title if not route.is_empty() else "Nivel %d" % level_number
 	$CanvasLayer/Instructions/Help.text = "Esc: pausa  •  Cambia los controles en Opciones desde el menú inicial."
 	_create_vortex_overlay()
 	_update_status()

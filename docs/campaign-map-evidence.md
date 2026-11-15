@@ -9,12 +9,12 @@ Base: `a63b798` (issue #18). The candidate is the working tree identified by the
 ```sh
 python3 src/tests/run_campaign_checks.py \
   --godot /opt/Godot/Godot_v4.8-beta3_linux.x86_64 \
-  --output docs/verification/issue-19/implementation --include-map
+  --output docs/verification/issue-19/implementation
 python3 -B -m unittest discover -s src/tests -p test_campaign_runner.py
 git diff --check
 ```
 
-The runner is Linux-only and refuses other hosts before launching Godot or creating fixtures. It allocates new temporary XDG data/config/cache roots; only deliberate cold-process pairs share storage. It never uses the player's campaign/settings. `--include-map` adds two map lifecycle processes, three protected/recovered storage checks and a repeated-confirm/failure-retry navigation regression to the existing 19 campaign/recovery cases; default invocation retains the original 19-case suite.
+The runner is Linux-only and refuses other hosts before launching Godot or creating fixtures. It allocates new temporary XDG data/config/cache roots; only deliberate cold-process pairs share storage. It never uses the player's campaign/settings. By default the runner adds two map lifecycle processes, three protected/recovered storage checks and a repeated-confirm/failure-retry navigation regression to the existing 19 campaign/recovery cases; `--skip-map` runs only the original 19-case suite. The recorded evidence was produced when these map checks were opt-in through the former `--include-map` flag.
 
 ## Acceptance mapping
 

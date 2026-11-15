@@ -3,7 +3,7 @@ extends Node2D
 const PAUSE_MENU := preload("res://src/ui/scripts/pause_menu.gd")
 const Progress = preload("res://src/scenes/scripts/game_progress.gd")
 const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
-const LEVEL_MAP := "res://src/ui/level_map.tscn"
+const MapNavigation := preload("res://src/ui/scripts/map_navigation.gd")
 const DOOR_SCENE := preload("res://src/scenes/level_door.tscn")
 const ITEM_SCENE := preload("res://src/collectibles/collectible.tscn")
 const HEALTH_SCENE := preload("res://src/character/components/player_health.tscn")
@@ -38,9 +38,12 @@ func _ready() -> void:
 	pause_menu.name = "PauseMenu"
 	pause_menu.set_script(PAUSE_MENU)
 	add_child(pause_menu)
-	if level_number == 1:
+	# The first route and explicit fresh entries (map selection) start clean;
+	# ordinary exits keep their carried inventory.
+	var fresh := Progress.consume_fresh_attempt()
+	if fresh or Registry.is_first(level_number):
 		Progress.reset_attempt()
-	else:
+	if level_number != 1:
 		movement.use_player_control()
 		control_label = "Jugador"
 	entry_progress = Progress.snapshot_inventory()
@@ -121,6 +124,11 @@ func _input(event: InputEvent) -> void:
 		else:
 			_restart_attempt()
 		return
+	# Jump keys also map to ui_accept; keep them from activating the focused
+	# completion button. Enter and R still work.
+	if completed and event.is_action("jump"):
+		get_viewport().set_input_as_handled()
+		return
 	if transitioning or player_health.dead or movement.input_locked or movement.damage_locked:
 		return
 	var up_pressed := event.is_action_pressed("interact_up") and not event.is_echo()
@@ -164,7 +172,7 @@ func _replay_from_start() -> void:
 
 func _request_restart_scene(replay: bool) -> Error:
 	if replay:
-		return get_tree().change_scene_to_file(Registry.level(1).scene_path)
+		return get_tree().change_scene_to_file(Registry.first_level_path())
 	return get_tree().reload_current_scene()
 
 func _finish_restart(previous_inventory: Dictionary, replay: bool) -> void:
@@ -221,7 +229,7 @@ func _request_return_to_map(button: Button) -> void:
 	call_deferred("_return_to_map", button)
 
 func _request_map_scene() -> Error:
-	return get_tree().change_scene_to_file(LEVEL_MAP)
+	return MapNavigation.open(get_tree())
 
 func _return_to_map(button: Button) -> void:
 	if not is_inside_tree():
@@ -229,9 +237,7 @@ func _return_to_map(button: Button) -> void:
 	var error := _request_map_scene()
 	if error != OK:
 		map_return_requested = false
-		button.disabled = false
-		button.text = "No se pudo abrir el mapa · Reintentar"
-		button.grab_focus()
+		MapNavigation.show_retry(button)
 
 func _record_level_completion() -> void:
 	Progress.record_completion(level_number)
