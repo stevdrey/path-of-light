@@ -1,0 +1,6 @@
+ERROR: Failed to open '/tmp/path-of-light-18-455d_4_c/rewards-policy-storage/data/godot/app_userdata/Experiment 2d Platform/legacy-rewards.json.v1.bak.tmp'.
+   at: copy (core/io/dir_access.cpp:426)
+   GDScript backtrace (most recent call first):
+       [0] _preserve_legacy (res://src/scenes/scripts/campaign_save.gd:108)
+       [1] save_campaign (res://src/scenes/scripts/campaign_save.gd:81)
+       [2] run (res://src/tests/scripts/campaign_rewards_integration.gd:125)

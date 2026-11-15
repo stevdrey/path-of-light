@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+    "--headless",
+    "--path",
+    "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+    "--script",
+    "/tmp/issue20-independent-extra.gd"
+  ],
+  "environment": {
+    "XDG_DATA_HOME": "/tmp/issue20-independent-extra-_pdt7org/data",
+    "XDG_CONFIG_HOME": "/tmp/issue20-independent-extra-_pdt7org/config",
+    "XDG_CACHE_HOME": "/tmp/issue20-independent-extra-_pdt7org/cache"
+  },
+  "exit_code": 0,
+  "script_sha256": "f361a0e0ad2a46649d6a33d69be9647f8d1b09b139673cd5f4599c11f03fac0a",
+  "stdout_sha256": "6a71cd53af036ebce549ea6d0f2cfbe6d449d4483ef34a36b532eb749f2f0a02",
+  "stderr_sha256": "1d4378c3fad3244e646994a93431e3407ae2a56b88b506876354706673a89a4c"
+}

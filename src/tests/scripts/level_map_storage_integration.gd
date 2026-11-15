@@ -23,7 +23,7 @@ func put(path: String, contents: String) -> void:
 func run() -> void:
 	var mode := OS.get_cmdline_user_args()[0]
 	var protected := mode != "--recovered"
-	var original := '{"schema_version":2,"future_data":"preserve"}' if mode == "--future" else "broken primary"
+	var original := '{"schema_version":3,"future_data":"preserve"}' if mode == "--future" else "broken primary"
 	put(Store.default_path(), original)
 	if mode == "--recovered":
 		put(Store.default_path() + ".bak", '{"schema_version":1,"completed_levels":[1],"recorded_secrets":[]}')

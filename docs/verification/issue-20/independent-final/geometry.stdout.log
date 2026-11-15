@@ -1,0 +1,22 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PROBE viewport=(640, 480) map=[P: (0.0, 0.0), S: (1152.0, 864.0)] panel=[P: (276.0, 261.0), S: (600.0, 342.0)] min=(600.0, 342.0)
+PROBE child=@Label@14 rect=[P: (296.0, 281.0), S: (560.0, 30.0)] min=(218.0, 30.0) text=DESCUBRIMIENTOS
+PROBE child=@Label@15 rect=[P: (296.0, 323.0), S: (560.0, 49.0)] min=(176.0, 49.0) text=? Por descubrir
+El mundo de las luces
+PROBE child=@Label@16 rect=[P: (296.0, 384.0), S: (560.0, 30.0)] min=(174.0, 30.0) text=RECOMPENSAS
+PROBE child=@Label@17 rect=[P: (296.0, 426.0), S: (560.0, 20.0)] min=(321.0, 20.0) text=Recompensas de mundo: aún no disponibles.
+PROBE child=@Label@18 rect=[P: (296.0, 458.0), S: (560.0, 43.0)] min=(284.0, 43.0) text=Personaje prototipo: bloqueado.
+Requiere una campaña con final propio.
+PROBE child=@Label@19 rect=[P: (296.0, 513.0), S: (560.0, 18.0)] min=(1.0, 18.0) text=
+PROBE child=@Button@20 rect=[P: (296.0, 543.0), S: (560.0, 40.0)] min=(160.0, 40.0) text=VOLVER AL MAPA
+PROBE viewport=(1152, 648) map=[P: (0.0, 0.0), S: (1152.0, 648.0)] panel=[P: (276.0, 153.0), S: (600.0, 342.0)] min=(600.0, 342.0)
+PROBE child=@Label@14 rect=[P: (296.0, 173.0), S: (560.0, 30.0)] min=(218.0, 30.0) text=DESCUBRIMIENTOS
+PROBE child=@Label@15 rect=[P: (296.0, 215.0), S: (560.0, 49.0)] min=(176.0, 49.0) text=? Por descubrir
+El mundo de las luces
+PROBE child=@Label@16 rect=[P: (296.0, 276.0), S: (560.0, 30.0)] min=(174.0, 30.0) text=RECOMPENSAS
+PROBE child=@Label@17 rect=[P: (296.0, 318.0), S: (560.0, 20.0)] min=(321.0, 20.0) text=Recompensas de mundo: aún no disponibles.
+PROBE child=@Label@18 rect=[P: (296.0, 350.0), S: (560.0, 43.0)] min=(284.0, 43.0) text=Personaje prototipo: bloqueado.
+Requiere una campaña con final propio.
+PROBE child=@Label@19 rect=[P: (296.0, 405.0), S: (560.0, 18.0)] min=(1.0, 18.0) text=
+PROBE child=@Button@20 rect=[P: (296.0, 435.0), S: (560.0, 40.0)] min=(160.0, 40.0) text=VOLVER AL MAPA

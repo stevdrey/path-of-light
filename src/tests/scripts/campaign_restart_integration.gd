@@ -68,7 +68,7 @@ func run() -> void:
 		Progress.score = 321
 		Progress.keys[4] = true
 		Progress.hearts = 1
-		if not check(Progress.save_campaign() == OK and JSON.parse_string(FileAccess.get_file_as_string(Store.default_path())).size() == 3, "attempt state excluded from disk document"):
+		if not check(Progress.save_campaign() == OK and JSON.parse_string(FileAccess.get_file_as_string(Store.default_path())).size() == 6, "attempt state excluded from disk document"):
 			return
 		print("PASS: real portal and both exits persist; attempt inventory excluded")
 	current_scene.free()

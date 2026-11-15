@@ -1,0 +1,214 @@
+{
+  "engine": "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+  "engine_sha256": "746a2bc89508d07801fe9ba9bbeaad5be0c74e05f13867977b314f2457f42701",
+  "platform": "Linux-7.3.3-300.fc45.x86_64-x86_64-with-glibc2.44",
+  "sandbox": "/tmp/issue20-independent-final-5_pnci0x",
+  "results": [
+    {
+      "name": "storage",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/campaign_storage_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/storage/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/storage/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/storage/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: campaign storage 46 assertions (validation, migration, recovery, version protection and write failures)"
+      ],
+      "seconds": 0.256,
+      "stdout_sha256": "946dd20fc9f4912bd93756e8854836af0079d3f269b8246e2aee5a61a6de9ece",
+      "stderr_sha256": "a4ec841c6b8413917000996162588c0b5d7d34cf4b26078915ede793a71b3563"
+    },
+    {
+      "name": "reward-policy-storage",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/campaign_rewards_integration.gd",
+        "--",
+        "--checks"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-policy-storage/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-policy-storage/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-policy-storage/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: rewards --checks 35 assertions"
+      ],
+      "seconds": 0.356,
+      "stdout_sha256": "7ee002a8cca88180a2e0090c513f1c46fbd55f6b719a93dba76b7a82368d6894",
+      "stderr_sha256": "3c6a0b62142111376d13fc323e360eda233151e199cd99391d62fc6b2659d217"
+    },
+    {
+      "name": "reward-write",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/campaign_rewards_integration.gd",
+        "--",
+        "--write"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: rewards --write 3 assertions"
+      ],
+      "seconds": 1.295,
+      "stdout_sha256": "582ba3b34f19a4dcaaf02da419d20c2e823740189bad9eb9749e0a7db033dbfb",
+      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+    },
+    {
+      "name": "reward-cold-restore",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/campaign_rewards_integration.gd",
+        "--",
+        "--verify"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/reward-restart/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: rewards --verify 8 assertions"
+      ],
+      "seconds": 0.65,
+      "stdout_sha256": "fc2759a80593a2cfa14ae64e879333c761881ccff0e344786bb4f3ab155784ea",
+      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+    },
+    {
+      "name": "level-map",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/level_map_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: registry, unlock guards, map failure/retry, both exits, pause, clean selection, assists, completion replay, menu focus and viewport bounds"
+      ],
+      "seconds": 5.685,
+      "stdout_sha256": "4dd185d917a9635aa7fd0060a2815f9f294822e4ef4b43989467f7ac779ea755",
+      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+    },
+    {
+      "name": "level-map-cold-restore",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/level_map_integration.gd",
+        "--",
+        "--verify"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-restart/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: cold-process map restore and clean revisit"
+      ],
+      "seconds": 0.545,
+      "stdout_sha256": "6f33fd54e614302761987fee6e675bf3d6b02bcbaecdbfb60eebb836225936bd",
+      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+    },
+    {
+      "name": "map-navigation",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/map_navigation_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-navigation/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-navigation/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/map-navigation/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: Space on completion preserves the screen without requesting the map",
+        "PASS: repeated UI confirm and retry after pause/completion navigation failure"
+      ],
+      "seconds": 0.545,
+      "stdout_sha256": "08ff924c7e41b9325511bab5d2dc41463cc721829dd0870105fbaa97fd336e4c",
+      "stderr_sha256": "5a3af234214d387470b672a2b5cffab2bc96561caaca269564215afe353b9cfd"
+    },
+    {
+      "name": "front-end-navigation",
+      "command": [
+        "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+        "--headless",
+        "--path",
+        "/home/stevdrey/Projects/Godot/Experiment 2D Platform/experiment-2d-platform",
+        "--script",
+        "res://src/tests/scripts/front_end_navigation_integration.gd"
+      ],
+      "environment": {
+        "XDG_DATA_HOME": "/tmp/issue20-independent-final-5_pnci0x/front-end-navigation/data",
+        "XDG_CONFIG_HOME": "/tmp/issue20-independent-final-5_pnci0x/front-end-navigation/config",
+        "XDG_CACHE_HOME": "/tmp/issue20-independent-final-5_pnci0x/front-end-navigation/cache"
+      },
+      "exit_code": 0,
+      "diagnostics": [],
+      "pass_lines": [
+        "PASS: MAPA/JUGAR in both orders and duplicate actions make one scene request",
+        "PASS: both failed destinations preserve state, warning and retry focus",
+        "PASS: detached menus issue no deferred scene request"
+      ],
+      "seconds": 0.736,
+      "stdout_sha256": "a9916086f049c368a2eaa83af6d3bd0bb8b6ecbfdaeae93e109d8cc98e78b463",
+      "stderr_sha256": "71ed938935422e0912ba03f297e80ad0828163e9a83e88df72813e4b99cd1d99"
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "all_passed": true
+}

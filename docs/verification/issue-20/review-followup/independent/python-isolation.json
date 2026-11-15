@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "src/tests",
+    "-p",
+    "test_campaign_runner.py"
+  ],
+  "exit_code": 0
+}

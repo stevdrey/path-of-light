@@ -91,6 +91,9 @@ def main(argv=None):
             checks.append(run('map-' + mode, 'level_map_storage_integration', ['--' + mode]))
         checks.append(run('map-navigation', 'map_navigation_integration'))
         checks.append(run('front-end-navigation', 'front_end_navigation_integration'))
+    checks += [run('rewards-policy-storage', 'campaign_rewards_integration', ['--checks']),
+               run('rewards-write', 'campaign_rewards_integration', ['--write'], 'rewards-restart'),
+               run('rewards-restore', 'campaign_rewards_integration', ['--verify'], 'rewards-restart')]
     report['passed'] = sum(checks)
     report['total'] = len(checks)
     report['all_passed'] = all(checks)

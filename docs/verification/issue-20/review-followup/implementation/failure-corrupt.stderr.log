@@ -1,0 +1,5 @@
+GameMode ERROR: Could not connect to bus: Failed to connect to socket /run/user/1000/bus: Operation not permitted
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2609)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

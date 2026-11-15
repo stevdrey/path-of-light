@@ -1,5 +1,6 @@
 extends Control
 
+const Rewards := preload("res://src/scenes/scripts/campaign_rewards.gd")
 const Registry := preload("res://src/scenes/scripts/campaign_registry.gd")
 const Progress := preload("res://src/scenes/scripts/game_progress.gd")
 const MAIN_MENU := "res://src/ui/front_end.tscn"
@@ -10,6 +11,10 @@ var back_button: Button
 var notice: Label
 var frame: PanelContainer
 var transitioning := false
+var routes_column: VBoxContainer
+var records_column: VBoxContainer
+var records_button: Button
+var records_notice: Label
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -36,6 +41,7 @@ func _ready() -> void:
 	frame.add_theme_stylebox_override("panel", style)
 	center.add_child(frame)
 	var column := VBoxContainer.new()
+	routes_column = column
 	column.add_theme_constant_override("separation", 12)
 	frame.add_child(column)
 	_add_label(column, "MAPA DE NIVELES", 28)
@@ -54,6 +60,12 @@ func _ready() -> void:
 			route_labels.append(_add_label(column, "", 16))
 	notice = _add_label(column, "", 14)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	records_button = Button.new()
+	records_button.text = "DESCUBRIMIENTOS Y RECOMPENSAS"
+	records_button.custom_minimum_size.y = 40
+	records_button.pressed.connect(_open_records)
+	column.add_child(records_button)
+	_build_records()
 	back_button = Button.new()
 	back_button.text = "VOLVER AL INICIO"
 	back_button.custom_minimum_size.y = 40
@@ -94,7 +106,50 @@ func refresh() -> void:
 			route_labels[index - 1].text = "↓ Ruta abierta" if open else "⋮ Completa el nivel anterior"
 	notice.text = Progress.campaign_notice()
 	notice.visible = not notice.text.is_empty()
+	records_notice.text = notice.text
+	records_notice.visible = notice.visible
 	back_button.disabled = transitioning
+	records_button.disabled = transitioning
+
+func _build_records() -> void:
+	records_column = VBoxContainer.new()
+	records_column.add_theme_constant_override("separation", 12)
+	frame.add_child(records_column)
+	_add_label(records_column, "DESCUBRIMIENTOS", 24)
+	for discovery in Rewards.DISCOVERIES:
+		var found := Progress.recorded_discoveries.has(discovery.id)
+		_add_label(records_column, "%s %s\n%s" % ["✓" if found else "?", discovery.title if found else "Por descubrir", discovery.category], 18)
+	_add_label(records_column, "RECOMPENSAS", 24)
+	# Only authored metadata may supply a display title; unknown retained IDs
+	# never create content, routes, or selectable characters.
+	for world in Rewards.WORLDS:
+		_add_label(records_column, "✓ " + world.title if Progress.world_rewards.has(world.id) else "× Recompensa bloqueada", 18)
+	if Rewards.WORLDS.is_empty():
+		_add_label(records_column, "Recompensas de mundo: aún no disponibles.", 16)
+	if Progress.character_unlocks.has("prototype"):
+		_add_label(records_column, "✓ Personaje prototipo: desbloqueado.\nLa selección de personaje aún no está disponible.", 16)
+	else:
+		_add_label(records_column, "Personaje prototipo: bloqueado.\nRequiere una campaña con final propio.", 16)
+	records_notice = _add_label(records_column, "", 14)
+	records_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var back := Button.new()
+	back.text = "VOLVER AL MAPA"
+	back.custom_minimum_size.y = 40
+	back.pressed.connect(_close_records)
+	records_column.add_child(back)
+	records_column.hide()
+
+func _open_records() -> void:
+	if transitioning:
+		return
+	routes_column.hide()
+	records_column.show()
+	records_column.get_child(-1).grab_focus()
+
+func _close_records() -> void:
+	records_column.hide()
+	routes_column.show()
+	records_button.grab_focus()
 
 func select_level(level_id: int) -> void:
 	if transitioning or not Registry.is_open(level_id, Progress.completed_levels):
@@ -145,4 +200,7 @@ func _finish_return() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():
 		get_viewport().set_input_as_handled()
-		_return_to_menu()
+		if records_column.visible:
+			_close_records()
+		else:
+			_return_to_menu()

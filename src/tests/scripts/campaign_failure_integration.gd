@@ -6,8 +6,8 @@ const SceneWait := preload("res://src/tests/scripts/scene_test_wait.gd")
 
 class FailingStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var failing := true
-	func _stage(destination: String, data: Dictionary) -> Error:
-		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, data)
+	func _stage(destination: String, text: String) -> Error:
+		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, text)
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -31,7 +31,7 @@ func run() -> void:
 	var mode := OS.get_cmdline_user_args()[0]
 	match mode:
 		"--future":
-			put(Store.default_path(), '{"schema_version":2,"future_data":"preserve"}')
+			put(Store.default_path(), '{"schema_version":3,"future_data":"preserve"}')
 		"--corrupt":
 			put(Store.default_path(), "broken primary")
 			put(Store.default_path() + ".bak", "broken backup")

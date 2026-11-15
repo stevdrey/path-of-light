@@ -1,0 +1,12 @@
+WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:193)
+WARNING: Level restart failed (error 20, replay=false). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:193)
+WARNING: Level restart failed (error 20, replay=true). Retry and pause remain available.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _finish_restart (res://src/scenes/scripts/level.gd:193)

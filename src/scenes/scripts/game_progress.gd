@@ -8,11 +8,15 @@ static var score := 0
 static var diamonds := 0
 static var diamond_counts: Array[int] = [0, 0, 0, 0]
 static var keys: Dictionary = {}
+const Rewards := preload("res://src/scenes/scripts/campaign_rewards.gd")
 const CampaignSave := preload("res://src/scenes/scripts/campaign_save.gd")
 # Durable facts, separate from inventory and scene state. JUGAR and replay
 # begin new attempts without erasing the campaign. No destructive reset UI.
 static var recorded_secrets: Dictionary = {}
 static var completed_levels: Dictionary = {}
+static var recorded_discoveries: Dictionary = {}
+static var world_rewards: Dictionary = {}
+static var character_unlocks: Dictionary = {}
 static var campaign_store := CampaignSave.new()
 static var campaign_loaded := false
 static var campaign_status := "new"
@@ -32,6 +36,9 @@ static func reset() -> void:
 	reset_attempt()
 	recorded_secrets.clear()
 	completed_levels.clear()
+	recorded_discoveries.clear()
+	world_rewards.clear()
+	character_unlocks.clear()
 	campaign_status = "new"
 	campaign_error = OK
 
@@ -46,11 +53,19 @@ static func load_campaign() -> void:
 	campaign_status = result.status
 	campaign_error = result.error
 	completed_levels.clear()
+	recorded_discoveries.clear()
+	world_rewards.clear()
+	character_unlocks.clear()
 	recorded_secrets.clear()
 	for id in result.data.completed_levels:
 		completed_levels[id] = true
 	for id in result.data.recorded_secrets:
 		recorded_secrets[id] = true
+	for field in CampaignSave.REWARD_FIELDS:
+		for id in result.data[field]:
+			_collection(field)[id] = true
+	# Legacy portal records identify the existing chamber, not a new reward.
+	_reconcile_records()
 	# Application restart never resumes an attempt or restores its key/health.
 	reset_attempt()
 
@@ -58,8 +73,11 @@ static func save_campaign() -> Error:
 	ensure_campaign_loaded()
 	if not campaign_persistent:
 		return ERR_UNAUTHORIZED
-	campaign_error = campaign_store.save_campaign({"schema_version": CampaignSave.VERSION,
-		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys()})
+	var data := {"schema_version": CampaignSave.VERSION,
+		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys()}
+	for field in CampaignSave.REWARD_FIELDS:
+		data[field] = _collection(field).keys()
+	campaign_error = campaign_store.save_campaign(data)
 	if campaign_error == OK:
 		campaign_status = "loaded"
 	return campaign_error as Error
@@ -76,6 +94,7 @@ static func record_secret(level_id: int) -> Error:
 	if recorded_secrets.has(level_id) and campaign_error == OK:
 		return OK
 	recorded_secrets[level_id] = true
+	_reconcile_records()
 	return save_campaign()
 
 static func record_completion(level_id: int) -> Error:
@@ -83,7 +102,25 @@ static func record_completion(level_id: int) -> Error:
 	if completed_levels.has(level_id) and campaign_error == OK:
 		return OK
 	completed_levels[level_id] = true
+	_reconcile_records()
 	return save_campaign()
+
+static func _collection(field: String) -> Dictionary:
+	match field:
+		"recorded_discoveries": return recorded_discoveries
+		"world_rewards": return world_rewards
+		"character_unlocks": return character_unlocks
+	return {}
+
+# Discoveries and rewards are derived only from authored mappings and explicit
+# completion policy. There is no arbitrary public grant API.
+static func _reconcile_records() -> void:
+	for id in Rewards.discoveries_for_secrets(recorded_secrets):
+		recorded_discoveries[id] = true
+	var earned := Rewards.earned(completed_levels)
+	for field in earned:
+		for id in earned[field]:
+			_collection(field)[id] = true
 
 static func campaign_notice() -> String:
 	if campaign_status == "unsupported":

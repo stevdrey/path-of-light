@@ -1,20 +1,20 @@
 extends SceneTree
 
 const Store := preload("res://src/scenes/scripts/campaign_save.gd")
-const DATA := {"schema_version": 1, "completed_levels": [1], "recorded_secrets": [2]}
-const NEXT := {"schema_version": 1, "completed_levels": [1, 2], "recorded_secrets": [2]}
+const DATA := {"schema_version": 2, "completed_levels": [1], "recorded_secrets": [2], "recorded_discoveries": [], "world_rewards": [], "character_unlocks": []}
+const NEXT := {"schema_version": 2, "completed_levels": [1, 2], "recorded_secrets": [2], "recorded_discoveries": [], "world_rewards": [], "character_unlocks": []}
 var checks := 0
 
 class FaultStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var fail_stage := ""
 	var fail_promote := ""
-	func _stage(destination: String, data: Dictionary) -> Error:
+	func _stage(destination: String, text: String) -> Error:
 		if destination.ends_with(fail_stage) and not fail_stage.is_empty():
 			var partial := FileAccess.open(destination, FileAccess.WRITE)
 			partial.store_string("{\"schema_version\":")
 			partial.close()
 			return ERR_FILE_CANT_WRITE
-		return super._stage(destination, data)
+		return super._stage(destination, text)
 	func _promote(source: String, destination: String) -> Error:
 		if destination.ends_with(fail_promote) and not fail_promote.is_empty():
 			return ERR_FILE_CANT_WRITE
@@ -88,7 +88,7 @@ func run() -> void:
 	if not check(store.load_campaign().status == "corrupt" and store.save_campaign(DATA) != OK and FileAccess.get_file_as_string(store.path + ".bak") == "{backup", "both corrupt files preserved; play may use empty memory records"):
 		return
 	store = fresh("future")
-	var future := {"schema_version": 2, "new_field": {"do_not_drop": true}}
+	var future := {"schema_version": 3, "new_field": {"do_not_drop": true}}
 	put(store.path, future)
 	put(store.path + ".bak", DATA)
 	if not check(store.load_campaign().status == "unsupported" and store.save_campaign(DATA) != OK and FileAccess.get_file_as_string(store.path) == JSON.stringify(future), "newer primary never downgrades to backup or gets overwritten"):
