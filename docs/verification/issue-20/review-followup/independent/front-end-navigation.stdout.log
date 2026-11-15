@@ -1,0 +1,5 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PASS: MAPA/JUGAR in both orders and duplicate actions make one scene request
+PASS: both failed destinations preserve state, warning and retry focus
+PASS: detached menus issue no deferred scene request

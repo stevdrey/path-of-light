@@ -5,12 +5,25 @@ extends RefCounted
 const WORLDS := []
 const CAMPAIGN_LEVELS := []
 const CAMPAIGN_FINALE := 0
+# Discovery entries: {id, level_id, title, category, legacy_secret_level?}.
+# Optional legacy_secret_level: a recorded numeric secret for that level implies
+# this discovery. Only the existing portal chamber uses this mapping.
 const DISCOVERIES := [
-	{"id": "secret-chamber-1", "level_id": 1, "title": "La cámara secreta", "category": "El mundo de las luces"},
+	{"id": "secret-chamber-1", "level_id": 1, "legacy_secret_level": 1, "title": "La cámara secreta", "category": "El mundo de las luces"},
 ]
 
+# Sharing a level does not make two discoveries the same event. Legacy saves
+# imply only records whose metadata explicitly maps that numeric portal visit.
+static func discoveries_for_secrets(secrets: Dictionary, discoveries: Array = DISCOVERIES) -> Array:
+	var discovered := []
+	for discovery in discoveries:
+		if discovery.has("legacy_secret_level") and secrets.get(discovery.legacy_secret_level, false):
+			discovered.append(discovery.id)
+	return discovered
+
 # Pure policy seam: tests supply synthetic definitions, never production content.
-# World definitions: {id: String, levels: Array[int], finale: int}.
+# World definitions: {id: String, title: String, levels: Array[int], finale: int}.
+# `title` is required authored display text; IDs are never shown to players.
 # A campaign requires all its levels and an explicit finale among them.
 static func earned(completions: Dictionary, worlds: Array = WORLDS, campaign_levels: Array = CAMPAIGN_LEVELS, campaign_finale: int = CAMPAIGN_FINALE) -> Dictionary:
 	var rewards := []

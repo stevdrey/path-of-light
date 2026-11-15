@@ -172,7 +172,7 @@
     "docs/adr/0004-attempt-recovery.md": "78c7dc6aa641d4f238bbb18a67b70145f3a3b2c7297835d7f1b6c7126eadb74d",
     "docs/adr/0005-configurable-assists.md": "9adeab493490359b519344c546a61f9d605a5994116c17a25c7571516e4e2ae1",
     "docs/adr/0006-campaign-registry-map.md": "98fb98bb869c19dcfc28c52f214bb409b1dbf84f64052f9d9cbda692d230230d",
-    "docs/adr/0007-discoveries-rewards.md": "8df04ded3d0dacf920f08236cddd7a28b9cc69fe43d0bb2a6b32da9b2430e79f",
+    "docs/adr/0007-discoveries-rewards.md": "35d4d5296c4d8265bc4ae77f707f4d137265564b87198a8975898aad24691698",
     "docs/adr/README.md": "1b7f4f1d0b9855eb61bac85b18777f1d2c9f3ae869f9df61fb8a2eb73033018f",
     "docs/asset-provenance-audit.md": "f6879cb742488f53461d880dfa41b46c1906e4afef768579fa36f522503008bb",
     "docs/attempt-recovery-evidence.md": "0fd12fc122860166a80f9a2b92e4afc1e03ac6a65ba1b4817188abb2ca86e1b1",
@@ -222,7 +222,7 @@
     "docs/backlog/issues/E10-02.md": "7929696a17b203eb855e8de6c7b3fcfb285a68898d55ae668bda3a1a63788b2d",
     "docs/backlog/issues/E10-03.md": "fea1b40d07e854e052d62333777e692514add6ff55b76c4383390100babb80b3",
     "docs/campaign-map-evidence.md": "73a3156a3ac6162de0ecb81686159160e10368dde939a6e8132d09dcba8c98ac",
-    "docs/campaign-rewards-evidence.md": "c7df3c63702795c36055c6cecf0ced2dc9bf6ec89367448446131d2ee85a0494",
+    "docs/campaign-rewards-evidence.md": "911d640dd6fe29aaa4010437ac6d97a449016178f8e882e293acafa648ead35d",
     "docs/campaign-save-evidence.md": "16f816a994caaaf689f5eca6e655f04fb5d036cee5320367f1ad1dfbf67d2348",
     "docs/import-test-baseline.md": "a8b08d991ae11499f7cff8086536526bc36ce962f023f042d566d2459c7172d8",
     "docs/level-measurement-baseline.md": "8a1867bab7694d246992cf3c35a2019cc65cd4d92a6797e5d9b0021f7558360c",
@@ -293,12 +293,13 @@
     "src/scenes/scripts/bonus_portal.gd.uid": "fab8ab6554789fca31e2c080e910e57fc431160eb5664b1431fe2a6a3f1a118e",
     "src/scenes/scripts/campaign_registry.gd": "e13092bf12e5848ca0928c02b4080b7b36c531dee5d3cf75075e975e6ce040c7",
     "src/scenes/scripts/campaign_registry.gd.uid": "c899372f7cb1069b43acc0da464004f26471da41efd9b07fb581eef5b683eddb",
-    "src/scenes/scripts/campaign_rewards.gd": "5c2a5558239aba87194d4cc97b763cc347457d6844f522e6f84903b7fa0d6428",
-    "src/scenes/scripts/campaign_save.gd": "1a65384419e072cf4618e6ceac8f1be3e633ae0b59a635415e81aa51d3a075ab",
+    "src/scenes/scripts/campaign_rewards.gd": "570c0b99c471bd189cec13f62a1efec032e8f83c83d6065faabd1ff196c4aa7e",
+    "src/scenes/scripts/campaign_rewards.gd.uid": "63d9666c0f6e00623d37b12d5e7d1902e55afc1ebe7b6b783cea34d408749eb4",
+    "src/scenes/scripts/campaign_save.gd": "1b805b0a06dc18123ca744e00b84d715fcd0643173131edc4de44ed2fc9c6d72",
     "src/scenes/scripts/campaign_save.gd.uid": "f32f12fc1827be1203627856ccb7aaa4e11dd2ab1701f55679711606dacf0d66",
     "src/scenes/scripts/first_level.gd": "dbbac4c3b963cfc72ff8e1427a2cd72d9636c07614f1a6750dfcec210b7fc36d",
     "src/scenes/scripts/first_level.gd.uid": "cd9facff6eec4ce7a43e65bf64a7433b01078979e5470bb6828f7c9ad8f100a7",
-    "src/scenes/scripts/game_progress.gd": "ebd264dcc560c79e91dcf6f9e0772f350d065506c5962baee71bfb5b7386c50e",
+    "src/scenes/scripts/game_progress.gd": "a73c6d57c411cd23d6e6427bde6b952cd6a8a6408cc572d159bfba386cf13ad0",
     "src/scenes/scripts/game_progress.gd.uid": "727d4470720a249fdfcbf94af5d13e10291b138217d0ef0d1e9b49d556576da3",
     "src/scenes/scripts/hazard.gd": "64ba7225bec84b83f67180b41d5aa47e383b50eb23b1c7ba2e4e8171c8f4cc34",
     "src/scenes/scripts/hazard.gd.uid": "b7eb707e5c9dfa9f3a196b6a5e87f0643aceea6e01694543bdfcc12858059cb9",
@@ -340,12 +341,13 @@
     "src/tests/scripts/breakable_crate_contents_integration.gd.uid": "747fdcc73099ffa7211a5fd203f282c40ed486391fbdd17a7670e1807a13ae8d",
     "src/tests/scripts/breakable_crate_integration.gd": "6ad8ec50842eac95eb1843f76c46b8b345ea0557aab41bae3f6391433d0e6e37",
     "src/tests/scripts/breakable_crate_integration.gd.uid": "7ab335f6f7b384b511bc8e5082dcc46504de0f805a68475c18d7362ba49a152b",
-    "src/tests/scripts/campaign_failure_integration.gd": "dd1634c0f84982d2741f9143b2b04504f76cc00364e343960c27af8d3dede0f7",
+    "src/tests/scripts/campaign_failure_integration.gd": "da3e07f8c59c4b0c0e5e339694f445a73ac136061692f23c699bb335f248135b",
     "src/tests/scripts/campaign_failure_integration.gd.uid": "eb0208ebd520f640b06bf4faa9a021ad8b63faa67a30cb5dd96ed8d308de537f",
     "src/tests/scripts/campaign_restart_integration.gd": "785b0fbf3c3ff31a54bfe0df4d712f20065fe9631dfa6c71ab2a29591baa9cea",
     "src/tests/scripts/campaign_restart_integration.gd.uid": "1b5169c5bf0c2e21c1fab4a92970c1b953b587499293e87fee9c8b88c90f9ad3",
-    "src/tests/scripts/campaign_rewards_integration.gd": "0a293cf1517740112ecd976814ee0d92c26e7b5824f7856aff753f660db7617f",
-    "src/tests/scripts/campaign_storage_integration.gd": "eb16c08d4d6dc7b1f16774b861eb1bd4db01083894ceafe55ac984b9aaf762c5",
+    "src/tests/scripts/campaign_rewards_integration.gd": "b1358c181de142340c9dd08cb11297f3c491af4a2c7e33c7e6d8239b03bafc38",
+    "src/tests/scripts/campaign_rewards_integration.gd.uid": "03b26ca43f6008685ea3797b86edd78efff7c710c66388d3dbcf002e17c51ca2",
+    "src/tests/scripts/campaign_storage_integration.gd": "ed8d16a3429cbfc00d6f48b68b59596ff6bebbefbc89a1e5f8629363e1992a36",
     "src/tests/scripts/campaign_storage_integration.gd.uid": "6bae5035f1204832e9ce97d6e9d8261e0d44b0098fa25f2d26e8ff7a698008b4",
     "src/tests/scripts/contextual_interaction_integration.gd": "fc8ac431bc760513cc104a31be3744bf722d50e99f30acfac1a93efe730b5b18",
     "src/tests/scripts/contextual_interaction_integration.gd.uid": "932fac62cd16aa6030c655e20248be4ecb3c6a1d0b42cee2614f03f00c7ce07f",
@@ -423,20 +425,20 @@
     "src/ui/scripts/front_end.gd.uid": "a27fc21f8f9bc02beb6b55a76586f281f8f18783659d316cd25454f2a97ffd88",
     "src/ui/scripts/game_settings.gd": "579e28097287669a5f42f165ccf76ff086e8cbf77fd793e6c83aa1ff15bf9ee9",
     "src/ui/scripts/game_settings.gd.uid": "c3e454d99b6562e1eaa5f332aea5a0e92b79cadfb81721bcfe8c93b55101f425",
-    "src/ui/scripts/level_map.gd": "1d4a7ff610637f4a54dafb942de9102b1c16d3d22300e8becd4f9ddfeae972e2",
+    "src/ui/scripts/level_map.gd": "a28679ad6187936463493dc126d92f71730b29a64e2c32b2a88b6a259dc7195e",
     "src/ui/scripts/level_map.gd.uid": "abc0270a4cff6b65ceae22dfc51199c9930089fb5174df43a57ed5712d4a521f",
     "src/ui/scripts/map_navigation.gd": "d96cda1c5b8d8ca84c87fc545356ad1fdde62a7bf6f51ed0b31da13522ef1651",
     "src/ui/scripts/map_navigation.gd.uid": "760c6c7dd76c457f97e5bb250ee3224a610b8748d046048b26a7443efd11fce1",
     "src/ui/scripts/pause_menu.gd": "e8446211b99203918de3567c522cdf80f0d0a8951af30f6eefe704e931d43226",
     "src/ui/scripts/pause_menu.gd.uid": "1c9abe2faf70d11aebbf3cd731bb1da6794d6407f55ef082e429806cd5ed205d"
   },
-  "source_manifest_sha256": "a89ea2bdbba74b401f53d51de0580b78be7f06aef12791e130bb49b562af4789",
-  "base_commit": "e8fb99943e505afb3932394ac47f7b304947a4e3",
+  "source_manifest_sha256": "56318bd28d678a88c34614fa5fbaf307b752f3d9f6d36e908b2f7b42ec89ee65",
+  "base_commit": "2c8944d9e2b7cf6b30e129be9945408e027df0aa",
   "engine": "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
   "engine_sha256": "746a2bc89508d07801fe9ba9bbeaad5be0c74e05f13867977b314f2457f42701",
   "engine_version": "4.8.beta3.official.c51ff06e8",
   "platform": "Linux-7.3.3-300.fc45.x86_64-x86_64-with-glibc2.44",
-  "sandbox": "/tmp/path-of-light-18-c5pp6cx5",
+  "sandbox": "/tmp/path-of-light-18-455d_4_c",
   "results": [
     {
       "name": "storage",
@@ -449,9 +451,9 @@
         "res://src/tests/scripts/campaign_storage_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/storage/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/storage/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/storage/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/storage/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/storage/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/storage/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -459,7 +461,7 @@
         "PASS: campaign storage 46 assertions (validation, migration, recovery, version protection and write failures)"
       ],
       "stdout_sha256": "946dd20fc9f4912bd93756e8854836af0079d3f269b8246e2aee5a61a6de9ece",
-      "stderr_sha256": "311231a14124ebb574e78f27214e931be4f01f1bddf5d59273461f4035071252"
+      "stderr_sha256": "a9285fecf7b91824c066854004a7d2a353a9337bac5d4c198528684191690583"
     },
     {
       "name": "campaign-write",
@@ -474,9 +476,9 @@
         "--write"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -484,7 +486,7 @@
         "PASS: real portal and both exits persist; attempt inventory excluded"
       ],
       "stdout_sha256": "e1e13eee5895cd83564ffacfe2501b0446b0107bb5f82e9f3834db18397d2be1",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "campaign-restore",
@@ -499,9 +501,9 @@
         "--verify"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -509,7 +511,7 @@
         "PASS: second process restores campaign without attempt inventory; menu remains playable"
       ],
       "stdout_sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "migration-seed",
@@ -524,9 +526,9 @@
         "--seed-migration"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/migration/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/migration/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/migration/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -534,7 +536,7 @@
         "PASS: seeded defined v0 migration fixture"
       ],
       "stdout_sha256": "56b9bf144b54309124e15bd5fac06a09173ffb07696bc78237bc018728e1c9c4",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "migration-restore",
@@ -549,9 +551,9 @@
         "--verify-migration"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/migration/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/migration/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/migration/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -559,7 +561,7 @@
         "PASS: second process restores campaign without attempt inventory; menu remains playable"
       ],
       "stdout_sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "migration-second-restart",
@@ -574,9 +576,9 @@
         "--verify"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/migration/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/migration/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/migration/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/migration/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -584,7 +586,7 @@
         "PASS: second process restores campaign without attempt inventory; menu remains playable"
       ],
       "stdout_sha256": "acfd57fdde328a3d47610d613c397e49e920328d25f70c349c6946807421ffac",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "failure-future",
@@ -599,9 +601,9 @@
         "--future"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-future/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-future/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-future/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/failure-future/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/failure-future/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/failure-future/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -609,7 +611,7 @@
         "PASS: playable campaign failure/recovery path --future"
       ],
       "stdout_sha256": "902c9124a8ab57549e64e4058b52fe68bd599d606f77dc0a57c02c3e138bf7fa",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "failure-corrupt",
@@ -624,9 +626,9 @@
         "--corrupt"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-corrupt/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-corrupt/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-corrupt/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/failure-corrupt/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/failure-corrupt/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/failure-corrupt/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -634,7 +636,7 @@
         "PASS: playable campaign failure/recovery path --corrupt"
       ],
       "stdout_sha256": "7112983c91ee7019380e73032256e67c030da0d83c6568ad3c7f87da561e3c54",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "failure-recovered",
@@ -649,9 +651,9 @@
         "--recovered"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-recovered/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-recovered/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-recovered/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/failure-recovered/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/failure-recovered/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/failure-recovered/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -659,7 +661,7 @@
         "PASS: playable campaign failure/recovery path --recovered"
       ],
       "stdout_sha256": "60c4116ec5ea99823a68cdfa221754e118189c833af472186801bc2775319d0f",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "failure-write-failure",
@@ -674,9 +676,9 @@
         "--write-failure"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-write-failure/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-write-failure/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/failure-write-failure/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/failure-write-failure/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/failure-write-failure/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/failure-write-failure/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -684,7 +686,7 @@
         "PASS: playable campaign failure/recovery path --write-failure"
       ],
       "stdout_sha256": "f88c5735b75fe036fa018913bcb724983b39d5e0e23a90130bc7f03898afcb70",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "attempt_recovery",
@@ -697,9 +699,9 @@
         "res://src/tests/scripts/attempt_recovery_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/attempt_recovery/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/attempt_recovery/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/attempt_recovery/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/attempt_recovery/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/attempt_recovery/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/attempt_recovery/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -708,7 +710,7 @@
         "PASS: level 2 fall, damage, healing, depletion, inventory, records and manual restart"
       ],
       "stdout_sha256": "b48baace761ae1f336fd3d76512f0ecca097b23cf9e156d0c32e7818fb43cb3c",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "recovery_records",
@@ -721,9 +723,9 @@
         "res://src/tests/scripts/recovery_records_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/recovery_records/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/recovery_records/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/recovery_records/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/recovery_records/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/recovery_records/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/recovery_records/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -731,7 +733,7 @@
         "PASS: real secret and exit records, bonus falls, optional secret, depletion and retry retention"
       ],
       "stdout_sha256": "7672b14a41f526b58a667a5dc24e9ee0e7ea406ec0e8a2aeb48784485cbb9338",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "restart_lifecycle",
@@ -744,9 +746,9 @@
         "res://src/tests/scripts/restart_lifecycle_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart_lifecycle/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart_lifecycle/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/restart_lifecycle/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/restart_lifecycle/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/restart_lifecycle/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/restart_lifecycle/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -754,7 +756,7 @@
         "PASS: failed reload/replay recovery, menu playthrough lifetime and explicit reset"
       ],
       "stdout_sha256": "765e5c66d46a1510d11ed612bb83b225ab98e8845b530d1af5ced0b2793dfe51",
-      "stderr_sha256": "3eebc2fc8512c0092272e5a62ddf74dff6b39cffe1ee3073c9b788b569efd7bc"
+      "stderr_sha256": "72b0ea50754b56197d32966de4df8271beef67f01f2e97603e07359eee292444"
     },
     {
       "name": "fall_depletion",
@@ -767,9 +769,9 @@
         "res://src/tests/scripts/fall_depletion_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/fall_depletion/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/fall_depletion/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/fall_depletion/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/fall_depletion/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/fall_depletion/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/fall_depletion/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -777,7 +779,7 @@
         "PASS: three falls consume hearts and restart expanded level"
       ],
       "stdout_sha256": "cd48105f51de7d7db79a8918a05233fa9f5021536c297493b3f17e0a35a43566",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "assist_recovery",
@@ -790,9 +792,9 @@
         "res://src/tests/scripts/assist_recovery_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_recovery/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_recovery/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_recovery/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/assist_recovery/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/assist_recovery/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/assist_recovery/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -807,7 +809,7 @@
         "PASS: recovery combination 7 on both levels"
       ],
       "stdout_sha256": "f3eda40ec91b5356cf494db89295196218b3667eab4933723cc2acb56d36320c",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "assist_ui",
@@ -820,9 +822,9 @@
         "res://src/tests/scripts/assist_ui_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_ui/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_ui/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/assist_ui/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/assist_ui/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/assist_ui/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/assist_ui/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -830,7 +832,7 @@
         "PASS: menu/pause assists, live cap and checkpoint changes, defeat, secret rewards and both exits"
       ],
       "stdout_sha256": "d46c62f728f3fa1955bc4499d29aaebba3981ce36f86543ada88d4c5cd4213d2",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "pause_menu",
@@ -843,9 +845,9 @@
         "res://src/tests/scripts/pause_menu_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/pause_menu/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/pause_menu/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/pause_menu/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/pause_menu/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/pause_menu/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/pause_menu/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -853,7 +855,7 @@
         "PASS: pause, frozen gameplay, resume, Escape and return to menu"
       ],
       "stdout_sha256": "c114276fa7115e997c1e590c9dab929a39ab6461f09f10dd8a94699b9d26c6e8",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stderr_sha256": "f2158057430676dc4fc02dc2b276638359799485932a61b8eae43273f64af7e2"
     },
     {
       "name": "two_levels",
@@ -866,9 +868,9 @@
         "res://src/tests/scripts/two_levels_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/two_levels/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/two_levels/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/two_levels/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/two_levels/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/two_levels/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/two_levels/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -879,7 +881,7 @@
         "PASS: yellow key collectible and matches final door"
       ],
       "stdout_sha256": "16f21aeb72aa0bf75605be80fc40d1c7debe11f40091ad96fa355fd83a3a4427",
-      "stderr_sha256": "1bf1d257cfc9cb18d33eb0584aa584f35a2954dc4fd4ba5458aaf635073cace4"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "scene_transition_wait",
@@ -892,9 +894,9 @@
         "res://src/tests/scripts/scene_transition_wait_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/scene_transition_wait/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/scene_transition_wait/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/scene_transition_wait/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/scene_transition_wait/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/scene_transition_wait/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/scene_transition_wait/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -902,7 +904,7 @@
         "PASS: bounded absent/wrong scene waits and three delayed real menu starts"
       ],
       "stdout_sha256": "83b79f32562363744971e54fde0db06528b1f0d2fba844ab473be30581088ad4",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "level-map",
@@ -915,9 +917,9 @@
         "res://src/tests/scripts/level_map_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -925,7 +927,7 @@
         "PASS: registry, unlock guards, map failure/retry, both exits, pause, clean selection, assists, completion replay, menu focus and viewport bounds"
       ],
       "stdout_sha256": "4dd185d917a9635aa7fd0060a2815f9f294822e4ef4b43989467f7ac779ea755",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "level-map-restore",
@@ -940,9 +942,9 @@
         "--verify"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -950,7 +952,7 @@
         "PASS: cold-process map restore and clean revisit"
       ],
       "stdout_sha256": "6f33fd54e614302761987fee6e675bf3d6b02bcbaecdbfb60eebb836225936bd",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "f2158057430676dc4fc02dc2b276638359799485932a61b8eae43273f64af7e2"
     },
     {
       "name": "map-future",
@@ -965,9 +967,9 @@
         "--future"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-future/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-future/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-future/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-future/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-future/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-future/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -975,7 +977,7 @@
         "PASS: map storage boundary --future"
       ],
       "stdout_sha256": "3352cdc835985a4afdfb2e80df173547be4a5480abab5fd2ecf5fe539e1323af",
-      "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "map-corrupt",
@@ -990,9 +992,9 @@
         "--corrupt"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-corrupt/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-corrupt/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-corrupt/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-corrupt/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-corrupt/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-corrupt/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -1000,7 +1002,7 @@
         "PASS: map storage boundary --corrupt"
       ],
       "stdout_sha256": "2ad6d95199151d4bb38155881ab90f4fc26bea6e977db95405b5ee7b871b20d6",
-      "stderr_sha256": "1d4378c3fad3244e646994a93431e3407ae2a56b88b506876354706673a89a4c"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "map-recovered",
@@ -1015,9 +1017,9 @@
         "--recovered"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-recovered/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-recovered/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-recovered/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-recovered/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-recovered/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-recovered/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -1025,7 +1027,7 @@
         "PASS: map storage boundary --recovered"
       ],
       "stdout_sha256": "80bcc02a5e960965a78ebb1b57ebda1eee5b13e0f6a1264ac5e951505d693050",
-      "stderr_sha256": "1d4378c3fad3244e646994a93431e3407ae2a56b88b506876354706673a89a4c"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "map-navigation",
@@ -1038,9 +1040,9 @@
         "res://src/tests/scripts/map_navigation_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-navigation/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-navigation/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/map-navigation/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/map-navigation/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/map-navigation/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/map-navigation/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -1049,7 +1051,7 @@
         "PASS: repeated UI confirm and retry after pause/completion navigation failure"
       ],
       "stdout_sha256": "08ff924c7e41b9325511bab5d2dc41463cc721829dd0870105fbaa97fd336e4c",
-      "stderr_sha256": "5a3af234214d387470b672a2b5cffab2bc96561caaca269564215afe353b9cfd"
+      "stderr_sha256": "236c449108724e87b46b2e15f8812f3735db767e7f800ff86547a0d76b6ebdab"
     },
     {
       "name": "front-end-navigation",
@@ -1062,9 +1064,9 @@
         "res://src/tests/scripts/front_end_navigation_integration.gd"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/front-end-navigation/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/front-end-navigation/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/front-end-navigation/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/front-end-navigation/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/front-end-navigation/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/front-end-navigation/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -1074,7 +1076,7 @@
         "PASS: detached menus issue no deferred scene request"
       ],
       "stdout_sha256": "a9916086f049c368a2eaa83af6d3bd0bb8b6ecbfdaeae93e109d8cc98e78b463",
-      "stderr_sha256": "71ed938935422e0912ba03f297e80ad0828163e9a83e88df72813e4b99cd1d99"
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "rewards-policy-storage",
@@ -1089,17 +1091,17 @@
         "--checks"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-policy-storage/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-policy-storage/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-policy-storage/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-policy-storage/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-policy-storage/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-policy-storage/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
       "pass_lines": [
-        "PASS: rewards --checks 35 assertions"
+        "PASS: rewards --checks 36 assertions"
       ],
-      "stdout_sha256": "7ee002a8cca88180a2e0090c513f1c46fbd55f6b719a93dba76b7a82368d6894",
-      "stderr_sha256": "d277ca80f2bd602354ecf1c14693f23abbae4c8ac99a0544fbdc98ded6f1015f"
+      "stdout_sha256": "ec5506d6b57104dbeffbfb4e033ea2fd66d91e20fe40f460305a6e17eafbc7d8",
+      "stderr_sha256": "7025d917d289e9f8631fd5c44cf9ba3e695758fd090d781ef9fb24f9908b3584"
     },
     {
       "name": "rewards-write",
@@ -1114,9 +1116,9 @@
         "--write"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
@@ -1124,7 +1126,7 @@
         "PASS: rewards --write 3 assertions"
       ],
       "stdout_sha256": "582ba3b34f19a4dcaaf02da419d20c2e823740189bad9eb9749e0a7db033dbfb",
-      "stderr_sha256": "7fe5112023c948cdfdc6ee2456ac91642573c72b6c79177cf2fbbd310803be5f"
+      "stderr_sha256": "03c9107ba0392d49ed5d18cad7fa7cfdf916521c788f1f700c512baaab476497"
     },
     {
       "name": "rewards-restore",
@@ -1139,17 +1141,17 @@
         "--verify"
       ],
       "environment": {
-        "XDG_DATA_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/data",
-        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/config",
-        "XDG_CACHE_HOME": "/tmp/path-of-light-18-c5pp6cx5/rewards-restart/cache"
+        "XDG_DATA_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/data",
+        "XDG_CONFIG_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/config",
+        "XDG_CACHE_HOME": "/tmp/path-of-light-18-455d_4_c/rewards-restart/cache"
       },
       "exit_code": 0,
       "diagnostics": [],
       "pass_lines": [
-        "PASS: rewards --verify 8 assertions"
+        "PASS: rewards --verify 10 assertions"
       ],
-      "stdout_sha256": "fc2759a80593a2cfa14ae64e879333c761881ccff0e344786bb4f3ab155784ea",
-      "stderr_sha256": "58e8ec7708d5ac02441ea1a51fc808864133db9772d0ca1d2504ce54cb70e02c"
+      "stdout_sha256": "e3fd87adc3fb74bc1afa9e0e5c0cf2a2c58d24df3e3e8c83bcb91df32a069220",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
   "passed": 29,

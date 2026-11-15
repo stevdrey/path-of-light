@@ -14,6 +14,7 @@ var transitioning := false
 var routes_column: VBoxContainer
 var records_column: VBoxContainer
 var records_button: Button
+var records_notice: Label
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -105,6 +106,8 @@ func refresh() -> void:
 			route_labels[index - 1].text = "↓ Ruta abierta" if open else "⋮ Completa el nivel anterior"
 	notice.text = Progress.campaign_notice()
 	notice.visible = not notice.text.is_empty()
+	records_notice.text = notice.text
+	records_notice.visible = notice.visible
 	back_button.disabled = transitioning
 	records_button.disabled = transitioning
 
@@ -120,12 +123,15 @@ func _build_records() -> void:
 	# Only authored metadata may supply a display title; unknown retained IDs
 	# never create content, routes, or selectable characters.
 	for world in Rewards.WORLDS:
-		_add_label(records_column, "✓ " + world.id if Progress.world_rewards.has(world.id) else "× Recompensa bloqueada", 18)
+		_add_label(records_column, "✓ " + world.title if Progress.world_rewards.has(world.id) else "× Recompensa bloqueada", 18)
 	if Rewards.WORLDS.is_empty():
 		_add_label(records_column, "Recompensas de mundo: aún no disponibles.", 16)
-	_add_label(records_column, "Personaje prototipo: bloqueado.\nRequiere una campaña con final propio.", 16)
-	var save_message := _add_label(records_column, Progress.campaign_notice(), 14)
-	save_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	if Progress.character_unlocks.has("prototype"):
+		_add_label(records_column, "✓ Personaje prototipo: desbloqueado.\nLa selección de personaje aún no está disponible.", 16)
+	else:
+		_add_label(records_column, "Personaje prototipo: bloqueado.\nRequiere una campaña con final propio.", 16)
+	records_notice = _add_label(records_column, "", 14)
+	records_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var back := Button.new()
 	back.text = "VOLVER AL MAPA"
 	back.custom_minimum_size.y = 40

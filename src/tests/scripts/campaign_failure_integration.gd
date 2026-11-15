@@ -6,8 +6,8 @@ const SceneWait := preload("res://src/tests/scripts/scene_test_wait.gd")
 
 class FailingStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var failing := true
-	func _stage(destination: String, data: Dictionary) -> Error:
-		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, data)
+	func _stage(destination: String, text: String) -> Error:
+		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, text)
 
 func _initialize() -> void:
 	call_deferred("run")

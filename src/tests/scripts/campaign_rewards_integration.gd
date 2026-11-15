@@ -8,8 +8,8 @@ var checks := 0
 
 class FailingStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var failing := true
-	func _stage(destination: String, data: Dictionary) -> Error:
-		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, data)
+	func _stage(destination: String, text: String) -> Error:
+		return ERR_FILE_CANT_WRITE if failing else super._stage(destination, text)
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -25,6 +25,13 @@ func put(path: String, value: Variant) -> void:
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(value))
 	file.close()
+
+func records_text(map: Control) -> String:
+	var text := ""
+	for child in map.records_column.get_children():
+		if child is Label:
+			text += child.text + "\n"
+	return text
 
 func run() -> void:
 	var mode := OS.get_cmdline_user_args()[0]
@@ -61,7 +68,7 @@ func run() -> void:
 			return
 		var before := FileAccess.get_file_as_string(Store.default_path())
 		Progress.reset_attempt()
-		if not check(Progress.record_secret(1) == OK and Progress.record_completion(2) == OK and Progress.record_discovery("secret-chamber-1") == OK and FileAccess.get_file_as_string(Store.default_path()) == before, "repeat events and fresh attempts retain records without rewriting unchanged saves"):
+		if not check(Progress.record_secret(1) == OK and Progress.record_completion(2) == OK and FileAccess.get_file_as_string(Store.default_path()) == before, "repeat events and fresh attempts retain records without rewriting unchanged saves"):
 			return
 		menu.free()
 		current_scene = null
@@ -71,6 +78,13 @@ func run() -> void:
 		map._open_records()
 		await process_frame
 		if not check(map.records_column.visible and not map.routes_column.visible and map.records_column.get_child(1).text.contains("La cámara secreta"), "map log shows restored discovery"):
+			return
+		var log_text := records_text(map)
+		if not check(log_text.contains("Personaje prototipo: desbloqueado") and not log_text.contains("Personaje prototipo: bloqueado"), "map log shows restored prototype unlock"):
+			return
+		if not check(log_text.contains("La selección de personaje aún no está disponible"), "restored unlock does not claim playable character selection"):
+			return
+		if not check(not map.records_notice.visible, "empty save notice adds no records row"):
 			return
 		for viewport_size in [Vector2i(640, 480), Vector2i(1152, 648)]:
 			root.size = viewport_size
@@ -97,6 +111,25 @@ func run() -> void:
 		current_scene.free()
 		current_scene = null
 	else:
+		Progress.reset()
+		Progress.character_unlocks["future-character"] = true
+		var locked_map: Control = load("res://src/ui/level_map.tscn").instantiate()
+		root.add_child(locked_map)
+		current_scene = locked_map
+		locked_map._open_records()
+		if not check(records_text(locked_map).contains("Personaje prototipo: bloqueado") and not records_text(locked_map).contains("Personaje prototipo: desbloqueado"), "missing prototype record stays locked even with an unrelated character unlock"):
+			return
+		locked_map.free()
+		current_scene = null
+		var discovery_fixtures := [
+			{"id": "secret-chamber-1", "level_id": 1, "legacy_secret_level": 1},
+			{"id": "unrelated-same-level", "level_id": 1},
+			{"id": "different-secret-same-level", "level_id": 1, "legacy_secret_level": 2},
+		]
+		if not check(Rewards.discoveries_for_secrets({1: true}, discovery_fixtures) == ["secret-chamber-1"], "legacy portal does not grant unrelated same-level discoveries or another secret event"):
+			return
+		if not check(Rewards.discoveries_for_secrets({}, discovery_fixtures).is_empty(), "discovery mappings require their recorded legacy event"):
+			return
 		if not check(Rewards.earned({1: true, 2: true, 999: true}) == {"world_rewards": [], "character_unlocks": []}, "no production finales means no rewards, including unknown completion IDs"):
 			return
 		var worlds := [{"id": "fixture-world", "levels": [1, 2], "finale": 2}]
@@ -150,13 +183,17 @@ func run() -> void:
 			return
 		Progress.campaign_store = FailingStore.new("user://failed-reward.json")
 		Progress.load_campaign()
-		if not check(Progress.record_discovery("not-authored") == ERR_INVALID_PARAMETER and Progress.recorded_discoveries.is_empty(), "unauthored discovery rejected"):
+		var chamber: Dictionary = Rewards.DISCOVERIES.filter(func(d): return d.id == "secret-chamber-1")[0]
+		if not check(chamber.get("legacy_secret_level") == 1 and Rewards.DISCOVERIES.all(func(d): return d.has("legacy_secret_level") == (d.id == "secret-chamber-1")), "only the portal chamber maps a numeric secret to a discovery"):
 			return
-		if not check(Progress.record_discovery("secret-chamber-1") != OK and Progress.recorded_discoveries.has("secret-chamber-1"), "write failure retains in-memory discovery"):
+		if not check(Progress.record_secret(2) != OK and Progress.recorded_discoveries.is_empty(), "secrets without an authored mapping record no discovery"):
+			return
+		if not check(Progress.record_secret(1) != OK and Progress.recorded_discoveries.has("secret-chamber-1"), "write failure retains in-memory discovery"):
 			return
 		Progress.campaign_store.failing = false
 		Progress.retry_failed_save()
-		if not check(Progress.campaign_error == OK and Store.new(Progress.campaign_store.path).load_campaign().data.recorded_discoveries == ["secret-chamber-1"], "boundary retry persists discovery"):
+		var persisted: Dictionary = Store.new(Progress.campaign_store.path).load_campaign().data
+		if not check(Progress.campaign_error == OK and persisted.recorded_secrets == [1, 2] and persisted.recorded_discoveries == ["secret-chamber-1"], "boundary retry persists secret and discovery"):
 			return
 	print("PASS: rewards ", mode, " ", checks, " assertions")
 	quit(0)

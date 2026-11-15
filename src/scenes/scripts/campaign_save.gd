@@ -55,7 +55,10 @@ func save_campaign(data: Dictionary) -> Error:
 	if not writable:
 		return ERR_UNAUTHORIZED
 	var decoded := _decode(data)
-	if decoded.status != "loaded" or (JSON.stringify(decoded.data, "\t") + "\n").to_utf8_buffer().size() > MAX_BYTES:
+	if decoded.status != "loaded":
+		return ERR_INVALID_DATA
+	var text := _serialize(decoded.data)
+	if text.to_utf8_buffer().size() > MAX_BYTES:
 		return ERR_INVALID_DATA
 	# Recheck disk before replacing anything. Preserve unreadable or newer files.
 	var primary := _read(path)
@@ -72,20 +75,19 @@ func save_campaign(data: Dictionary) -> Error:
 		return ERR_FILE_CORRUPT
 	# Archive each legacy input before rotation, including a legacy backup beside
 	# an already upgraded primary. Preserve exact bytes, never an inferred copy.
-	for source in [path, path + ".bak"]:
-		var original := _read(source)
+	for input in [[path, primary], [path + ".bak", backup]]:
+		var original: Dictionary = input[1]
 		if original.status == "migrated":
-			var copy_error := _preserve_legacy(source, original.source_version)
+			var copy_error := _preserve_legacy(input[0], original.source_version)
 			if copy_error != OK:
 				return copy_error
-	var error := _stage(path + ".tmp", decoded.data)
+	var error := _stage(path + ".tmp", text)
 	if error != OK:
 		return error
 	# Copy, do not move, the last valid primary. It remains available if backup
 	# staging/promotion fails. Never rotate a corrupt primary over good recovery.
 	if has_primary or not has_backup:
-		var previous: Dictionary = primary.data if has_primary else decoded.data
-		error = _stage(path + ".bak.tmp", previous)
+		error = _stage(path + ".bak.tmp", _serialize(primary.data) if has_primary else text)
 		if error != OK:
 			return error
 		error = _promote(path + ".bak.tmp", path + ".bak")
@@ -111,18 +113,21 @@ func _preserve_legacy(source: String, version: int) -> Error:
 		return ERR_FILE_CORRUPT
 	return _promote(temporary, destination)
 
-func _stage(destination: String, data: Dictionary) -> Error:
+func _serialize(data: Dictionary) -> String:
+	return JSON.stringify(data, "\t") + "\n"
+
+# `text` is the serialized form of data already validated by _decode.
+func _stage(destination: String, text: String) -> Error:
 	var file := FileAccess.open(destination, FileAccess.WRITE)
 	if file == null:
 		return FileAccess.get_open_error()
-	var text := JSON.stringify(data, "\t") + "\n"
 	file.store_string(text)
 	file.flush()
 	var error := file.get_error()
 	file.close()
 	if error != OK:
 		return error
-	# Byte comparison is enough: `data` was already validated by _decode.
+	# Byte comparison is enough: the text came from validated data.
 	if FileAccess.get_file_as_string(destination) != text:
 		return ERR_FILE_CORRUPT
 	return OK

@@ -8,13 +8,13 @@ var checks := 0
 class FaultStore extends "res://src/scenes/scripts/campaign_save.gd":
 	var fail_stage := ""
 	var fail_promote := ""
-	func _stage(destination: String, data: Dictionary) -> Error:
+	func _stage(destination: String, text: String) -> Error:
 		if destination.ends_with(fail_stage) and not fail_stage.is_empty():
 			var partial := FileAccess.open(destination, FileAccess.WRITE)
 			partial.store_string("{\"schema_version\":")
 			partial.close()
 			return ERR_FILE_CANT_WRITE
-		return super._stage(destination, data)
+		return super._stage(destination, text)
 	func _promote(source: String, destination: String) -> Error:
 		if destination.ends_with(fail_promote) and not fail_promote.is_empty():
 			return ERR_FILE_CANT_WRITE

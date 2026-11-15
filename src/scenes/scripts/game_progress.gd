@@ -61,7 +61,7 @@ static func load_campaign() -> void:
 		completed_levels[id] = true
 	for id in result.data.recorded_secrets:
 		recorded_secrets[id] = true
-	for field in ["recorded_discoveries", "world_rewards", "character_unlocks"]:
+	for field in CampaignSave.REWARD_FIELDS:
 		for id in result.data[field]:
 			_collection(field)[id] = true
 	# Legacy portal records identify the existing chamber, not a new reward.
@@ -73,10 +73,11 @@ static func save_campaign() -> Error:
 	ensure_campaign_loaded()
 	if not campaign_persistent:
 		return ERR_UNAUTHORIZED
-	campaign_error = campaign_store.save_campaign({"schema_version": CampaignSave.VERSION,
-		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys(),
-		"recorded_discoveries": recorded_discoveries.keys(), "world_rewards": world_rewards.keys(),
-		"character_unlocks": character_unlocks.keys()})
+	var data := {"schema_version": CampaignSave.VERSION,
+		"completed_levels": completed_levels.keys(), "recorded_secrets": recorded_secrets.keys()}
+	for field in CampaignSave.REWARD_FIELDS:
+		data[field] = _collection(field).keys()
+	campaign_error = campaign_store.save_campaign(data)
 	if campaign_error == OK:
 		campaign_status = "loaded"
 	return campaign_error as Error
@@ -104,18 +105,6 @@ static func record_completion(level_id: int) -> Error:
 	_reconcile_records()
 	return save_campaign()
 
-# Named discovery events are accepted only for authored records. No arbitrary
-# public reward-grant API: rewards follow explicit completion policy.
-static func record_discovery(discovery_id: String) -> Error:
-	ensure_campaign_loaded()
-	for discovery in Rewards.DISCOVERIES:
-		if discovery.id == discovery_id:
-			if recorded_discoveries.has(discovery_id) and campaign_error == OK:
-				return OK
-			recorded_discoveries[discovery_id] = true
-			return save_campaign()
-	return ERR_INVALID_PARAMETER
-
 static func _collection(field: String) -> Dictionary:
 	match field:
 		"recorded_discoveries": return recorded_discoveries
@@ -123,12 +112,13 @@ static func _collection(field: String) -> Dictionary:
 		"character_unlocks": return character_unlocks
 	return {}
 
+# Discoveries and rewards are derived only from authored mappings and explicit
+# completion policy. There is no arbitrary public grant API.
 static func _reconcile_records() -> void:
-	for discovery in Rewards.DISCOVERIES:
-		if recorded_secrets.get(discovery.level_id, false):
-			recorded_discoveries[discovery.id] = true
+	for id in Rewards.discoveries_for_secrets(recorded_secrets):
+		recorded_discoveries[id] = true
 	var earned := Rewards.earned(completed_levels)
-	for field in ["world_rewards", "character_unlocks"]:
+	for field in earned:
 		for id in earned[field]:
 			_collection(field)[id] = true
 
