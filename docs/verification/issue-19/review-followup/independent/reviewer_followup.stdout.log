@@ -1,0 +1,5 @@
+Godot Engine v4.8.beta3.official.c51ff06e8 - https://godotengine.org
+
+PASS: independent adversarial menu conflicts, stale callback, repeated failure, alternate retry and external detachment
+PASS: independent registry matrix and physical Space versus Enter/R conflicts in both orders
+PASS: independent pause failure/retry and clean selected attempt; 31 assertions

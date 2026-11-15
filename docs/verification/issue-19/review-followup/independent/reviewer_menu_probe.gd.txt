@@ -1,0 +1,9 @@
+extends "res://src/ui/scripts/front_end.gd"
+var observed: Array[String] = []
+var reject := 0
+func _request_menu_scene(path: String) -> Error:
+	observed.append(path)
+	if reject > 0:
+		reject -= 1
+		return ERR_CANT_CREATE
+	return super._request_menu_scene(path)

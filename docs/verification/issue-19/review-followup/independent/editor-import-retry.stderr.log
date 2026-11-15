@@ -1,0 +1,26 @@
+ERROR: Condition "_sock == -1" is true. Returning: FAILED
+   at: _inet_open (drivers/unix/net_socket_unix.cpp:288)
+While attempting to print an error, another error was printed:
+ERROR: Condition "p_image.is_null()" is true.
+   at: add_image (scene/gui/rich_text_label.cpp:4565)
+ERROR: Condition "err != OK" is true. Returning: ERR_CANT_CREATE
+   at: listen (core/io/tcp_server.cpp:56)
+While attempting to print an error, another error was printed:
+ERROR: Condition "p_image.is_null()" is true.
+   at: add_image (scene/gui/rich_text_label.cpp:4565)
+ERROR: Condition "_sock == -1" is true. Returning: FAILED
+   at: _inet_open (drivers/unix/net_socket_unix.cpp:288)
+   GDScript backtrace (most recent call first):
+       [0] _open (res://addons/godot_mcp/mcp_bridge.gd:139)
+       [1] start (res://addons/godot_mcp/mcp_bridge.gd:100)
+       [2] _enter_tree (res://addons/godot_mcp/godot_mcp.gd:81)
+ERROR: godot_mcp: connect_to_url(ws://127.0.0.1:9080) failed (error 1)
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _open (res://addons/godot_mcp/mcp_bridge.gd:142)
+       [1] start (res://addons/godot_mcp/mcp_bridge.gd:100)
+       [2] _enter_tree (res://addons/godot_mcp/godot_mcp.gd:81)
+ERROR: Condition "_sock == -1" is true. Returning: FAILED
+   at: _inet_open (drivers/unix/net_socket_unix.cpp:288)
+ERROR: Condition "err != OK" is true. Returning: ERR_CANT_CREATE
+   at: listen (core/io/tcp_server.cpp:56)

@@ -1,0 +1,204 @@
+[
+  {
+    "name": "engine-version",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--version"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/engine-version-92vdbpuu/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/engine-version-92vdbpuu/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/engine-version-92vdbpuu/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "fa82a745ca07355773995ced5a69250d09db89898c6985ced979f47cac45116b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pass_lines": []
+  },
+  {
+    "name": "editor-import",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--editor",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--import"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/editor-import-sdh63dly/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/editor-import-sdh63dly/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/editor-import-sdh63dly/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [
+      "SCRIPT ERROR: Parse Error: Preload file \"res://assets/sounds/music/background_sfx_engine.wav\" has no resource loaders (unrecognized file extension).",
+      "SCRIPT ERROR: Parse Error: Preload file \"res://assets/sounds/music/menu_theme.wav\" has no resource loaders (unrecognized file extension)."
+    ],
+    "stdout_sha256": "5bf6c6313b433fe4a9f4380d5edb6b820707ea2de0157b56a3042462e2408cc1",
+    "stderr_sha256": "d0c9f6c02e374ac9049bb8821f5b5d6a8b239a3ab8df6f924da8de1d89a1f453",
+    "pass_lines": []
+  },
+  {
+    "name": "engine-version",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--version"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/engine-version-01ztogul/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/engine-version-01ztogul/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/engine-version-01ztogul/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "fa82a745ca07355773995ced5a69250d09db89898c6985ced979f47cac45116b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pass_lines": []
+  },
+  {
+    "name": "editor-import-retry",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--editor",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--import"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/editor-import-retry-i9jmg6h8/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/editor-import-retry-i9jmg6h8/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/editor-import-retry-i9jmg6h8/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "d8db4d8874539ec6075b6d7456d06a5fb25b1fc745034fd6c8b650cf0a07497c",
+    "stderr_sha256": "509be87eaac5ef9f5bf8cc5701869c1fbc962ceb95d4c41a5898e62c6169b927",
+    "pass_lines": []
+  },
+  {
+    "name": "reviewer_followup",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--script",
+      "res://src/tests/scripts/reviewer_followup.gd"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/reviewer_followup-cxbq5m6_/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/reviewer_followup-cxbq5m6_/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/reviewer_followup-cxbq5m6_/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "1c15953e1f7ac2e113506bd7f40ba21b921a31f9603a5006fe3b82dc4a5c41fc",
+    "stderr_sha256": "e72986c4d10092e663eb10910b2124b3d9995f3f1b51a3f4aac218acee56160b",
+    "pass_lines": [
+      "PASS: independent adversarial menu conflicts, stale callback, repeated failure, alternate retry and external detachment",
+      "PASS: independent registry matrix and physical Space versus Enter/R conflicts in both orders",
+      "PASS: independent pause failure/retry and clean selected attempt; 31 assertions"
+    ]
+  },
+  {
+    "name": "level_map_integration",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--script",
+      "res://src/tests/scripts/level_map_integration.gd"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/level_map_integration-v0wof_7n/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/level_map_integration-v0wof_7n/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/level_map_integration-v0wof_7n/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "4dd185d917a9635aa7fd0060a2815f9f294822e4ef4b43989467f7ac779ea755",
+    "stderr_sha256": "3586a0f08686c4ec5a9f7d4888b33de2ae361b56d998ebf04808871ff4bbc217",
+    "pass_lines": [
+      "PASS: registry, unlock guards, map failure/retry, both exits, pause, clean selection, assists, completion replay, menu focus and viewport bounds"
+    ]
+  },
+  {
+    "name": "map_navigation_integration",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--script",
+      "res://src/tests/scripts/map_navigation_integration.gd"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/map_navigation_integration-rf6aeq20/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/map_navigation_integration-rf6aeq20/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/map_navigation_integration-rf6aeq20/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "08ff924c7e41b9325511bab5d2dc41463cc721829dd0870105fbaa97fd336e4c",
+    "stderr_sha256": "5a3af234214d387470b672a2b5cffab2bc96561caaca269564215afe353b9cfd",
+    "pass_lines": [
+      "PASS: Space on completion preserves the screen without requesting the map",
+      "PASS: repeated UI confirm and retry after pause/completion navigation failure"
+    ]
+  },
+  {
+    "name": "front_end_navigation_integration",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--script",
+      "res://src/tests/scripts/front_end_navigation_integration.gd"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/front_end_navigation_integration-u09duast/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/front_end_navigation_integration-u09duast/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/front_end_navigation_integration-u09duast/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "a9916086f049c368a2eaa83af6d3bd0bb8b6ecbfdaeae93e109d8cc98e78b463",
+    "stderr_sha256": "71ed938935422e0912ba03f297e80ad0828163e9a83e88df72813e4b99cd1d99",
+    "pass_lines": [
+      "PASS: MAPA/JUGAR in both orders and duplicate actions make one scene request",
+      "PASS: both failed destinations preserve state, warning and retry focus",
+      "PASS: detached menus issue no deferred scene request"
+    ]
+  },
+  {
+    "name": "two_levels_integration",
+    "command": [
+      "/opt/Godot/Godot_v4.8-beta3_linux.x86_64",
+      "--headless",
+      "--path",
+      "/tmp/issue19-followup-independent/project",
+      "--script",
+      "res://src/tests/scripts/two_levels_integration.gd"
+    ],
+    "environment": {
+      "XDG_DATA_HOME": "/tmp/issue19-followup-independent/two_levels_integration-r6m8_tn6/data",
+      "XDG_CONFIG_HOME": "/tmp/issue19-followup-independent/two_levels_integration-r6m8_tn6/config",
+      "XDG_CACHE_HOME": "/tmp/issue19-followup-independent/two_levels_integration-r6m8_tn6/cache"
+    },
+    "exit_code": 0,
+    "diagnostics": [],
+    "stdout_sha256": "16f21aeb72aa0bf75605be80fc40d1c7debe11f40091ad96fa355fd83a3a4427",
+    "stderr_sha256": "1bf1d257cfc9cb18d33eb0584aa584f35a2954dc4fd4ba5458aaf635073cace4",
+    "pass_lines": [
+      "PASS: portal needs centered player; up still jumps at edge",
+      "PASS: door transitions to level two preserving score and hearts",
+      "PASS: ladder reaches elevated yellow key platform",
+      "PASS: yellow key collectible and matches final door"
+    ]
+  }
+]

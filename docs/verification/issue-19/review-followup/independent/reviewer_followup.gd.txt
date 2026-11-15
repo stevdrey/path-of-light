@@ -1,0 +1,159 @@
+extends SceneTree
+const P = preload("res://src/scenes/scripts/game_progress.gd")
+const R = preload("res://src/scenes/scripts/campaign_registry.gd")
+const W = preload("res://src/tests/scripts/scene_test_wait.gd")
+const MAP = "res://src/ui/level_map.tscn"
+const MENU = "res://src/ui/front_end.tscn"
+var assertions := 0
+class RejectPause extends "res://src/ui/scripts/pause_menu.gd":
+	var reject := true
+	var requests := 0
+	func _request_map_scene() -> Error:
+		requests += 1
+		if reject:
+			reject = false
+			return ERR_CANT_CREATE
+		return super._request_map_scene()
+func _initialize() -> void:
+	call_deferred("run")
+func ck(value: bool, message: String) -> bool:
+	assertions += 1
+	if not value:
+		printerr("FAIL: ", message)
+		quit(1)
+	return value
+func settle(n: int = 4) -> void:
+	for i in n:
+		await process_frame
+func menu() -> Control:
+	root.set_meta("skip_intro_splash", true)
+	var m: Control = load(MENU).instantiate()
+	m.set_script(load("res://src/tests/scripts/reviewer_menu_probe.gd"))
+	root.add_child(m)
+	current_scene = m
+	return m
+func clear() -> void:
+	if is_instance_valid(current_scene):
+		current_scene.free()
+	current_scene = null
+func activate(m: Control, map: bool) -> void:
+	(m.map_button if map else m.play_button).pressed.emit()
+func key(code: Key) -> void:
+	for pressed in [true, false]:
+		var e := InputEventKey.new()
+		e.keycode = code
+		e.physical_keycode = code
+		e.pressed = pressed
+		Input.parse_input_event(e)
+	Input.flush_buffered_events()
+func run() -> void:
+	P.reset()
+	for first in [true, false]:
+		for repeats in [1, 6]:
+			var m := menu()
+			var seen: Array = m.observed
+			var destination: String = MAP if first else R.first_level_path()
+			activate(m, first)
+			for i in repeats:
+				activate(m, not first)
+				activate(m, first)
+			m._finish_scene(R.first_level_path() if first else MAP)
+			if not ck(seen.is_empty() and m.pending_scene == destination and m.map_button.disabled and m.play_button.disabled, "pending request serializes both actions; mismatched callback does nothing"):
+				return
+			var s: Node = await W.for_scene(self, destination)
+			if not ck(s != null and seen == [destination], "first action alone changes scene despite competing and repeated actions"):
+				return
+			clear()
+		var m := menu()
+		m.reject = 2
+		P.campaign_status = "unsupported"
+		P.completed_levels = {1: true}
+		P.recorded_secrets = {1: true}
+		P.score = 42
+		P.diamonds = 7
+		P.keys = {4: true}
+		P.hearts = 1
+		for attempt in 2:
+			activate(m, first)
+			activate(m, not first)
+			await settle()
+			var b: Button = m.map_button if first else m.play_button
+			if not ck(current_scene == m and m.observed.size() == attempt+1 and m.pending_scene.is_empty() and b.has_focus() and not b.disabled and m.save_notice.text.contains(P.campaign_notice()) and m.save_notice.visible and P.score == 42 and P.hearts == 1 and P.keys == {4: true} and P.completed_levels == {1: true} and P.recorded_secrets == {1: true}, "two failures keep state, notice, controls and focus retryable"):
+				return
+		activate(m, not first)
+		if not ck(await W.for_scene(self, R.first_level_path() if first else MAP) != null, "opposite destination can be selected after repeated failures"):
+			return
+		clear()
+		m = menu()
+		var seen: Array = m.observed
+		activate(m, first)
+		root.remove_child(m)
+		current_scene = null
+		m._play()
+		m._open_map()
+		await settle()
+		if not ck(seen.is_empty(), "detached pending callback and both detached entry points issue no request"):
+			return
+		m.free()
+		m = menu()
+		seen = m.observed
+		activate(m, first)
+		change_scene_to_file(MAP)
+		if not ck(await W.for_scene(self, MAP) != null and seen.is_empty(), "external replacement wins and detached callback is ignored"):
+			return
+		clear()
+	print("PASS: independent adversarial menu conflicts, stale callback, repeated failure, alternate retry and external detachment")
+	P.reset()
+	for facts in [{}, {999: true}, {2: true}, {1: true}, {1: true, 2: true}]:
+		if not ck(R.is_open(1, facts) and R.is_open(2, facts) == (facts.has(1) or facts.has(2)) and not R.is_open(999, facts), "unlock matrix preserves registered revisits and rejects unknown facts"):
+			return
+	var entries: Array = R.levels()
+	entries[0].id = 999
+	if not ck(R.level(1).id == 1 and R.next_level_path(1) == R.level(2).scene_path and R.next_level_path(2).is_empty(), "metadata copies and destination boundaries"):
+		return
+	for order in [[KEY_SPACE, KEY_ENTER, KEY_R], [KEY_SPACE, KEY_R, KEY_ENTER]]:
+		var l: Node = load(R.level(2).scene_path).instantiate()
+		root.add_child(l)
+		current_scene = l
+		l.transitioning = true
+		l._show_completion()
+		await settle()
+		key(order[0])
+		await settle()
+		if not ck(current_scene == l and l.completed and not l.map_return_requested and not l.restarting, "physical Space stays at completion"):
+			return
+		key(order[1])
+		key(order[2])
+		var target: String = MAP if order[1] == KEY_ENTER else R.first_level_path()
+		if not ck(await W.for_scene(self, target) != null, "first of Enter/R wins completion conflict in either order"):
+			return
+		clear()
+	print("PASS: independent registry matrix and physical Space versus Enter/R conflicts in both orders")
+	var l: Node = load(R.level(1).scene_path).instantiate()
+	root.add_child(l)
+	current_scene = l
+	l.get_node("PauseMenu").free()
+	var pause := RejectPause.new()
+	l.add_child(pause)
+	P.score = 73
+	P.keys = {4: true}
+	P.hearts = 1
+	pause.pause()
+	pause.map_button.pressed.emit()
+	pause.map_button.pressed.emit()
+	await settle()
+	if not ck(paused and pause.owns_pause and current_scene == l and pause.requests == 1 and not pause.map_return_requested and not pause.map_button.disabled and pause.map_button.has_focus() and P.score == 73 and P.keys == {4: true} and P.hearts == 1, "pause map failure preserves paused attempt and retry state"):
+		return
+	pause.map_button.pressed.emit()
+	pause.map_button.pressed.emit()
+	var map: Control = await W.for_scene(self, MAP)
+	if not ck(map != null and not paused and not map.level_buttons[1].disabled, "pause retry releases pause on map"):
+		return
+	map.level_buttons[1].pressed.emit()
+	l = await W.for_scene(self, R.level(1).scene_path)
+	if not ck(l != null and P.score == 0 and P.diamonds == 0 and P.keys.is_empty() and P.hidden_missing == 0 and l.player_health.hearts == P.configured_max_hearts() and l.checkpoint_index == 0, "abandoned attempt starts a clean selection"):
+		return
+	print("PASS: independent pause failure/retry and clean selected attempt; ", assertions, " assertions")
+	clear()
+	await settle()
+	quit(0)

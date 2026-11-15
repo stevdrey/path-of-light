@@ -1,0 +1,23 @@
+{
+  "source_commit": "232048253c73f9f752ce7f80b8afc810c777a68f",
+  "source_tree": "7a0781f4ab3cf5a2f3ff06bdf52aedc37a58b15b",
+  "source_manifest_sha256": "5579900907d166220b8f011f753c27d3999235af24d5f344291adc51c15c9a2f",
+  "source_file_count": 425,
+  "reviewed_prior_head": "31fbf6ee32ac5b80a78b2c5174f39f276e99c10e",
+  "implementation_processes": {
+    "passed": 26,
+    "total": 26
+  },
+  "independent_runtime_processes": 5,
+  "independent_adversarial_assertions": 31,
+  "independent_isolation_tests": 4,
+  "independent_verdict": "PASS",
+  "source_unchanged_after_verification": true,
+  "publication_note": "Next commit adds verification artifacts only; its source must retain this manifest. Its distinct full Git tree is not the source tree recorded above.",
+  "remaining_validation": [
+    "headless Linux only",
+    "no human visual/audio/controller/accessibility/playtest",
+    "no co-op/export/browser/native Windows/macOS test",
+    "environment/editor-import and test-cleanup diagnostics retained"
+  ]
+}
