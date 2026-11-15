@@ -1,6 +1,28 @@
 # Campaign registry and level-map evidence
 
-Evidence for [E03-02 / issue #19](https://github.com/stevdrey/path-of-light/issues/19), recorded 2026-11-13. This is a local Linux development candidate, not a release or human usability approval. [ADR 0006](adr/0006-campaign-registry-map.md) defines the prototype contract and remaining design boundaries.
+## Current PR review follow-up
+
+The PR review of `31fbf6ee32ac5b80a78b2c5174f39f276e99c10e` requested serialized menu transitions and fresh exact-candidate evidence. The old PASS and logs below apply only to the original `4583ed9` source; they do not verify later navigation/reset/input changes.
+
+Current evidence is under [review-followup/](verification/issue-19/review-followup/): [implementation results and source manifest](verification/issue-19/review-followup/implementation/results.json), [independent final report](verification/issue-19/review-followup/independent/final-integration-report.md), and [runner-isolation results](verification/issue-19/review-followup/runner-unit.log). The implementation report identifies the source commit, full per-file SHA-256 manifest, engine, platform and isolated process commands. `docs/verification/` is excluded from the source digest so committing evidence cannot change the reviewed source identity. A later evidence-only commit must match that same manifest before publication; prior reviews are not carried forward as approval of changed source.
+
+The menu now shares a pending scene request between **MAPA** and **JUGAR**. The first accepted action wins, both actions defer replacement, detached callbacks are ignored, and a failed load restores controls, initiating-button focus and the campaign notice without resetting inventory. The new default regression tests conflicting/duplicate actions in both orders, checked failures/retry, and detached callbacks. The navigation regression additionally synthesizes Space and Enter on completion; it checks that Space cannot activate the map and Enter can, alongside pause-to-map failure/retry and pause release. Map-selected fresh attempts and ordinary-exit carry-over remain covered by the existing integration suite.
+
+Reproduce the current default 26-process suite and four Python isolation tests on Linux:
+
+```sh
+python3 src/tests/run_campaign_checks.py \
+  --godot /opt/Godot/Godot_v4.8-beta3_linux.x86_64 \
+  --output docs/verification/issue-19/review-followup/implementation
+python3 -B -m unittest discover -s src/tests -p test_campaign_runner.py
+git diff --check
+```
+
+The earlier menu conflict was reproduced on `31fbf6e`; its zero-exit run still emitted a null-tree GDScript error, retained in [reproduction](verification/issue-19/review-followup/reproduction/stderr.log). Final checks reject script/parse/failure diagnostics regardless of exit status. Raw headless environment/import and cleanup warnings remain in the logs and are not represented as an error-free editor or release result. Independent focused checks are recorded separately from implementation runs. No human visual/audio/controller, accessibility, co-op or exported-platform test is claimed; the scope and remaining validation below still apply.
+
+## Historical original candidate evidence
+
+Original evidence for [E03-02 / issue #19](https://github.com/stevdrey/path-of-light/issues/19), recorded 2026-11-13. This is a local Linux development candidate, not a release or human usability approval. [ADR 0006](adr/0006-campaign-registry-map.md) defines the prototype contract and remaining design boundaries.
 
 ## Candidate and reproduction
 

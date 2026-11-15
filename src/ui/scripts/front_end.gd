@@ -17,7 +17,8 @@ var waiting_action := ""
 var message: Label
 var save_notice: Label
 var map_button: Button
-var map_requested := false
+var play_button: Button
+var pending_scene := ""
 
 func _ready() -> void:
 	Progress.ensure_campaign_loaded()
@@ -72,7 +73,7 @@ func _build_ui() -> void:
 	var subtitle := _label("Una aventura por descubrir", 16)
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	main_panel.add_child(subtitle)
-	_add_button(main_panel, "JUGAR", _play)
+	play_button = _add_button(main_panel, "JUGAR", _play)
 	_add_button(main_panel, "OPCIONES", _open_options)
 	map_button = _add_button(main_panel, "MAPA DE NIVELES", _open_map)
 	_add_button(main_panel, "SALIR", func(): get_tree().quit())
@@ -204,25 +205,46 @@ func _show_splash() -> void:
 
 func _play() -> void:
 	# JUGAR starts a level-one attempt while preserving durable campaign facts.
-	BackgroundMusic.play_game()
-	get_tree().change_scene_to_file(Registry.first_level_path())
+	_queue_scene(Registry.first_level_path())
 
 func _open_map() -> void:
-	if map_requested:
-		return
-	map_requested = true
-	# Button callbacks must finish before their scene is removed.
-	call_deferred("_finish_open_map")
+	_queue_scene(MapNavigation.SCENE)
 
-func _finish_open_map() -> void:
-	if MapNavigation.open(get_tree()) == OK:
+func _queue_scene(path: String) -> void:
+	if not is_inside_tree() or not pending_scene.is_empty():
 		return
-	map_requested = false
-	# Keep any campaign save warning visible alongside the map error.
+	pending_scene = path
+	_set_transition_controls(true)
+	# Serialize MAPA and JUGAR before queuing either replacement.
+	call_deferred("_finish_scene", path)
+
+func _set_transition_controls(disabled: bool) -> void:
+	for child in main_panel.get_children():
+		if child is Button:
+			child.disabled = disabled
+
+func _request_menu_scene(path: String) -> Error:
+	if path == MapNavigation.SCENE:
+		return MapNavigation.open(get_tree())
+	return get_tree().change_scene_to_file(path)
+
+func _finish_scene(path: String) -> void:
+	# A caller outside these buttons may already have detached the menu.
+	if not is_inside_tree() or pending_scene != path:
+		return
+	var music: Node = get_node("/root/BackgroundMusic")
+	if _request_menu_scene(path) == OK:
+		if path != MapNavigation.SCENE:
+			music.play_game()
+		return
+	pending_scene = ""
+	_set_transition_controls(false)
+	# Keep campaign warnings and inventory intact after either failed request.
 	var campaign := Progress.campaign_notice()
-	save_notice.text = (campaign + "\n" if not campaign.is_empty() else "") + "No se pudo abrir el mapa. Reintenta."
+	var error_text := "No se pudo abrir el mapa. Reintenta." if path == MapNavigation.SCENE else "No se pudo iniciar el nivel. Reintenta."
+	save_notice.text = (campaign + "\n" if not campaign.is_empty() else "") + error_text
 	save_notice.show()
-	map_button.grab_focus()
+	(map_button if path == MapNavigation.SCENE else play_button).grab_focus()
 
 func _open_options() -> void:
 	main_panel.hide()

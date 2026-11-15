@@ -38,6 +38,15 @@ func accept_twice() -> void:
 			Input.parse_input_event(event)
 	Input.flush_buffered_events()
 
+func press_key(code: Key) -> void:
+	for pressed in [true, false]:
+		var event := InputEventKey.new()
+		event.keycode = code
+		event.physical_keycode = code
+		event.pressed = pressed
+		Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
 func run() -> void:
 	Progress.reset()
 	var level: Node = load("res://src/scenes/adventure_level_1.tscn").instantiate()
@@ -69,12 +78,19 @@ func run() -> void:
 	var content: Node = level.get_node("Completion/Panel/Margin/Content")
 	var button: Button = content.get_child(content.get_child_count() - 1)
 	await process_frame
+	press_key(KEY_SPACE)
+	for i in 3:
+		await process_frame
+	if not check(current_scene == level and level.completed and not level.map_return_requested and button.has_focus() and level.fail_once, "Space jump cannot accept the focused completion map button"):
+		return
+	print("PASS: Space on completion preserves the screen without requesting the map")
 	accept_twice()
 	for i in 3:
 		await process_frame
 	if not check(current_scene == level and level.completed and not level.map_return_requested and not button.disabled and button.has_focus() and button.text.contains("Reintentar"), "failed completion navigation retains completion and restores focused retry"):
 		return
-	accept_twice()
+	press_key(KEY_ENTER)
+	press_key(KEY_ENTER)
 	# A conflicting replay key in the same frame must not enqueue another scene.
 	var restart := InputEventAction.new()
 	restart.action = "restart_demo"

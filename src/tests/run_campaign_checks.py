@@ -90,6 +90,7 @@ def main(argv=None):
         for mode in ('future', 'corrupt', 'recovered'):
             checks.append(run('map-' + mode, 'level_map_storage_integration', ['--' + mode]))
         checks.append(run('map-navigation', 'map_navigation_integration'))
+        checks.append(run('front-end-navigation', 'front_end_navigation_integration'))
     report['passed'] = sum(checks)
     report['total'] = len(checks)
     report['all_passed'] = all(checks)
